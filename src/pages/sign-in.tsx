@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Navbar } from "@/components/layouts/Navbar";
+import { Navbar } from "@/components/layouts/base/Navbar";
 import { Button } from "@/components/ui/button";
 import { SignInForm } from "@/features/sign-in/components/layouts/SignInForm";
 
