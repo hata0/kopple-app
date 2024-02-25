@@ -13,8 +13,6 @@ export const Navbar = () => {
   const router = useRouter();
   const pathname = router.pathname;
 
-  console.log(pathname);
-
   const LinkButton = ({ children, href }: LinkButtonProps) => {
     return (
       <Button asChild className={pathname === href ? "" : "text-muted-foreground"} variant="ghost">
