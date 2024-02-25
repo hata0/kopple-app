@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
+import { RevealPasswordInput } from "@/components/ui/case/RevealPasswordInput";
 import {
   Form,
   FormControl,
@@ -53,9 +54,13 @@ export const SignInForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>パスワード</FormLabel>
-              <FormControl>
-                <Input type="password" {...field} autoComplete="current-password" />
-              </FormControl>
+              <RevealPasswordInput
+                render={(inputProps) => (
+                  <FormControl>
+                    <Input {...inputProps} {...field} autoComplete="current-password" />
+                  </FormControl>
+                )}
+              />
               <FormMessage />
             </FormItem>
           )}
