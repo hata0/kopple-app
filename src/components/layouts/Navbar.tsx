@@ -22,12 +22,12 @@ export const Navbar = () => {
   };
 
   return (
-    <div>
+    <nav>
       <Button asChild variant="ghost">
         <Link href="/">My App</Link>
       </Button>
       <LinkButton href="/sign-in">Sign in</LinkButton>
       <LinkButton href="/sign-up">Sign up</LinkButton>
-    </div>
+    </nav>
   );
 };
