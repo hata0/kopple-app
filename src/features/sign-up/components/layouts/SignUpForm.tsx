@@ -60,7 +60,7 @@ export const SignUpForm = () => {
             <FormItem>
               <FormLabel>メールアドレス</FormLabel>
               <FormControl>
-                <Input type="email" {...field} />
+                <Input type="email" {...field} autoComplete="email" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -73,7 +73,7 @@ export const SignUpForm = () => {
             <FormItem>
               <FormLabel>パスワード</FormLabel>
               <FormControl>
-                <Input type="password" {...field} autoComplete="off" />
+                <Input type="password" {...field} autoComplete="new-password" />
               </FormControl>
               <FormDescription>
                 半角英数字混合で8文字以上のパスワードを作成してください。
@@ -89,7 +89,7 @@ export const SignUpForm = () => {
             <FormItem>
               <FormLabel>確認用パスワード</FormLabel>
               <FormControl>
-                <Input type="password" {...field} autoComplete="off" />
+                <Input type="password" {...field} autoComplete="new-password" />
               </FormControl>
               <FormMessage />
             </FormItem>
