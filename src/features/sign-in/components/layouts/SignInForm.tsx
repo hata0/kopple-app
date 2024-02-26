@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { fetcher } from "@/utils/fetcher";
 
 const formSchema = z.object({
   email: z.string().email("メールアドレスの形式が不正です。"),
@@ -29,11 +30,15 @@ export const SignInForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    const { email, password } = values;
 
-    const res = await fetch("https://my.backend/book");
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const data = await res.json();
+    const data = await fetcher("https://my.backend/sign-in", {
+      body: {
+        email,
+        password,
+      },
+      method: "POST",
+    });
 
     console.log(data);
   };

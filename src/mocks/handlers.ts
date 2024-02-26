@@ -1,11 +1,5 @@
-import { http, HttpResponse } from "msw";
+import { http } from "msw";
 
-export const handlers = [
-  http.get("https://my.backend/book", () => {
-    return HttpResponse.json({
-      description:
-        "The Lord of the Rings is an epic high-fantasy novel written by English author and scholar J. R. R. Tolkien.",
-      title: "Lord of the Rings",
-    });
-  }),
-];
+import { signInResolver } from "./resolvers/signInResolver";
+
+export const handlers = [http.post("https://my.backend/sign-in", signInResolver)];
