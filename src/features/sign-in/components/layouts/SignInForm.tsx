@@ -54,7 +54,7 @@ export const SignInForm = () => {
         className="space-y-8"
         onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}
       >
-        <h2 aria-labelledby={headingId}>ログイン</h2>
+        <h2 id={headingId}>ログイン</h2>
         <fieldset>
           <legend>アカウント情報の入力</legend>
           <FormField
