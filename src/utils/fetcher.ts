@@ -6,16 +6,21 @@ export const fetcher = async <T extends object>(
   input: RequestInfo | URL,
   { body, headers, ...restInit }: Init<T> = {},
 ) => {
-  const res = await fetch(input, {
-    ...restInit,
-    body: body && JSON.stringify(body),
-    headers: {
-      "Content-Type": "application/json",
-      ...headers,
-    },
-  });
+  let res;
+  let error;
 
-  const data: unknown = await res.json();
+  try {
+    res = await fetch(input, {
+      ...restInit,
+      body: body && JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+        ...headers,
+      },
+    });
+  } catch (e) {
+    error = e;
+  }
 
-  return data;
+  return { error, res };
 };

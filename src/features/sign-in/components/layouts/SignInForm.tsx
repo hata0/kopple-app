@@ -1,8 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useId } from "react";
+import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
+import { User } from "../../types/SignIn";
 
 import { Button } from "@/components/ui/button";
 import { RevealPasswordInput } from "@/components/ui/case/RevealPasswordInput";
@@ -23,6 +25,7 @@ const formSchema = z.object({
 });
 
 export const SignInForm = () => {
+  const [errorMessage, setErrorMessage] = useState("");
   const headingId = useId();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -36,7 +39,7 @@ export const SignInForm = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const { email, password } = values;
 
-    const data = await fetcher("https://my.backend/sign-in", {
+    const { error, res } = await fetcher<User>("https://my.backend/sign-in", {
       body: {
         email,
         password,
@@ -44,7 +47,9 @@ export const SignInForm = () => {
       method: "POST",
     });
 
-    console.log(data);
+    if (error || res!.status >= 400) {
+      setErrorMessage("認証に失敗しました。もう一度入力してください。");
+    }
   };
 
   return (
@@ -88,6 +93,7 @@ export const SignInForm = () => {
             )}
           />
         </fieldset>
+        {errorMessage && <div>{errorMessage}</div>}
         <div className="flex space-x-8">
           <Button type="submit">ログイン</Button>
           <div>

@@ -1,26 +1,17 @@
 import { HttpResponse, HttpResponseResolver, PathParams } from "msw";
 
-type User = {
-  email: string;
-  password: string;
-};
-
-type ResponseType =
-  | {
-      message: string;
-    }
-  | {
-      error: string;
-    };
+import { ErrorResponse, SuccessResponse, User } from "@/features/sign-in/types/SignIn";
 
 const user: User = {
   email: "user@example.com",
   password: "password1",
 };
 
-export const signInResolver: HttpResponseResolver<PathParams, User, ResponseType> = async ({
-  request,
-}) => {
+export const signInResolver: HttpResponseResolver<
+  PathParams,
+  User,
+  SuccessResponse | ErrorResponse
+> = async ({ request }) => {
   const data = await request.json();
 
   if (user.email === data.email && user.password === data.password) {
