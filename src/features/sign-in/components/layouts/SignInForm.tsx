@@ -1,4 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { useId } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -21,6 +23,8 @@ const formSchema = z.object({
 });
 
 export const SignInForm = () => {
+  const headingId = useId();
+
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
       email: "",
@@ -45,38 +49,54 @@ export const SignInForm = () => {
 
   return (
     <Form {...form}>
-      <form className="space-y-8" onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>メールアドレス</FormLabel>
-              <FormControl>
-                <Input type="email" {...field} autoComplete="email" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>パスワード</FormLabel>
-              <RevealPasswordInput
-                render={(inputProps) => (
-                  <FormControl>
-                    <Input {...inputProps} {...field} autoComplete="current-password" />
-                  </FormControl>
-                )}
-              />
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
+      <form
+        aria-labelledby={headingId}
+        className="space-y-8"
+        onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}
+      >
+        <h2 aria-labelledby={headingId}>ログイン</h2>
+        <fieldset>
+          <legend>アカウント情報の入力</legend>
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>メールアドレス</FormLabel>
+                <FormControl>
+                  <Input type="email" {...field} autoComplete="email" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>パスワード</FormLabel>
+                <RevealPasswordInput
+                  render={(inputProps) => (
+                    <FormControl>
+                      <Input {...inputProps} {...field} autoComplete="current-password" />
+                    </FormControl>
+                  )}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </fieldset>
+        <div className="flex space-x-8">
+          <Button type="submit">ログイン</Button>
+          <div>
+            <span>または</span>
+            <Button asChild className="px-2" variant="link">
+              <Link href="/sign-up">新規登録</Link>
+            </Button>
+          </div>
+        </div>
       </form>
     </Form>
   );
