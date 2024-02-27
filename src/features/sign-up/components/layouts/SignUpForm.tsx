@@ -1,10 +1,16 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useId } from "react";
+import { useRouter } from "next/router";
+import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { User } from "../../types/SignUp";
+
 import { Button } from "@/components/ui/button";
+import { ErrorMessage } from "@/components/ui/domain/ErrorMessage";
+import { FormHeading } from "@/components/ui/domain/FormHeading";
+import { FormLegend } from "@/components/ui/domain/FormLegend";
 import {
   Form,
   FormControl,
@@ -15,6 +21,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { toast } from "@/components/ui/use-toast";
+import { fetcher } from "@/utils/fetcher";
 
 const formSchema = z
   .object({
@@ -39,7 +47,9 @@ const formSchema = z
   });
 
 export const SignUpForm = () => {
+  const [errorMessage, setErrorMessage] = useState("");
   const headingId = useId();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
@@ -50,8 +60,26 @@ export const SignUpForm = () => {
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const { email, password } = values;
+
+    const { error } = await fetcher<User>("https://my.backend/sign-up", {
+      body: {
+        email,
+        password,
+      },
+      method: "POST",
+    });
+
+    if (error) {
+      setErrorMessage("新規登録に失敗しました。もう一度入力してください。");
+    } else {
+      toast({
+        title: "新規登録に成功しました。",
+      });
+
+      await router.push("/");
+    }
   };
 
   return (
@@ -61,9 +89,9 @@ export const SignUpForm = () => {
         className="space-y-8"
         onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}
       >
-        <h2 id={headingId}>新規登録</h2>
+        <FormHeading id={headingId}>新規登録</FormHeading>
         <fieldset>
-          <legend>アカウント情報の入力</legend>
+          <FormLegend>アカウント情報の入力</FormLegend>
           <FormField
             control={form.control}
             name="email"
@@ -107,6 +135,7 @@ export const SignUpForm = () => {
             )}
           />
         </fieldset>
+        <ErrorMessage>{errorMessage}</ErrorMessage>
         <div className="flex space-x-4">
           <Button type="submit">新規登録</Button>
           <div>
