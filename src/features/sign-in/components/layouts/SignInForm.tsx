@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -17,6 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { toast } from "@/components/ui/use-toast";
 import { fetcher } from "@/utils/fetcher";
 
 const formSchema = z.object({
@@ -27,6 +29,7 @@ const formSchema = z.object({
 export const SignInForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const headingId = useId();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
@@ -49,6 +52,12 @@ export const SignInForm = () => {
 
     if (error || res!.status >= 400) {
       setErrorMessage("認証に失敗しました。もう一度入力してください。");
+    } else {
+      toast({
+        title: "ログインに成功しました",
+      });
+
+      await router.push("/");
     }
   };
 
