@@ -1,4 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { useId } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -37,6 +39,8 @@ const formSchema = z
   });
 
 export const SignUpForm = () => {
+  const headingId = useId();
+
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
       email: "",
@@ -52,50 +56,66 @@ export const SignUpForm = () => {
 
   return (
     <Form {...form}>
-      <form className="space-y-8" onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>メールアドレス</FormLabel>
-              <FormControl>
-                <Input type="email" {...field} autoComplete="email" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>パスワード</FormLabel>
-              <FormControl>
-                <Input type="password" {...field} autoComplete="new-password" />
-              </FormControl>
-              <FormDescription>
-                半角英数字混合で8文字以上のパスワードを作成してください。
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="passwordConfirm"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>確認用パスワード</FormLabel>
-              <FormControl>
-                <Input type="password" {...field} autoComplete="new-password" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
+      <form
+        aria-labelledby={headingId}
+        className="space-y-8"
+        onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}
+      >
+        <h2 id={headingId}>新規登録</h2>
+        <fieldset>
+          <legend>アカウント情報の入力</legend>
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>メールアドレス</FormLabel>
+                <FormControl>
+                  <Input type="email" {...field} autoComplete="email" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>パスワード</FormLabel>
+                <FormControl>
+                  <Input type="password" {...field} autoComplete="new-password" />
+                </FormControl>
+                <FormDescription>
+                  半角英数字混合で8文字以上のパスワードを作成してください。
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="passwordConfirm"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>確認用パスワード</FormLabel>
+                <FormControl>
+                  <Input type="password" {...field} autoComplete="new-password" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </fieldset>
+        <div className="flex space-x-4">
+          <Button type="submit">新規登録</Button>
+          <div>
+            <span>または</span>
+            <Button asChild className="px-2" variant="link">
+              <Link href="/sign-in">ログイン</Link>
+            </Button>
+          </div>
+        </div>
       </form>
     </Form>
   );
