@@ -9,6 +9,9 @@ import { User } from "../../types/SignIn";
 
 import { Button } from "@/components/ui/button";
 import { RevealPasswordInput } from "@/components/ui/case/RevealPasswordInput";
+import { ErrorMessage } from "@/components/ui/domain/ErrorMessage";
+import { FormHeading } from "@/components/ui/domain/FormHeading";
+import { FormLegend } from "@/components/ui/domain/FormLegend";
 import {
   Form,
   FormControl,
@@ -68,9 +71,9 @@ export const SignInForm = () => {
         className="space-y-8"
         onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}
       >
-        <h2 id={headingId}>ログイン</h2>
+        <FormHeading id={headingId}>ログイン</FormHeading>
         <fieldset>
-          <legend>アカウント情報の入力</legend>
+          <FormLegend>アカウント情報の入力</FormLegend>
           <FormField
             control={form.control}
             name="email"
@@ -102,7 +105,7 @@ export const SignInForm = () => {
             )}
           />
         </fieldset>
-        {errorMessage && <div>{errorMessage}</div>}
+        <ErrorMessage>{errorMessage}</ErrorMessage>
         <div className="flex space-x-8">
           <Button type="submit">ログイン</Button>
           <div>
