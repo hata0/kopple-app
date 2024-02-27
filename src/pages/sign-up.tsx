@@ -1,10 +1,10 @@
-import { Navbar } from "@/components/layouts/base/Navbar";
+import { Header } from "@/components/layouts/base/Header";
 import { SignUpForm } from "@/features/sign-up/components/layouts/SignUpForm";
 
 export default function SignUpPage() {
   return (
     <div>
-      <Navbar />
+      <Header />
       <SignUpForm />
     </div>
   );

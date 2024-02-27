@@ -9,7 +9,7 @@ type LinkButtonProps = {
   children: ReactNode;
 };
 
-export const Navbar = () => {
+export const Header = () => {
   const router = useRouter();
   const pathname = router.pathname;
 
@@ -22,12 +22,14 @@ export const Navbar = () => {
   };
 
   return (
-    <nav>
+    <header aria-label="ヘッダー" className="flex">
       <Button asChild variant="ghost">
         <Link href="/">My App</Link>
       </Button>
-      <LinkButton href="/sign-in">Sign in</LinkButton>
-      <LinkButton href="/sign-up">Sign up</LinkButton>
-    </nav>
+      <nav aria-label="ナビゲーション">
+        <LinkButton href="/sign-in">Sign in</LinkButton>
+        <LinkButton href="/sign-up">Sign up</LinkButton>
+      </nav>
+    </header>
   );
 };

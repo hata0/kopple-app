@@ -1,9 +1,9 @@
-import { Navbar } from "@/components/layouts/base/Navbar";
+import { Header } from "@/components/layouts/base/Header";
 
 export default function Home() {
   return (
     <div>
-      <Navbar />
+      <Header />
       <div>ホームページ</div>
       <div>ホームページの説明</div>
     </div>

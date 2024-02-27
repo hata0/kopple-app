@@ -1,10 +1,10 @@
-import { Navbar } from "@/components/layouts/base/Navbar";
+import { Header } from "@/components/layouts/base/Header";
 import { SignInForm } from "@/features/sign-in/components/layouts/SignInForm";
 
 export default function SignInPage() {
   return (
     <div>
-      <Navbar />
+      <Header />
       <SignInForm />
     </div>
   );
