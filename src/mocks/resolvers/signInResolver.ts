@@ -1,15 +1,15 @@
 import { HttpResponse, HttpResponseResolver, PathParams } from "msw";
 
-import { ErrorResponse, SuccessResponse, User } from "@/features/sign-in/types/SignIn";
+import { ErrorResponse, SuccessResponse, Account } from "@/features/sign-in/types/SignIn";
 
-const user: User = {
+const user: Account = {
   email: "user@example.com",
   password: "password1",
 };
 
 export const signInResolver: HttpResponseResolver<
   PathParams,
-  User,
+  Account,
   SuccessResponse | ErrorResponse
 > = async ({ request }) => {
   const data = await request.json();

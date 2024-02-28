@@ -5,7 +5,7 @@ import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { User } from "../../types/SignUp";
+import { Account } from "../../types/SignUp";
 
 import { Button } from "@/components/ui/button";
 import { ErrorMessage } from "@/components/ui/domain/ErrorMessage";
@@ -63,7 +63,7 @@ export const SignUpForm = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const { email, password } = values;
 
-    const { error } = await fetcher<User>("https://my.backend/sign-up", {
+    const { error } = await fetcher<Account>("https://my.backend/sign-up", {
       body: {
         email,
         password,
