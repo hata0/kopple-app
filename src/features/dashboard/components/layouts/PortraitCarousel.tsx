@@ -1,6 +1,7 @@
+import { Users } from "../../types/Users";
+
 import { PortraitCard } from "./PortraitCard";
 import { PortraitMenubar } from "./PortraitMenubar";
-import { Users } from "./types/Users";
 
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 
