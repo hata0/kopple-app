@@ -5,19 +5,49 @@ import { ImCross, ImProfile } from "react-icons/im";
 import { Button } from "@/components/ui/button";
 import { CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { ToggleIconButton } from "@/components/ui/case/ToggleIconButton";
+import { fetcher } from "@/utils/fetcher";
 
-export const PortraitMenubar = () => {
-  const [isLike, setIsLike] = useState(false);
-  const [isDislike, setIsDislike] = useState(false);
+type Props = {
+  isLike: boolean | null;
+};
 
-  const handleLikeClick = () => {
-    setIsLike((prev) => !prev);
-    setIsDislike(false);
+export const PortraitMenubar = ({ isLike: initialValue }: Props) => {
+  const [isLike, setIsLike] = useState(initialValue);
+
+  const handleLikeClick = async () => {
+    const { error, res } = await fetcher("http://localhost:3000/api/like/id", {
+      method: "PUT",
+    });
+
+    if (!error && res?.ok) {
+      setIsLike((prev) => {
+        if (prev) {
+          return null;
+        } else {
+          return true;
+        }
+      });
+    } else {
+      // TODO: エラーが起きたことを知らせる必要がある
+    }
   };
 
-  const handleDislikeClick = () => {
-    setIsDislike((prev) => !prev);
-    setIsLike(false);
+  const handleDislikeClick = async () => {
+    const { error, res } = await fetcher("http://localhost:3000/api/dislike/id", {
+      method: "PUT",
+    });
+
+    if (!error && res?.ok) {
+      setIsLike((prev) => {
+        if (prev === false) {
+          return null;
+        } else {
+          return false;
+        }
+      });
+    } else {
+      // TODO: エラーが起きたことを知らせる必要がある
+    }
   };
 
   return (
@@ -25,14 +55,14 @@ export const PortraitMenubar = () => {
       <CarouselPrevious className="static left-auto top-auto h-10 w-10 translate-x-0" />
       <ToggleIconButton
         ariaLabel={isLike ? "いいねしました" : "いいねする"}
-        isPressed={isLike}
-        onClick={handleLikeClick}
+        isPressed={!!isLike}
+        onClick={() => void handleLikeClick()}
         render={(className) => <AiFillLike className={className} />}
       />
       <ToggleIconButton
-        ariaLabel={isDislike ? "イマイチと評価しました" : "イマイチと評価する"}
-        isPressed={isDislike}
-        onClick={handleDislikeClick}
+        ariaLabel={isLike === false ? "イマイチと評価しました" : "イマイチと評価する"}
+        isPressed={isLike === false}
+        onClick={() => void handleDislikeClick()}
         render={(className) => <ImCross className={className} />}
       />
       <Button
