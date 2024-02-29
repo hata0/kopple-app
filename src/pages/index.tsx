@@ -1,9 +1,9 @@
-import { Header } from "@/components/layouts/base/Header";
+import { RootHeader } from "@/components/layouts/base/RootHeader";
 
 export default function Home() {
   return (
     <div>
-      <Header />
+      <RootHeader />
       <div>ホームページ</div>
       <div>ホームページの説明</div>
     </div>

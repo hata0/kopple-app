@@ -9,7 +9,7 @@ type LinkButtonProps = {
   children: ReactNode;
 };
 
-export const Header = () => {
+export const RootHeader = () => {
   const router = useRouter();
   const pathname = router.pathname;
 
@@ -27,7 +27,7 @@ export const Header = () => {
         <Link href="/">My App</Link>
       </Button>
       <nav aria-label="ナビゲーション">
-        <LinkButton href="/dashboard">ダッシュボードへ移動</LinkButton>
+        <LinkButton href="/dashboard">ダッシュボード</LinkButton>
         <LinkButton href="/sign-in">ログイン</LinkButton>
         <LinkButton href="/sign-up">新規登録</LinkButton>
       </nav>
