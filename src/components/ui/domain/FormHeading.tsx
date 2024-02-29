@@ -1,8 +1,8 @@
-import { ComponentProps, forwardRef } from "react";
+import { ComponentPropsWithoutRef, forwardRef } from "react";
 
 import { cn } from "@/lib/utils";
 
-type Props = Omit<ComponentProps<"h2">, "ref">;
+type Props = ComponentPropsWithoutRef<"h2">;
 
 export const FormHeading = forwardRef<HTMLHeadingElement, Props>(
   ({ className, ...rest }, forwardRef) => {
