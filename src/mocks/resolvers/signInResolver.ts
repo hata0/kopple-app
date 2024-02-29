@@ -1,6 +1,6 @@
 import { HttpResponse, HttpResponseResolver, PathParams } from "msw";
 
-import { ErrorResponse, SuccessResponse, Account } from "@/features/sign-in/types/SignIn";
+import { Account, ErrorResponse, SuccessResponse } from "@/features/sign-in/types/SignIn";
 
 const user: Account = {
   email: "user@example.com",

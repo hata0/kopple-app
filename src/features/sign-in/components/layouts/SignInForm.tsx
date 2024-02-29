@@ -53,7 +53,7 @@ export const SignInForm = () => {
       method: "POST",
     });
 
-    if (error || res!.status >= 400) {
+    if (error || !res?.ok) {
       setErrorMessage("認証に失敗しました。もう一度入力してください。");
     } else {
       toast({
