@@ -1,10 +1,10 @@
-import { RootHeader } from "@/components/layouts/base/RootHeader";
+import { PreLoginHeader } from "@/components/layouts/domain/PreLoginHeader";
 import { SignUpForm } from "@/features/sign-up/components/layouts/SignUpForm";
 
 export default function SignUpPage() {
   return (
     <div>
-      <RootHeader />
+      <PreLoginHeader />
       <SignUpForm />
     </div>
   );

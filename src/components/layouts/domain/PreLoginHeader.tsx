@@ -9,7 +9,7 @@ type LinkButtonProps = {
   children: ReactNode;
 };
 
-export const RootHeader = () => {
+export const PreLoginHeader = () => {
   const router = useRouter();
   const pathname = router.pathname;
 
