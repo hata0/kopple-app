@@ -1,13 +1,15 @@
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import { ThemeModeToggle } from "@/components/ui/domain/ThemeModeToggle";
 
 export const DashboardHeader = () => {
   return (
-    <header aria-label="ヘッダー">
+    <header aria-label="ヘッダー" className="flex">
       <Button asChild variant="ghost">
         <Link href="/dashboard">My App</Link>
       </Button>
+      <ThemeModeToggle />
     </header>
   );
 };

@@ -4,6 +4,8 @@ import { ReactNode } from "react";
 
 import { Button } from "../../ui/button";
 
+import { ThemeModeToggle } from "@/components/ui/domain/ThemeModeToggle";
+
 type LinkButtonProps = {
   href: string;
   children: ReactNode;
@@ -31,6 +33,7 @@ export const PreLoginHeader = () => {
         <LinkButton href="/sign-in">ログイン</LinkButton>
         <LinkButton href="/sign-up">新規登録</LinkButton>
       </nav>
+      <ThemeModeToggle />
     </header>
   );
 };
