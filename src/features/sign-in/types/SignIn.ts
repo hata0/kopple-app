@@ -6,7 +6,3 @@ export type Account = {
 export type SuccessResponse = {
   message: string;
 };
-
-export type ErrorResponse = {
-  error: string;
-};
