@@ -27,8 +27,9 @@ export const Header = () => {
         <Link href="/">My App</Link>
       </Button>
       <nav aria-label="ナビゲーション">
-        <LinkButton href="/sign-in">Sign in</LinkButton>
-        <LinkButton href="/sign-up">Sign up</LinkButton>
+        <LinkButton href="/dashboard">ダッシュボードへ移動</LinkButton>
+        <LinkButton href="/sign-in">ログイン</LinkButton>
+        <LinkButton href="/sign-up">新規登録</LinkButton>
       </nav>
     </header>
   );
