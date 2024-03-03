@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { AiFillLike } from "react-icons/ai";
 import { ImCross, ImProfile } from "react-icons/im";
 
-import { IsLike } from "../../types/Users";
+import { IsLike, Users } from "../../types/Users";
 
 import { Button } from "@/components/ui/button";
 import { CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
@@ -12,11 +12,11 @@ import { fetcher } from "@/utils/fetcher";
 
 type Props = {
   isLikes: IsLike[];
+  setUsers: Dispatch<SetStateAction<Users>>;
   current: number;
 };
 
-export const PortraitMenubar = ({ current, isLikes: initialValue }: Props) => {
-  const [isLikes, setIsLikes] = useState(initialValue);
+export const PortraitMenubar = ({ current, isLikes, setUsers }: Props) => {
   const isLike = isLikes[current];
 
   const handleLikeClick = async () => {
@@ -25,18 +25,21 @@ export const PortraitMenubar = ({ current, isLikes: initialValue }: Props) => {
     });
 
     if (!error) {
-      setIsLikes((prev) => {
-        return prev.map((isLike, index) => {
-          if (index === current) {
-            if (isLike) {
-              return null;
+      setUsers((prev) => {
+        return {
+          ...prev,
+          isLikes: prev.isLikes.map((isLike, index) => {
+            if (index === current) {
+              if (isLike) {
+                return null;
+              } else {
+                return true;
+              }
             } else {
-              return true;
+              return isLike;
             }
-          } else {
-            return isLike;
-          }
-        });
+          }),
+        };
       });
     } else {
       toast({
@@ -52,18 +55,21 @@ export const PortraitMenubar = ({ current, isLikes: initialValue }: Props) => {
     });
 
     if (!error) {
-      setIsLikes((prev) => {
-        return prev.map((isLike, index) => {
-          if (index === current) {
-            if (isLike === false) {
-              return null;
+      setUsers((prev) => {
+        return {
+          ...prev,
+          isLikes: prev.isLikes.map((isLike, index) => {
+            if (index === current) {
+              if (isLike === false) {
+                return null;
+              } else {
+                return false;
+              }
             } else {
-              return false;
+              return isLike;
             }
-          } else {
-            return isLike;
-          }
-        });
+          }),
+        };
       });
     } else {
       toast({
