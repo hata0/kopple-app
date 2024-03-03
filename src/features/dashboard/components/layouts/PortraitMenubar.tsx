@@ -20,7 +20,7 @@ export const PortraitMenubar = ({ current, isLikes: initialValue }: Props) => {
   const isLike = isLikes[current];
 
   const handleLikeClick = async () => {
-    const { error } = await fetcher("http://localhost:3000/api/like/id", {
+    const { error } = await fetcher(`http://localhost:3000/api/like/${current}`, {
       method: "PUT",
     });
 
@@ -47,7 +47,7 @@ export const PortraitMenubar = ({ current, isLikes: initialValue }: Props) => {
   };
 
   const handleDislikeClick = async () => {
-    const { error } = await fetcher("http://localhost:3000/api/dislike/id", {
+    const { error } = await fetcher(`http://localhost:3000/api/dislike/${current}`, {
       method: "PUT",
     });
 
