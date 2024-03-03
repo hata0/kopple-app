@@ -2,17 +2,21 @@ import { useState } from "react";
 import { AiFillLike } from "react-icons/ai";
 import { ImCross, ImProfile } from "react-icons/im";
 
+import { IsLike } from "../../types/Users";
+
 import { Button } from "@/components/ui/button";
 import { CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { ToggleIconButton } from "@/components/ui/case/ToggleIconButton";
 import { fetcher } from "@/utils/fetcher";
 
 type Props = {
-  isLike: boolean | null;
+  isLikes: IsLike[];
+  current: number;
 };
 
-export const PortraitMenubar = ({ isLike: initialValue }: Props) => {
-  const [isLike, setIsLike] = useState(initialValue);
+export const PortraitMenubar = ({ current, isLikes: initialValue }: Props) => {
+  const [isLikes, setIsLikes] = useState(initialValue);
+  const isLike = isLikes[current];
 
   const handleLikeClick = async () => {
     const { error, res } = await fetcher("http://localhost:3000/api/like/id", {
@@ -20,12 +24,18 @@ export const PortraitMenubar = ({ isLike: initialValue }: Props) => {
     });
 
     if (!error && res?.ok) {
-      setIsLike((prev) => {
-        if (prev) {
-          return null;
-        } else {
-          return true;
-        }
+      setIsLikes((prev) => {
+        return prev.map((isLike, index) => {
+          if (index === current) {
+            if (isLike) {
+              return null;
+            } else {
+              return true;
+            }
+          } else {
+            return isLike;
+          }
+        });
       });
     } else {
       // TODO: エラーが起きたことを知らせる必要がある
@@ -38,12 +48,18 @@ export const PortraitMenubar = ({ isLike: initialValue }: Props) => {
     });
 
     if (!error && res?.ok) {
-      setIsLike((prev) => {
-        if (prev === false) {
-          return null;
-        } else {
-          return false;
-        }
+      setIsLikes((prev) => {
+        return prev.map((isLike, index) => {
+          if (index === current) {
+            if (isLike === false) {
+              return null;
+            } else {
+              return false;
+            }
+          } else {
+            return isLike;
+          }
+        });
       });
     } else {
       // TODO: エラーが起きたことを知らせる必要がある

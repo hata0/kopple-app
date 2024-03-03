@@ -1,14 +1,8 @@
 import Image from "next/image";
 
-import { Card, CardContent } from "@/components/ui/card";
+import { PortraitCard as Props } from "../../types/Users";
 
-type Props = {
-  imageUrl: string;
-  name: string;
-  age: number;
-  message: string;
-  hashtag: string;
-};
+import { Card, CardContent } from "@/components/ui/card";
 
 export const PortraitCard = ({ age, hashtag, imageUrl, message, name }: Props) => {
   return (

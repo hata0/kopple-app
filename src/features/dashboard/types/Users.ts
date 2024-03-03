@@ -3,7 +3,7 @@ export type Users = {
   isLikes: IsLike[];
 };
 
-type PortraitCard = {
+export type PortraitCard = {
   imageUrl: string;
   name: string;
   age: number;
@@ -11,4 +11,4 @@ type PortraitCard = {
   hashtag: string;
 };
 
-type IsLike = boolean | null;
+export type IsLike = boolean | null;
