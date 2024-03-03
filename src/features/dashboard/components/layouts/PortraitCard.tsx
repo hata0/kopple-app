@@ -12,7 +12,7 @@ export const PortraitCard = ({ age, hashtag, imageUrl, message, name }: Props) =
           <Image
             fill
             priority
-            alt="portrait"
+            alt="ポートレイト"
             className="object-contain"
             sizes="(max-width: 900px) 100vw, (max-width: 1350px) 50vw, 33vw"
             src={imageUrl}
