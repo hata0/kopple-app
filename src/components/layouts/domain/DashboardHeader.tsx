@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { DropdownHamburgerMenu } from "./DropdownHamburgerMenu";
+
 import { Button } from "@/components/ui/button";
 import { ThemeModeToggle } from "@/components/ui/domain/ThemeModeToggle";
 
@@ -10,6 +12,7 @@ export const DashboardHeader = () => {
         <Link href="/dashboard">My App</Link>
       </Button>
       <ThemeModeToggle />
+      <DropdownHamburgerMenu />
     </header>
   );
 };
