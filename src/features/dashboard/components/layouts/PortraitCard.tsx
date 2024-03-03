@@ -20,7 +20,7 @@ export const PortraitCard = ({ age, hashtag, imageUrl, message, name }: Props) =
             priority
             alt="portrait"
             className="object-contain"
-            sizes="100vw"
+            sizes="(max-width: 900px) 100vw, (max-width: 1350px) 50vw, 33vw"
             src={imageUrl}
           />
           <div className="absolute bottom-[8px] left-[8px]">
