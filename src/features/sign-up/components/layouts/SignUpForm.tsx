@@ -63,7 +63,7 @@ export const SignUpForm = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const { email, password } = values;
 
-    const { error } = await fetcher<Account>("https://my.backend/sign-up", {
+    const { error } = await fetcher<Account>("http://localhost:3000/sign-up", {
       body: {
         email,
         password,

@@ -45,7 +45,7 @@ export const SignInForm = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const { email, password } = values;
 
-    const { error, res } = await fetcher<Account>("https://my.backend/sign-in", {
+    const { error, res } = await fetcher<Account>("http://localhost:3000/api/sign-in", {
       body: {
         email,
         password,
