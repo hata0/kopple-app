@@ -9,7 +9,14 @@ export type Props = {
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const { res } = await fetcher("http://localhost:3000/api/users");
+  const { error, res } = await fetcher("http://localhost:3000/api/users", {
+    method: "POST",
+  });
+
+  if (error || res?.ok) {
+    throw new Error();
+  }
+
   const users = (await res?.json()) as Users;
 
   return { props: { users } };

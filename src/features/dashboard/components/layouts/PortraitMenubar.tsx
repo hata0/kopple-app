@@ -19,11 +19,11 @@ export const PortraitMenubar = ({ current, isLikes: initialValue }: Props) => {
   const isLike = isLikes[current];
 
   const handleLikeClick = async () => {
-    const { error, res } = await fetcher("http://localhost:3000/api/like/id", {
+    const { error } = await fetcher("http://localhost:3000/api/like/id", {
       method: "PUT",
     });
 
-    if (!error && res?.ok) {
+    if (!error) {
       setIsLikes((prev) => {
         return prev.map((isLike, index) => {
           if (index === current) {
@@ -43,11 +43,11 @@ export const PortraitMenubar = ({ current, isLikes: initialValue }: Props) => {
   };
 
   const handleDislikeClick = async () => {
-    const { error, res } = await fetcher("http://localhost:3000/api/dislike/id", {
+    const { error } = await fetcher("http://localhost:3000/api/dislike/id", {
       method: "PUT",
     });
 
-    if (!error && res?.ok) {
+    if (!error) {
       setIsLikes((prev) => {
         return prev.map((isLike, index) => {
           if (index === current) {
