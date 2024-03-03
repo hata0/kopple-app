@@ -22,7 +22,7 @@ export const DropdownHamburgerMenu = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size="icon" variant="outline">
+        <Button aria-label="メニューを表示" size="icon" variant="outline">
           <GiHamburgerMenu />
         </Button>
       </DropdownMenuTrigger>
