@@ -24,7 +24,7 @@ export const PortraitCard = ({ age, hashtag, imageUrl, message, name }: Props) =
             src={imageUrl}
           />
           <div className="absolute bottom-[8px] left-[8px]">
-            <div className="flex items-end justify-center space-x-[8px]">
+            <div className="flex items-end justify-start space-x-[8px]">
               <div className="text-xl font-bold text-foreground">{name}</div>
               <div className="font-medium text-foreground">{age}</div>
             </div>

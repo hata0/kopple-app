@@ -9,9 +9,9 @@ export const PortraitCarousel = ({ isLikes, portraitCards }: Users) => {
   return (
     <Carousel className="flex" orientation="vertical">
       <CarouselContent className="h-[80vh] w-[448px]">
-        {Array.from({ length: 5 }).map((_, index) => (
+        {portraitCards.map((portraitCard, index) => (
           <CarouselItem key={index}>
-            <PortraitCard {...portraitCards[0]} />
+            <PortraitCard {...portraitCard} />
           </CarouselItem>
         ))}
       </CarouselContent>
