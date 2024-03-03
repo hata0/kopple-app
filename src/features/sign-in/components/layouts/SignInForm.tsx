@@ -60,7 +60,7 @@ export const SignInForm = () => {
         title: "ログインに成功しました",
       });
 
-      await router.push("/");
+      await router.push("/dashboard");
     }
   };
 

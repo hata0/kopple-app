@@ -78,7 +78,7 @@ export const SignUpForm = () => {
         title: "新規登録に成功しました。",
       });
 
-      await router.push("/");
+      await router.push("/dashboard");
     }
   };
 
