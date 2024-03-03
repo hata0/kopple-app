@@ -7,6 +7,7 @@ import { IsLike } from "../../types/Users";
 import { Button } from "@/components/ui/button";
 import { CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { ToggleIconButton } from "@/components/ui/case/ToggleIconButton";
+import { toast } from "@/components/ui/use-toast";
 import { fetcher } from "@/utils/fetcher";
 
 type Props = {
@@ -38,7 +39,10 @@ export const PortraitMenubar = ({ current, isLikes: initialValue }: Props) => {
         });
       });
     } else {
-      // TODO: エラーが起きたことを知らせる必要がある
+      toast({
+        title: "いいねの更新に失敗しました",
+        variant: "destructive",
+      });
     }
   };
 
@@ -62,7 +66,10 @@ export const PortraitMenubar = ({ current, isLikes: initialValue }: Props) => {
         });
       });
     } else {
-      // TODO: エラーが起きたことを知らせる必要がある
+      toast({
+        title: "イマイチと評価している状態の更新に失敗しました",
+        variant: "destructive",
+      });
     }
   };
 
