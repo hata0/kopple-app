@@ -1,6 +1,6 @@
 import { Users } from "@/features/dashboard/types/Users";
 
-export const users: Users = {
+export const USERS: Users = {
   isLikes: [null, null, false, null, true],
   portraitCards: [
     {
