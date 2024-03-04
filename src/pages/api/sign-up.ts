@@ -1,7 +1,10 @@
 import { NextApiHandler } from "next";
 
-const handler: NextApiHandler = (req, res) => {
+import { delay } from "@/utils/delay";
+
+const handler: NextApiHandler = async (req, res) => {
   if (req.method === "POST") {
+    await delay(1000);
     res.status(200).send({
       message: "Sign up successful",
     });

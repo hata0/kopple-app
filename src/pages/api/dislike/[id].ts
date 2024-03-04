@@ -1,7 +1,10 @@
 import { NextApiHandler } from "next";
 
-const handler: NextApiHandler = (req, res) => {
+import { delay } from "@/utils/delay";
+
+const handler: NextApiHandler = async (req, res) => {
   if (req.method === "PUT") {
+    await delay(1000);
     res.status(200).send(null);
   } else {
     res.status(404).send({

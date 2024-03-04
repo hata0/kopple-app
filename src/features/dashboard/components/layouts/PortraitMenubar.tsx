@@ -19,62 +19,81 @@ export const PortraitMenubar = ({ current }: Props) => {
   const isLike = users!.isLikes[current];
 
   const handleLikeClick = async () => {
-    const { error } = await fetcher(`http://localhost:3000/api/like/${current}`, {
-      method: "PUT",
-    });
-
-    if (!error) {
-      await mutate({
-        ...users!,
-        isLikes: users!.isLikes.map((isLike, index) => {
-          if (index === current) {
-            if (isLike) {
-              return null;
-            } else {
-              return true;
-            }
+    const updatedUsers = {
+      ...users!,
+      isLikes: users!.isLikes.map((isLike, index) => {
+        if (index === current) {
+          if (isLike) {
+            return null;
           } else {
-            return isLike;
+            return true;
           }
-        }, false),
-      });
-    } else {
-      toast({
-        title: "いいねの更新に失敗しました",
-        variant: "destructive",
-      });
-    }
+        } else {
+          return isLike;
+        }
+      }, false),
+    };
+
+    await mutate(
+      async () => {
+        const { error } = await fetcher(`http://localhost:3000/api/like/${current}`, {
+          method: "PUT",
+        });
+
+        if (error) {
+          toast({
+            title: "いいねの更新に失敗しました",
+            variant: "destructive",
+          });
+          throw new Error();
+        }
+
+        return updatedUsers;
+      },
+      {
+        optimisticData: updatedUsers,
+        rollbackOnError: true,
+      },
+    );
   };
 
   const handleDislikeClick = async () => {
-    const { error } = await fetcher(`http://localhost:3000/api/dislike/${current}`, {
-      method: "PUT",
-    });
+    const updatedUsers = {
+      ...users!,
+      isLikes: users!.isLikes.map((isLike, index) => {
+        if (index === current) {
+          if (isLike === false) {
+            return null;
+          } else {
+            return false;
+          }
+        } else {
+          return isLike;
+        }
+      }),
+    };
 
-    if (!error) {
-      await mutate(
-        {
-          ...users!,
-          isLikes: users!.isLikes.map((isLike, index) => {
-            if (index === current) {
-              if (isLike === false) {
-                return null;
-              } else {
-                return false;
-              }
-            } else {
-              return isLike;
-            }
-          }),
-        },
-        false,
-      );
-    } else {
-      toast({
-        title: "イマイチと評価している状態の更新に失敗しました",
-        variant: "destructive",
-      });
-    }
+    await mutate(
+      async () => {
+        const { error } = await fetcher(`http://localhost:3000/api/dislike/${current}`, {
+          method: "PUT",
+        });
+
+        if (error) {
+          toast({
+            title: "イマイチと評価している状態の更新に失敗しました",
+            variant: "destructive",
+          });
+          throw new Error();
+        }
+
+        return updatedUsers;
+      },
+      {
+        optimisticData: updatedUsers,
+        rollbackOnError: true,
+      },
+    );
   };
 
   return (
