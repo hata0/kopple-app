@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import useSWR from "swr";
 
 import { Users } from "../../types/Users";
 
@@ -11,8 +12,8 @@ import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
 import { fetcher } from "@/utils/fetcher";
 
-export const PortraitCarousel = (initialValue: Users) => {
-  const [users, setUsers] = useState(initialValue);
+export const PortraitCarousel = () => {
+  const { data: users, mutate } = useSWR<Users>("/api/users");
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
 
@@ -31,12 +32,13 @@ export const PortraitCarousel = (initialValue: Users) => {
 
             if (!error) {
               const additionalUsers = (await res?.json()) as Users;
-              setUsers((prev) => {
-                return {
-                  isLikes: [...prev.isLikes, ...additionalUsers.isLikes],
-                  portraitCards: [...prev.portraitCards, ...additionalUsers.portraitCards],
-                };
-              });
+              await mutate(
+                {
+                  isLikes: [...users!.isLikes, ...additionalUsers.isLikes],
+                  portraitCards: [...users!.portraitCards, ...additionalUsers.portraitCards],
+                },
+                false,
+              );
             } else {
               toast({
                 action: (
@@ -54,12 +56,12 @@ export const PortraitCarousel = (initialValue: Users) => {
       };
       api.on("settle", () => void func());
     }
-  }, [api]);
+  }, [api, mutate, users]);
 
   return (
     <Carousel className="flex" orientation="vertical" setApi={setApi}>
       <CarouselContent className="h-[80vh] w-[448px]">
-        {users.portraitCards.map((portraitCard, index) => (
+        {users!.portraitCards.map((portraitCard, index) => (
           <CarouselItem key={index}>
             <PortraitCard {...portraitCard} />
           </CarouselItem>
@@ -68,7 +70,7 @@ export const PortraitCarousel = (initialValue: Users) => {
           <PortraitCardSkeleton />
         </CarouselItem>
       </CarouselContent>
-      <PortraitMenubar current={current} isLikes={users.isLikes} setUsers={setUsers} />
+      <PortraitMenubar current={current} />
     </Carousel>
   );
 };

@@ -1,15 +1,16 @@
 import { NextPage } from "next";
+import { SWRConfig } from "swr";
 
 import { DashboardHeader } from "@/components/layouts/domain/DashboardHeader";
 import { PortraitCarousel } from "@/features/dashboard/components/layouts/PortraitCarousel";
 import { getServerSideProps, Props } from "@/features/dashboard/getServerSideProps";
 
-const DashboardPage: NextPage<Props> = ({ users }) => {
+const DashboardPage: NextPage<Props> = ({ fallback }) => {
   return (
-    <div>
+    <SWRConfig value={{ fallback }}>
       <DashboardHeader />
-      <PortraitCarousel {...users} />
-    </div>
+      <PortraitCarousel />
+    </SWRConfig>
   );
 };
 

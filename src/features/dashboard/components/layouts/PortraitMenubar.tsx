@@ -1,8 +1,8 @@
-import { Dispatch, SetStateAction } from "react";
 import { AiFillLike } from "react-icons/ai";
 import { ImCross, ImProfile } from "react-icons/im";
+import useSWR from "swr";
 
-import { IsLike, Users } from "../../types/Users";
+import { Users } from "../../types/Users";
 
 import { Button } from "@/components/ui/button";
 import { CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
@@ -11,13 +11,12 @@ import { toast } from "@/components/ui/use-toast";
 import { fetcher } from "@/utils/fetcher";
 
 type Props = {
-  isLikes: IsLike[];
-  setUsers: Dispatch<SetStateAction<Users>>;
   current: number;
 };
 
-export const PortraitMenubar = ({ current, isLikes, setUsers }: Props) => {
-  const isLike = isLikes[current];
+export const PortraitMenubar = ({ current }: Props) => {
+  const { data: users, mutate } = useSWR<Users>("/api/users");
+  const isLike = users!.isLikes[current];
 
   const handleLikeClick = async () => {
     const { error } = await fetcher(`http://localhost:3000/api/like/${current}`, {
@@ -25,21 +24,19 @@ export const PortraitMenubar = ({ current, isLikes, setUsers }: Props) => {
     });
 
     if (!error) {
-      setUsers((prev) => {
-        return {
-          ...prev,
-          isLikes: prev.isLikes.map((isLike, index) => {
-            if (index === current) {
-              if (isLike) {
-                return null;
-              } else {
-                return true;
-              }
+      await mutate({
+        ...users!,
+        isLikes: users!.isLikes.map((isLike, index) => {
+          if (index === current) {
+            if (isLike) {
+              return null;
             } else {
-              return isLike;
+              return true;
             }
-          }),
-        };
+          } else {
+            return isLike;
+          }
+        }, false),
       });
     } else {
       toast({
@@ -55,10 +52,10 @@ export const PortraitMenubar = ({ current, isLikes, setUsers }: Props) => {
     });
 
     if (!error) {
-      setUsers((prev) => {
-        return {
-          ...prev,
-          isLikes: prev.isLikes.map((isLike, index) => {
+      await mutate(
+        {
+          ...users!,
+          isLikes: users!.isLikes.map((isLike, index) => {
             if (index === current) {
               if (isLike === false) {
                 return null;
@@ -69,8 +66,9 @@ export const PortraitMenubar = ({ current, isLikes, setUsers }: Props) => {
               return isLike;
             }
           }),
-        };
-      });
+        },
+        false,
+      );
     } else {
       toast({
         title: "イマイチと評価している状態の更新に失敗しました",

@@ -5,7 +5,9 @@ import { Users } from "./types/Users";
 import { fetcher } from "@/utils/fetcher";
 
 export type Props = {
-  users: Users;
+  fallback: {
+    "/api/users": Users;
+  };
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
@@ -17,5 +19,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
 
   const users = (await res?.json()) as Users;
 
-  return { props: { users } };
+  return {
+    props: {
+      fallback: {
+        "/api/users": users,
+      },
+    },
+  };
 };
