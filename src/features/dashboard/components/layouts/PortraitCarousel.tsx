@@ -10,6 +10,7 @@ import { PortraitMenubar } from "./PortraitMenubar";
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
+import { BACKEND_URL } from "@/constants/backendUrl";
 import { fetcher } from "@/utils/fetcher";
 
 export const PortraitCarousel = () => {
@@ -28,7 +29,7 @@ export const PortraitCarousel = () => {
       const func = async () => {
         if (!api.canScrollNext()) {
           const recursion = async () => {
-            const { error, res } = await fetcher("http://localhost:3000/api/users");
+            const { error, res } = await fetcher(`${BACKEND_URL}/users`);
 
             if (!error) {
               const additionalUsers = (await res?.json()) as Users;

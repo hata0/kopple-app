@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
+import { BACKEND_URL } from "@/constants/backendUrl";
 import { fetcher } from "@/utils/fetcher";
 
 const formSchema = z.object({
@@ -45,7 +46,7 @@ export const SignInForm = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const { email, password } = values;
 
-    const { error, res } = await fetcher<Account>("http://localhost:3000/api/sign-in", {
+    const { error, res } = await fetcher<Account>(`${BACKEND_URL}/sign-in`, {
       body: {
         email,
         password,

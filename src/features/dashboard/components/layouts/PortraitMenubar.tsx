@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { ToggleIconButton } from "@/components/ui/case/ToggleIconButton";
 import { toast } from "@/components/ui/use-toast";
+import { BACKEND_URL } from "@/constants/backendUrl";
 import { fetcher } from "@/utils/fetcher";
 
 type Props = {
@@ -36,7 +37,7 @@ export const PortraitMenubar = ({ current }: Props) => {
 
     await mutate(
       async () => {
-        const { error } = await fetcher(`http://localhost:3000/api/like/${current}`, {
+        const { error } = await fetcher(`${BACKEND_URL}/like/${current}`, {
           method: "PUT",
         });
 
@@ -75,7 +76,7 @@ export const PortraitMenubar = ({ current }: Props) => {
 
     await mutate(
       async () => {
-        const { error } = await fetcher(`http://localhost:3000/api/dislike/${current}`, {
+        const { error } = await fetcher(`${BACKEND_URL}/dislike/${current}`, {
           method: "PUT",
         });
 
