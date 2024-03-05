@@ -7,7 +7,7 @@ import { fetcher } from "@/utils/fetcher";
 
 export type Props = {
   fallback: {
-    "/api/users": Users;
+    "/users": Users;
   };
 };
 
@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
   return {
     props: {
       fallback: {
-        "/api/users": users,
+        "/users": users,
       },
     },
   };

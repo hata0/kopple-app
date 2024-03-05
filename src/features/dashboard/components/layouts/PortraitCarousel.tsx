@@ -10,7 +10,7 @@ import { PortraitMenubar } from "./PortraitMenubar";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 
 export const PortraitCarousel = () => {
-  const { data: users, mutate } = useSWR<Users>("/api/users");
+  const { data: users, mutate } = useSWR<Users>("/users");
   const { current, setApi } = usePortraitCarousel(users, mutate);
 
   return (

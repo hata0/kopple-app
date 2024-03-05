@@ -17,7 +17,7 @@ type Props = {
 };
 
 export const PortraitMenubar = memo(({ current }: Props) => {
-  const { data: users, mutate } = useSWR<Users>("/api/users");
+  const { data: users, mutate } = useSWR<Users>("/users");
   const isLike = users!.isLikes[current];
 
   const handleLikeClick = async () => {
