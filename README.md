@@ -5,6 +5,7 @@ git clone git@github.com:saezuri510/kosen-hackathon-app.git
 cd kosen-hackathon-app
 npm i
 ```
+また、Webアプリケーションを立ち上げる時は`npm run dev`を実行してください。
 
 2. vscodeに以下の拡張機能をインストールしてください。
   - prettier
