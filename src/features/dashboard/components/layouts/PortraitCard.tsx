@@ -1,10 +1,11 @@
 import Image from "next/image";
+import { memo } from "react";
 
 import { PortraitCard as Props } from "../../types/Users";
 
 import { Card, CardContent } from "@/components/ui/card";
 
-export const PortraitCard = ({ age, hashtag, imageUrl, message, name }: Props) => {
+export const PortraitCard = memo(({ age, hashtag, imageUrl, message, name }: Props) => {
   return (
     <Card className="h-full">
       <CardContent className="h-full p-0">
@@ -29,4 +30,6 @@ export const PortraitCard = ({ age, hashtag, imageUrl, message, name }: Props) =
       </CardContent>
     </Card>
   );
-};
+});
+
+PortraitCard.displayName = "PortraitCard";

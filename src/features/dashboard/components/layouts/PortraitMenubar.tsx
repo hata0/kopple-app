@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { AiFillLike } from "react-icons/ai";
 import { ImProfile } from "react-icons/im";
 import useSWR from "swr";
@@ -15,7 +16,7 @@ type Props = {
   current: number;
 };
 
-export const PortraitMenubar = ({ current }: Props) => {
+export const PortraitMenubar = memo(({ current }: Props) => {
   const { data: users, mutate } = useSWR<Users>("/api/users");
   const isLike = users!.isLikes[current];
 
@@ -70,4 +71,6 @@ export const PortraitMenubar = ({ current }: Props) => {
       <CarouselNext className="static bottom-auto left-auto h-10 w-10 translate-x-0" />
     </div>
   );
-};
+});
+
+PortraitMenubar.displayName = "PortraitMenubar";

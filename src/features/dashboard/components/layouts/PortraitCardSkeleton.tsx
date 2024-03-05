@@ -1,6 +1,8 @@
+import { memo } from "react";
+
 import { Skeleton } from "@/components/ui/skeleton";
 
-export const PortraitCardSkeleton = () => {
+export const PortraitCardSkeleton = memo(() => {
   return (
     <div className="relative h-full w-full">
       <Skeleton className="absolute h-full w-full" />
@@ -14,4 +16,6 @@ export const PortraitCardSkeleton = () => {
       </div>
     </div>
   );
-};
+});
+
+PortraitCardSkeleton.displayName = "PortraitCardSkeleton";
