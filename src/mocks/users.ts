@@ -1,7 +1,7 @@
 import { Users } from "@/features/dashboard/types/Users";
 
 export const USERS: Users = {
-  isLikes: [null, null, false, null, true],
+  isLikes: [false, false, true, false, true],
   portraitCards: [
     {
       age: 25,

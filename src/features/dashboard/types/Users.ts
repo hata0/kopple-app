@@ -11,4 +11,4 @@ export type PortraitCard = {
   hashtag: string;
 };
 
-export type IsLike = boolean | null;
+export type IsLike = boolean;
