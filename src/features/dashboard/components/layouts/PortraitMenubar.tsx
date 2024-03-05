@@ -1,11 +1,11 @@
 import { memo } from "react";
 import { AiFillLike } from "react-icons/ai";
-import { ImProfile } from "react-icons/im";
 import useSWR from "swr";
 
 import { Users } from "../../types/Users";
 
-import { Button } from "@/components/ui/button";
+import { ProfileDrawer } from "./ProfileDrawer";
+
 import { CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { ToggleIconButton } from "@/components/ui/case/ToggleIconButton";
 import { toast } from "@/components/ui/use-toast";
@@ -60,14 +60,7 @@ export const PortraitMenubar = memo(({ current }: Props) => {
         onClick={() => void handleLikeClick()}
         render={(className) => <AiFillLike className={className} />}
       />
-      <Button
-        aria-label="プロフィールを表示"
-        className="rounded-full"
-        size="icon"
-        variant="outline"
-      >
-        <ImProfile />
-      </Button>
+      <ProfileDrawer current={current} />
       <CarouselNext className="static bottom-auto left-auto h-10 w-10 translate-x-0" />
     </div>
   );
