@@ -3,6 +3,9 @@ import { ImProfile } from "react-icons/im";
 
 import { useProfile } from "../../hooks/useProfile";
 
+import { ProfileContent } from "./ProfileContent";
+import { ProfileSkeleton } from "./ProfileSkeleton";
+
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
@@ -27,7 +30,7 @@ export const ProfileDrawer = memo(({ current }: Props) => {
         </Button>
       </DrawerTrigger>
       <DrawerContent>
-        <div>{profile?.name}</div>
+        {profile ? <ProfileContent {...profile} /> : <ProfileSkeleton />}
       </DrawerContent>
     </Drawer>
   );
