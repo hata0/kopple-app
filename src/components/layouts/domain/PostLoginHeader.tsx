@@ -17,9 +17,9 @@ export const PostLoginHeader = () => {
       <Button asChild variant="ghost">
         <Link href="/dashboard">My App</Link>
       </Button>
-      <NavLinkButton href="/talk" pathname={pathname}>
+      <NavLinkButton href="/chats" pathname={pathname}>
         <IoChatboxEllipses />
-        <span>トークリスト</span>
+        <span>チャットリスト</span>
       </NavLinkButton>
       <ThemeModeToggle />
       <DropdownHamburgerMenu />
