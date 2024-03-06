@@ -1,11 +1,11 @@
 import { PreLoginHeader } from "@/components/layouts/domain/PreLoginHeader";
 
-export default function Home() {
+export default function TopPage() {
   return (
     <div>
       <PreLoginHeader />
-      <div>ホームページ</div>
-      <div>ホームページの説明</div>
+      <div>トップページ</div>
+      <div>トップページの説明</div>
     </div>
   );
 }

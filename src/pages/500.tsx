@@ -14,7 +14,7 @@ export default function Custom500() {
       </div>
       <div className="flex items-center justify-center space-x-6">
         <Button asChild>
-          <Link href="/">ホームページへ</Link>
+          <Link href="/">トップページへ</Link>
         </Button>
         <Button onClick={() => router.reload()}>リロードする</Button>
       </div>
