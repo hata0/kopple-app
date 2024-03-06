@@ -2,7 +2,7 @@ import { memo } from "react";
 import { AiFillLike } from "react-icons/ai";
 import useSWR from "swr";
 
-import { Users } from "../../types/Users";
+import { Portraits } from "../../types/Portraits";
 
 import { ProfileDrawer } from "./ProfileDrawer";
 
@@ -17,7 +17,7 @@ type Props = {
 };
 
 export const PortraitMenubar = memo(({ current }: Props) => {
-  const { data: users, mutate } = useSWR<Users>("/users");
+  const { data: users, mutate } = useSWR<Portraits>("/users/portraits");
   const isLike = users!.isLikes[current];
 
   const handleLikeClick = async () => {

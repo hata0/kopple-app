@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { memo } from "react";
 
-import { PortraitCard as Props } from "../../types/Users";
+import { PortraitCard as Props } from "../../types/Portraits";
 
 import { Card, CardContent } from "@/components/ui/card";
 

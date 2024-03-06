@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
-import { Users } from "../types/Users";
+import { Portraits } from "../types/Portraits";
 
 import { CarouselApi } from "@/components/ui/carousel";
 import { ToastAction } from "@/components/ui/toast";
@@ -10,7 +10,7 @@ import { BACKEND_URL } from "@/constants/backendUrl";
 import { fetcher } from "@/utils/fetcher";
 
 export const usePortraitCarousel = () => {
-  const { data: users, mutate } = useSWR<Users>("/users");
+  const { data: users, mutate } = useSWR<Portraits>("/users/portraits");
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
 
@@ -25,10 +25,10 @@ export const usePortraitCarousel = () => {
       const func = async () => {
         if (!api.canScrollNext()) {
           const recursion = async () => {
-            const { error, res } = await fetcher(`${BACKEND_URL}/users`);
+            const { error, res } = await fetcher(`${BACKEND_URL}/users/portraits`);
 
             if (!error) {
-              const additionalUsers = (await res?.json()) as Users;
+              const additionalUsers = (await res?.json()) as Portraits;
               await mutate(
                 {
                   isLikes: [...users!.isLikes, ...additionalUsers.isLikes],

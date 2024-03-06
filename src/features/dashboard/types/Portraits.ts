@@ -1,4 +1,4 @@
-export type Users = {
+export type Portraits = {
   portraitCards: PortraitCard[];
   isLikes: IsLike[];
 };
