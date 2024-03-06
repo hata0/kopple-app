@@ -4,23 +4,28 @@ import { useChatCards } from "../../hooks/useChatCards";
 
 import { ChatCard } from "./ChatCard";
 
+import { useIsClient } from "@/hooks/useIsClient";
+
 export const ChatCards = () => {
-  const { isPageBottom } = useChatCards();
+  const { chatCards, isPageBottom } = useChatCards();
+  const { isClient } = useIsClient();
 
   return (
     <div>
-      {Array.from({ length: 10 }).map((_, index) => (
-        <ChatCard key={index} />
+      {chatCards!.map((chatCard) => (
+        <ChatCard {...chatCard} key={chatCard.id} />
       ))}
       <div className="flex h-[60px] w-full items-center justify-center">
-        <TailSpin
-          ariaLabel="ロード中"
-          color="#4fa94d"
-          height="40"
-          radius="1"
-          visible={isPageBottom}
-          width="40"
-        />
+        {isClient && (
+          <TailSpin
+            ariaLabel="ロード中"
+            color="#4fa94d"
+            height="40"
+            radius="1"
+            visible={isPageBottom}
+            width="40"
+          />
+        )}
       </div>
     </div>
   );

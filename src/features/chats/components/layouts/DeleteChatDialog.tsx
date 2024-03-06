@@ -1,3 +1,7 @@
+import useSWR from "swr";
+
+import { ChatCard } from "../../types/ChatCard";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,24 +18,39 @@ import { toast } from "@/components/ui/use-toast";
 import { BACKEND_URL } from "@/constants/backendUrl";
 import { fetcher } from "@/utils/fetcher";
 
-export const DeleteChatDialog = () => {
-  // TODO: idをPropsに渡す
-  const id = 1;
+type Props = {
+  id: string;
+};
+
+export const DeleteChatDialog = ({ id }: Props) => {
+  const { data: chatCards, mutate } = useSWR<ChatCard[]>(`/users/chats`);
 
   const handleDeleteClick = async () => {
-    // TODO: 実際はswrのmutateを使って行い楽観的更新を行う
-    const { error } = await fetcher(`${BACKEND_URL}/user/chat/${id}`, {
-      method: "DELETE",
+    const updatedChatCards = chatCards?.filter((chatCard) => {
+      return chatCard.id !== id;
     });
 
-    if (error) {
-      toast({
-        title: "削除に失敗しました",
-        variant: "destructive",
-      });
-    } else {
-      // TODO: 成功時の処理を記述
-    }
+    await mutate(
+      async () => {
+        const { error } = await fetcher(`${BACKEND_URL}/user/chat/${id}`, {
+          method: "DELETE",
+        });
+
+        if (error) {
+          toast({
+            title: "削除に失敗しました",
+            variant: "destructive",
+          });
+          throw new Error();
+        }
+
+        return updatedChatCards;
+      },
+      {
+        optimisticData: updatedChatCards,
+        rollbackOnError: true,
+      },
+    );
   };
 
   return (
