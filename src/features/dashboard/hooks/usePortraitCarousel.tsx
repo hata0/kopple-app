@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-// eslint-disable-next-line import/named
-import { KeyedMutator } from "swr";
+import useSWR from "swr";
 
 import { Users } from "../types/Users";
 
@@ -10,7 +9,8 @@ import { toast } from "@/components/ui/use-toast";
 import { BACKEND_URL } from "@/constants/backendUrl";
 import { fetcher } from "@/utils/fetcher";
 
-export const usePortraitCarousel = (users: Users | undefined, mutate: KeyedMutator<Users>) => {
+export const usePortraitCarousel = () => {
+  const { data: users, mutate } = useSWR<Users>("/users");
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
 
@@ -58,5 +58,6 @@ export const usePortraitCarousel = (users: Users | undefined, mutate: KeyedMutat
   return {
     current,
     setApi,
+    users,
   };
 };
