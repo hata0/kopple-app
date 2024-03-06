@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { NavLinkButton } from "@/components/ui/domain/NavLinkButton";
 import { ThemeModeToggle } from "@/components/ui/domain/ThemeModeToggle";
 
-export const DashboardHeader = () => {
+export const PostLoginHeader = () => {
   const router = useRouter();
   const pathname = router.pathname;
 

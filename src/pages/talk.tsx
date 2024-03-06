@@ -1,9 +1,9 @@
-import { DashboardHeader } from "@/components/layouts/domain/DashboardHeader";
+import { PostLoginHeader } from "@/components/layouts/domain/PostLoginHeader";
 
 export default function TalkPage() {
   return (
     <div>
-      <DashboardHeader />
+      <PostLoginHeader />
       <div>talk</div>
     </div>
   );
