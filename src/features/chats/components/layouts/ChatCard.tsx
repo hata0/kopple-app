@@ -1,4 +1,5 @@
 import { format, isThisWeek, isThisYear, isToday, isYesterday } from "date-fns";
+import { memo } from "react";
 
 import { ChatCard as Props } from "../../types/ChatCard";
 
@@ -8,7 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatJpDayOfWeek } from "@/utils/formatJpDayOfWeek";
 
-export const ChatCard = ({ id, imageUrl, latestMessage, name, updatedAt }: Props) => {
+export const ChatCard = memo(({ id, imageUrl, latestMessage, name, updatedAt }: Props) => {
   const formatDate = (() => {
     if (updatedAt === null) {
       return;
@@ -47,4 +48,6 @@ export const ChatCard = ({ id, imageUrl, latestMessage, name, updatedAt }: Props
       </CardContent>
     </Card>
   );
-};
+});
+
+ChatCard.displayName = "ChatCard";

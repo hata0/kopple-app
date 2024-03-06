@@ -12,6 +12,7 @@ import { fetcher } from "@/utils/fetcher";
 // FIXME:
 // React Strict Mode のとき二回以上クエリが投げられる問題を解決するため、
 // react-intersection-observerとuseSWRInfiniteを使って再実装する必要がある
+// また、何か削除した後に最下部までスクロールすると無限スクロールできないバグが発生する
 export const useChatCards = () => {
   const { data: chatCards, mutate } = useSWR<ChatCard[]>("/users/chats");
   const { scrollPosition } = useScrollPosition();
@@ -34,8 +35,6 @@ export const useChatCards = () => {
       });
     } else {
       const additionalChatCards = (await res!.json()) as ChatCard[];
-      console.log(chatCards);
-      console.log(additionalChatCards);
       await mutate([...chatCards!, ...additionalChatCards]);
     }
   }, [chatCards, mutate]);

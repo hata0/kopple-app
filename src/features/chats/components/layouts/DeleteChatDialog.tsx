@@ -1,3 +1,4 @@
+import { memo } from "react";
 import useSWR from "swr";
 
 import { ChatCard } from "../../types/ChatCard";
@@ -22,7 +23,7 @@ type Props = {
   id: string;
 };
 
-export const DeleteChatDialog = ({ id }: Props) => {
+export const DeleteChatDialog = memo(({ id }: Props) => {
   const { data: chatCards, mutate } = useSWR<ChatCard[]>(`/users/chats`);
 
   const handleDeleteClick = async () => {
@@ -72,4 +73,6 @@ export const DeleteChatDialog = ({ id }: Props) => {
       </AlertDialogContent>
     </AlertDialog>
   );
-};
+});
+
+DeleteChatDialog.displayName = "DeleteChatDialog";
