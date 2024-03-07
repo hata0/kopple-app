@@ -1,3 +1,4 @@
+import { InView } from "react-intersection-observer";
 import { TailSpin } from "react-loader-spinner";
 
 import { useChatCards } from "../../hooks/useChatCards";
@@ -7,26 +8,36 @@ import { ChatCard } from "./ChatCard";
 import { useIsClient } from "@/hooks/useIsClient";
 
 export const ChatCards = () => {
-  const { chatCards, isPageBottom } = useChatCards();
+  const { chatCards, getChatCards } = useChatCards();
   const { isClient } = useIsClient();
+
+  const handleInfiniteScroll = async (isInView: boolean) => {
+    if (isInView) {
+      await getChatCards();
+    }
+  };
 
   return (
     <div>
       {chatCards!.map((chatCard) => (
         <ChatCard {...chatCard} key={chatCard.id} />
       ))}
-      <div className="flex h-[60px] w-full items-center justify-center">
+      <InView
+        as="div"
+        className="flex h-[60px] w-full items-center justify-center"
+        onChange={(isInView) => void handleInfiniteScroll(isInView)}
+      >
         {isClient && (
           <TailSpin
+            visible
             ariaLabel="ロード中"
             color="#4fa94d"
             height="40"
             radius="1"
-            visible={isPageBottom}
             width="40"
           />
         )}
-      </div>
+      </InView>
     </div>
   );
 };
