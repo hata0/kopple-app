@@ -35,7 +35,7 @@ export const useChatCards = () => {
       });
     } else {
       const additionalChatCards = (await res!.json()) as ChatCard[];
-      await mutate([...chatCards!, ...additionalChatCards]);
+      await mutate([...chatCards!, ...additionalChatCards], false);
     }
   }, [chatCards, mutate]);
 

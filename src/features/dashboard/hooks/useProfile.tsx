@@ -26,7 +26,7 @@ export const useProfile = (id: string) => {
       });
     } else {
       const data = (await res?.json()) as Profile;
-      await mutate(data);
+      await mutate(data, false);
     }
   }, [id, mutate]);
 
