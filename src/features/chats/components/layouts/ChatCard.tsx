@@ -28,7 +28,7 @@ export const ChatCard = memo(({ id, imageUrl, latestMessage, name, updatedAt }: 
 
   return (
     <Card>
-      <CardContent className="flex py-2">
+      <CardContent className="flex py-2 hover:bg-accent">
         <div className="flex items-center justify-center">
           <Avatar>
             <AvatarImage alt="プロフィール画像" src={imageUrl} />
