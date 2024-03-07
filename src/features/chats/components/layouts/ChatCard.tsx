@@ -32,7 +32,9 @@ export const ChatCard = memo(({ id, imageUrl, latestMessage, name, updatedAt }: 
         <div className="flex items-center justify-center">
           <Avatar>
             <AvatarImage alt="プロフィール画像" src={imageUrl} />
-            <AvatarFallback>ロード中</AvatarFallback>
+            <AvatarFallback aria-label={name} className="bg-sky-200">
+              {name.substring(0, 1)}
+            </AvatarFallback>
           </Avatar>
         </div>
         <div className="w-full overflow-hidden">

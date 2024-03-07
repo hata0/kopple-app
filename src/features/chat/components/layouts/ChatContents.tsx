@@ -17,7 +17,12 @@ export const ChatContents = () => {
         return message.isMyMessage ? (
           <MyChatContent key={message.id} {...message} />
         ) : (
-          <InterlocutorChatContent key={message.id} {...message} imageUrl={chatContents.imageUrl} />
+          <InterlocutorChatContent
+            key={message.id}
+            {...message}
+            imageUrl={chatContents.imageUrl}
+            name={chatContents.name}
+          />
         );
       })}
     </div>

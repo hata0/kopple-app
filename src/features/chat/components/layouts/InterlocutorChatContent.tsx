@@ -8,14 +8,17 @@ import { cn } from "@/lib/utils";
 
 type Props = {
   imageUrl: string;
+  name: string;
 } & Message;
 
-export const InterlocutorChatContent = memo(({ createdAt, imageUrl, message }: Props) => {
+export const InterlocutorChatContent = memo(({ createdAt, imageUrl, message, name }: Props) => {
   return (
     <div className="flex">
       <Avatar>
         <AvatarImage alt="プロフィール画像" src={imageUrl} />
-        <AvatarFallback>ロード中</AvatarFallback>
+        <AvatarFallback aria-label={name} className="bg-sky-200">
+          {name.substring(0, 1)}
+        </AvatarFallback>
       </Avatar>
       <div
         className={cn(
