@@ -1,14 +1,23 @@
+import { useRouter } from "next/router";
+import useSWR from "swr";
+
+import { ChatContents as ChatContentsType } from "../../types/ChatContents";
+
 import { InterlocutorChatContent } from "./InterlocutorChatContent";
-import { OneselfChatContent } from "./OneselfChatContent";
+import { MyChatContent } from "./MyChatContent";
 
 export const ChatContents = () => {
+  const router = useRouter();
+  const id = router.query.id as string;
+  const { data: chatContents } = useSWR<ChatContentsType>(`/user/chat/${id}`);
+
   return (
     <div className="space-y-3 p-3">
-      {Array.from({ length: 5 }).map((_, index) => {
-        return index % 2 === 0 ? (
-          <InterlocutorChatContent key={index} />
+      {chatContents?.messages.map((message) => {
+        return message.isMyMessage ? (
+          <MyChatContent key={message.id} {...message} />
         ) : (
-          <OneselfChatContent key={index} />
+          <InterlocutorChatContent key={message.id} {...message} imageUrl={chatContents.imageUrl} />
         );
       })}
     </div>
