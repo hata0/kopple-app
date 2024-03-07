@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
-import { Portraits } from "../types/Portraits";
+import { PortraitCard } from "../types/PortraitCard";
 
 import { CarouselApi } from "@/components/ui/carousel";
 import { ToastAction } from "@/components/ui/toast";
@@ -10,7 +10,7 @@ import { BACKEND_URL } from "@/constants/backendUrl";
 import { fetcher } from "@/utils/fetcher";
 
 export const usePortraitCarousel = () => {
-  const { data: users, mutate } = useSWR<Portraits>("/users/portraits");
+  const { data: portraitCards, mutate } = useSWR<PortraitCard[]>("/users/portraits");
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
 
@@ -28,14 +28,8 @@ export const usePortraitCarousel = () => {
             const { error, res } = await fetcher(`${BACKEND_URL}/users/portraits`);
 
             if (!error) {
-              const additionalUsers = (await res?.json()) as Portraits;
-              await mutate(
-                {
-                  isLikes: [...users!.isLikes, ...additionalUsers.isLikes],
-                  portraitCards: [...users!.portraitCards, ...additionalUsers.portraitCards],
-                },
-                false,
-              );
+              const additionalPortraitCards = (await res?.json()) as PortraitCard[];
+              await mutate([...portraitCards!, ...additionalPortraitCards], false);
             } else {
               toast({
                 action: (
@@ -53,11 +47,11 @@ export const usePortraitCarousel = () => {
       };
       api.on("settle", () => void func());
     }
-  }, [api, mutate, users]);
+  }, [api, mutate, portraitCards]);
 
   return {
     current,
+    portraitCards,
     setApi,
-    users,
   };
 };

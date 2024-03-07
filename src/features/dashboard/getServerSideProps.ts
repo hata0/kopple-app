@@ -1,13 +1,13 @@
 import { GetServerSideProps } from "next";
 
-import { Portraits } from "./types/Portraits";
+import { PortraitCard } from "./types/PortraitCard";
 
 import { BACKEND_URL } from "@/constants/backendUrl";
 import { fetcher } from "@/utils/fetcher";
 
 export type Props = {
   fallback: {
-    "/users/portraits": Portraits;
+    "/users/portraits": PortraitCard[];
   };
 };
 
@@ -18,7 +18,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
     throw new Error();
   }
 
-  const portraits = (await res?.json()) as Portraits;
+  const portraits = (await res?.json()) as PortraitCard[];
 
   return {
     props: {

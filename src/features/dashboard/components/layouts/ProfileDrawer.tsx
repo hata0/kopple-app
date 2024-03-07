@@ -10,11 +10,11 @@ import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
 type Props = {
-  current: number;
+  id: string;
 };
 
-export const ProfileDrawer = memo(({ current }: Props) => {
-  const { fetchProfile, profile } = useProfile(current);
+export const ProfileDrawer = memo(({ id }: Props) => {
+  const { fetchProfile, profile } = useProfile(id);
 
   return (
     <Drawer>

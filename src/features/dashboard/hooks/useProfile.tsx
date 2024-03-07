@@ -8,11 +8,11 @@ import { toast } from "@/components/ui/use-toast";
 import { BACKEND_URL } from "@/constants/backendUrl";
 import { fetcher } from "@/utils/fetcher";
 
-export const useProfile = (current: number) => {
-  const { data: profile, mutate } = useSWR<Profile>(`/user/profile/${current}`);
+export const useProfile = (id: string) => {
+  const { data: profile, mutate } = useSWR<Profile>(`/user/profile/${id}`);
 
   const fetchProfile = useCallback(async () => {
-    const { error, res } = await fetcher(`${BACKEND_URL}/user/profile/${current}`);
+    const { error, res } = await fetcher(`${BACKEND_URL}/user/profile/${id}`);
 
     if (error) {
       toast({
@@ -28,7 +28,7 @@ export const useProfile = (current: number) => {
       const data = (await res?.json()) as Profile;
       await mutate(data);
     }
-  }, [current, mutate]);
+  }, [id, mutate]);
 
   return { fetchProfile, profile };
 };

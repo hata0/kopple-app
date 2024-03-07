@@ -1,14 +1,12 @@
 import { NextApiHandler } from "next";
 
-import { Portraits } from "@/features/dashboard/types/Portraits";
-import { PORTRAITS } from "@/mocks/portraits";
-import { ErrorResponse } from "@/types/ErrorResponse";
+import { portraitCards } from "@/mocks/portraits";
 import { delay } from "@/utils/delay";
 
-const handler: NextApiHandler<Portraits | ErrorResponse> = async (req, res) => {
+const handler: NextApiHandler = async (req, res) => {
   if (req.method === "GET") {
     await delay(1000);
-    res.status(200).send(PORTRAITS);
+    res.status(200).send(portraitCards());
   } else {
     res.status(405).send({
       error: "Method not allowed",

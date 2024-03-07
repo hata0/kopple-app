@@ -1,14 +1,9 @@
-export type Portraits = {
-  portraitCards: PortraitCard[];
-  isLikes: IsLike[];
-};
-
 export type PortraitCard = {
+  id: string;
   imageUrl: string;
   name: string;
   age: number;
   message: string;
   hashtag: string;
+  isLike: boolean;
 };
-
-export type IsLike = boolean;
