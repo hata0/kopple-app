@@ -29,7 +29,7 @@ export const useChatContents = () => {
     }
   }, []);
 
-  // データ取得、追加時のスクロール挙動の制御
+  // 先頭と末尾に要素を追加したときのスクロール操作で、削除時には影響しない
   useEffect(() => {
     if (
       messages.length > prevMessages.length &&
