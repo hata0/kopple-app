@@ -2,7 +2,8 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 
-import { ChatContents, Message } from "../types/ChatContents";
+import { ChatContents } from "../types/ChatContents";
+import { Message } from "../types/Message";
 
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";

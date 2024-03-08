@@ -1,4 +1,4 @@
-import { Message } from "@/features/chat/types/ChatContents";
+import { Message } from "@/features/chat/types/Message";
 
 export const message = (message: string): Message => {
   return {

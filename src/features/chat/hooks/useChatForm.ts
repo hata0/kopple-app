@@ -4,8 +4,9 @@ import { useForm } from "react-hook-form";
 import useSWR from "swr";
 import { z } from "zod";
 
-import { ChatContents, Message } from "../types/ChatContents";
+import { ChatContents } from "../types/ChatContents";
 import { CreateMessageRequest } from "../types/CreateMessage";
+import { Message } from "../types/Message";
 
 import { toast } from "@/components/ui/use-toast";
 import { BACKEND_URL } from "@/constants/backendUrl";

@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { memo } from "react";
 
-import { Message } from "../../types/ChatContents";
+import { Message } from "../../types/Message";
 
 import { cn } from "@/lib/utils";
 
