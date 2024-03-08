@@ -9,10 +9,10 @@ import { BACKEND_URL } from "@/constants/backendUrl";
 import { fetcher } from "@/utils/fetcher";
 
 export const useProfile = (id: string) => {
-  const { data: profile, mutate } = useSWR<Profile>(`/user/profile/${id}`);
+  const { data: profile, mutate } = useSWR<Profile>(`/profiles/${id}`);
 
   const fetchProfile = useCallback(async () => {
-    const { error, res } = await fetcher(`${BACKEND_URL}/user/profile/${id}`);
+    const { error, res } = await fetcher(`${BACKEND_URL}/profiles/${id}`);
 
     if (error) {
       toast({
