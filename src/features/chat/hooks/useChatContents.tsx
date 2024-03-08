@@ -13,7 +13,7 @@ import { fetcher } from "@/utils/fetcher";
 export const useChatContents = () => {
   const router = useRouter();
   const id = router.query.id as string;
-  const { data: chatContents, mutate } = useSWR<ChatContents>(`/user/chat/${id}`);
+  const { data: chatContents, mutate } = useSWR<ChatContents>(`/chats/${id}`);
   const messages = chatContents!.messages;
   const [prevMessages, setPrevMessages] = useState<Message[]>([]);
   const [prevHeight, setPrevHeight] = useState(0);
@@ -62,7 +62,7 @@ export const useChatContents = () => {
   };
 
   const getChatContents = useCallback(async () => {
-    const { error, res } = await fetcher(`${BACKEND_URL}/user/chat/${id}`);
+    const { error, res } = await fetcher(`${BACKEND_URL}/chats/${id}`);
 
     if (error) {
       toast({

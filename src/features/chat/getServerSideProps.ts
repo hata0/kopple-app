@@ -13,7 +13,7 @@ export type Props = {
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {
   const id = params!.id as string;
-  const { error, res } = await fetcher(`${BACKEND_URL}/user/chat/${id}`);
+  const { error, res } = await fetcher(`${BACKEND_URL}/chats/${id}`);
 
   if (error) {
     throw new Error();
@@ -24,7 +24,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) 
   return {
     props: {
       fallback: {
-        [`/user/chat/${params?.id as string}`]: chatContents,
+        [`/chats/${id}`]: chatContents,
       },
     },
   };

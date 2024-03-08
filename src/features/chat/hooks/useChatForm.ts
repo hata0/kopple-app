@@ -19,7 +19,7 @@ const formSchema = z.object({
 export const useChatForm = () => {
   const router = useRouter();
   const id = router.query.id as string;
-  const { data: chatContents, mutate } = useSWR<ChatContents>(`/user/chat/${id}`);
+  const { data: chatContents, mutate } = useSWR<ChatContents>(`/chats/${id}`);
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
       message: "",

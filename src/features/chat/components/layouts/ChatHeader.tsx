@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 export const ChatHeader = () => {
   const router = useRouter();
   const id = router.query.id as string;
-  const { data: chatContents } = useSWR<ChatContents>(`/user/chat/${id}`);
+  const { data: chatContents } = useSWR<ChatContents>(`/chats/${id}`);
 
   return (
     <header aria-label="ヘッダー" className="relative flex w-full bg-accent p-2">
