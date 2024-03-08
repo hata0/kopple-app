@@ -10,8 +10,10 @@ export { getServerSideProps };
 export const ChatPage: NextPage<Props> = ({ fallback }) => {
   return (
     <SWRConfig value={{ fallback }}>
-      <ChatHeader />
-      <ChatContents />
+      <div className="flex h-screen flex-col">
+        <ChatHeader />
+        <ChatContents />
+      </div>
     </SWRConfig>
   );
 };
