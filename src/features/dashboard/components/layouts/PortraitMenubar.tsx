@@ -19,7 +19,7 @@ type Props = {
 };
 
 export const PortraitMenubar = memo(({ current }: Props) => {
-  const { data: portraitCards, mutate } = useSWR<PortraitCard[]>("/users/portraits");
+  const { data: portraitCards, mutate } = useSWR<PortraitCard[]>("/portraits");
   const isLike = portraitCards![current] ? portraitCards![current].isLike : false;
   const id = portraitCards![current] ? portraitCards![current].id : undefined;
 

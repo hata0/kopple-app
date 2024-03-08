@@ -10,7 +10,7 @@ import { BACKEND_URL } from "@/constants/backendUrl";
 import { fetcher } from "@/utils/fetcher";
 
 export const usePortraitCarousel = () => {
-  const { data: portraitCards, mutate } = useSWR<PortraitCard[]>("/users/portraits");
+  const { data: portraitCards, mutate } = useSWR<PortraitCard[]>("/portraits");
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
 
@@ -25,7 +25,7 @@ export const usePortraitCarousel = () => {
       const func = async () => {
         if (!api.canScrollNext()) {
           const recursion = async () => {
-            const { error, res } = await fetcher(`${BACKEND_URL}/users/portraits`);
+            const { error, res } = await fetcher(`${BACKEND_URL}/portraits`);
 
             if (!error) {
               const additionalPortraitCards = (await res?.json()) as PortraitCard[];
