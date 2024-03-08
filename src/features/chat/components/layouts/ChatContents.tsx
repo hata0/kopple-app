@@ -11,14 +11,14 @@ import { ScrollBar } from "@/components/ui/scroll-area";
 import { useIsClient } from "@/hooks/useIsClient";
 
 export const ChatContents = () => {
-  const { chatContents, handleInfiniteScroll, initialScrollPosRef, scrollRef } = useChatContents();
+  const { chatContents, handleInfiniteScroll, scrollBottomRef, scrollRef } = useChatContents();
   const { isClient } = useIsClient();
 
   return (
     <ScrollAreaPrimitive.Root className="relative flex-grow overflow-hidden">
       <ScrollAreaPrimitive.Viewport ref={scrollRef} className="h-full w-full rounded-[inherit]">
         <div className="flex flex-col-reverse space-y-10">
-          <div ref={initialScrollPosRef} aria-hidden />
+          <div ref={scrollBottomRef} aria-hidden />
           {chatContents?.messages.map((message) => {
             return message.isMyMessage ? (
               <MyChatContent key={message.id} {...message} />

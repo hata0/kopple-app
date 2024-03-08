@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 
-import { ChatContents } from "../types/ChatContents";
+import { ChatContents, Message } from "../types/ChatContents";
 
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
@@ -13,21 +13,50 @@ export const useChatContents = () => {
   const router = useRouter();
   const id = router.query.id as string;
   const { data: chatContents, mutate } = useSWR<ChatContents>(`/user/chat/${id}`);
-  const initialScrollPosRef = useRef<HTMLDivElement>(null);
-
+  const messages = chatContents!.messages;
+  const [prevMessages, setPrevMessages] = useState<Message[]>([]);
+  const [prevHeight, setPrevHeight] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollBottomRef = useRef<HTMLDivElement>(null);
 
+  // 初期スクロール位置をスクロール最下部にする
   useEffect(() => {
-    if (initialScrollPosRef.current) {
-      initialScrollPosRef.current.scrollIntoView();
+    if (scrollBottomRef.current) {
+      scrollBottomRef.current.scrollIntoView();
+    }
+    if (scrollRef.current) {
+      setPrevHeight(scrollRef.current.scrollHeight);
     }
   }, []);
 
+  // データ取得、追加時のスクロール挙動の制御
+  useEffect(() => {
+    if (
+      messages.length > prevMessages.length &&
+      prevMessages.length > 0 &&
+      scrollBottomRef.current &&
+      scrollRef.current
+    ) {
+      const isFirstMatch = messages[0].id === prevMessages[0].id;
+      const isLastMatch =
+        messages[messages.length - 1].id === prevMessages[prevMessages.length - 1].id;
+
+      if (isFirstMatch && !isLastMatch) {
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight - prevHeight;
+      } else if (!isFirstMatch && isLastMatch) {
+        scrollBottomRef.current.scrollIntoView();
+      }
+    }
+
+    if (scrollRef.current) {
+      setPrevHeight(scrollRef.current.scrollHeight);
+    }
+    setPrevMessages(messages);
+  }, [messages, prevHeight, prevMessages]);
+
   const handleInfiniteScroll = async (isInView: boolean) => {
-    if (isInView && scrollRef.current) {
-      const prevHeight = scrollRef.current.scrollHeight;
+    if (isInView) {
       await getChatContents();
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight - prevHeight;
     }
   };
 
@@ -56,7 +85,7 @@ export const useChatContents = () => {
   return {
     chatContents,
     handleInfiniteScroll,
-    initialScrollPosRef,
+    scrollBottomRef,
     scrollRef,
   };
 };
