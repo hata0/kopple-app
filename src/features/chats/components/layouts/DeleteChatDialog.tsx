@@ -24,7 +24,7 @@ type Props = {
 };
 
 export const DeleteChatDialog = memo(({ id }: Props) => {
-  const { data: chatCards, mutate } = useSWR<ChatCard[]>(`/users/chats`);
+  const { data: chatCards, mutate } = useSWR<ChatCard[]>(`/chats`);
 
   const handleDeleteClick = async () => {
     const updatedChatCards = chatCards?.filter((chatCard) => {

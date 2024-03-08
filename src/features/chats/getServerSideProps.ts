@@ -7,12 +7,12 @@ import { fetcher } from "@/utils/fetcher";
 
 export type Props = {
   fallback: {
-    "/users/chats": ChatCard[];
+    "/chats": ChatCard[];
   };
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const { error, res } = await fetcher(`${BACKEND_URL}/users/chats`);
+  const { error, res } = await fetcher(`${BACKEND_URL}/chats`);
 
   if (error) {
     throw new Error();
@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
   return {
     props: {
       fallback: {
-        "/users/chats": chatCards,
+        "/chats": chatCards,
       },
     },
   };

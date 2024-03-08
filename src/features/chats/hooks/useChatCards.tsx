@@ -9,10 +9,10 @@ import { BACKEND_URL } from "@/constants/backendUrl";
 import { fetcher } from "@/utils/fetcher";
 
 export const useChatCards = () => {
-  const { data: chatCards, mutate } = useSWR<ChatCard[]>("/users/chats");
+  const { data: chatCards, mutate } = useSWR<ChatCard[]>("/chats");
 
   const getChatCards = useCallback(async () => {
-    const { error, res } = await fetcher(`${BACKEND_URL}/users/chats`);
+    const { error, res } = await fetcher(`${BACKEND_URL}/chats`);
 
     if (error) {
       toast({
