@@ -39,7 +39,7 @@ export const PortraitMenubar = memo(({ current }: Props) => {
 
     await mutate(
       async () => {
-        const { error } = await fetcher(`${BACKEND_URL}/user/like/${id}`, {
+        const { error } = await fetcher(`${BACKEND_URL}/likes/${id}`, {
           method: "PUT",
         });
 
