@@ -4,6 +4,7 @@ import { TailSpin } from "react-loader-spinner";
 
 import { useChatContents } from "../../hooks/useChatContents";
 
+import { DateBadge } from "./DateBadge";
 import { InterlocutorChatContent } from "./InterlocutorChatContent";
 import { MyChatContent } from "./MyChatContent";
 
@@ -19,18 +20,21 @@ export const ChatContents = () => {
       <ScrollAreaPrimitive.Viewport ref={scrollRef} className="h-full w-full rounded-[inherit]">
         <div className="flex flex-col-reverse space-y-10">
           <div ref={scrollBottomRef} aria-hidden />
-          {chatContents?.messages.map((message) => {
-            return message.isMyMessage ? (
-              <MyChatContent key={message.id} {...message} />
-            ) : (
-              <InterlocutorChatContent
-                key={message.id}
-                {...message}
-                imageUrl={chatContents.imageUrl}
-                name={chatContents.name}
-              />
-            );
-          })}
+          {chatContents?.messages.map((message) => (
+            <>
+              {message.isMyMessage ? (
+                <MyChatContent key={message.id} {...message} />
+              ) : (
+                <InterlocutorChatContent
+                  key={message.id}
+                  {...message}
+                  imageUrl={chatContents.imageUrl}
+                  name={chatContents.name}
+                />
+              )}
+              <DateBadge date={message.createdAt} />
+            </>
+          ))}
           <InView
             as="div"
             className="flex h-[60px] w-full items-center justify-center"
