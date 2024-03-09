@@ -20,7 +20,7 @@ export const useChatContents = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const scrollBottomRef = useRef<HTMLDivElement>(null);
 
-  // 初期スクロール位置をスクロール最下部にする
+  // 初期スクロール位置をスクロール最下部にし、高さの初期値を設定
   useEffect(() => {
     if (scrollBottomRef.current) {
       scrollBottomRef.current.scrollIntoView();

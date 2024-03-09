@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import useSWR from "swr";
 import { z } from "zod";
@@ -20,62 +21,89 @@ export const useChatForm = () => {
   const router = useRouter();
   const id = router.query.id as string;
   const { data: chatContents, mutate } = useSWR<ChatContents>(`/chats/${id}`);
+  const [rows, setRows] = useState(0);
+  const messageHeightRef = useRef<HTMLTextAreaElement>(null);
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
       message: "",
     },
+    mode: "onChange",
     resolver: zodResolver(formSchema),
   });
+  const watchMessage = form.watch("message", "");
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const { message } = values;
+  useEffect(() => {
+    if (messageHeightRef.current) {
+      const rows = Math.floor(messageHeightRef.current.scrollHeight / 20);
+      setRows(rows);
+    }
+  }, [watchMessage]);
 
-    await mutate(
-      async () => {
-        const { error, res } = await fetcher<CreateMessageRequest>(
-          `${BACKEND_URL}/messages/create/${id}`,
-          {
-            body: {
-              message,
-            },
-            method: "POST",
-          },
-        );
+  const onSubmit = useCallback(
+    async (values: z.infer<typeof formSchema>) => {
+      const { message } = values;
+      form.reset();
 
-        if (error) {
-          toast({
-            title: "メッセージの送信に失敗しました。",
-            variant: "destructive",
-          });
-          throw new Error();
-        } else {
-          const additionalMessage = (await res?.json()) as Message;
-          return {
-            ...chatContents!,
-            messages: [additionalMessage, ...chatContents!.messages],
-          };
-        }
-      },
-      {
-        optimisticData: {
-          ...chatContents!,
-          messages: [
+      await mutate(
+        async () => {
+          const { error, res } = await fetcher<CreateMessageRequest>(
+            `${BACKEND_URL}/messages/create/${id}`,
             {
-              createdAt: new Date(),
-              id: crypto.randomUUID(),
-              isMyMessage: true,
-              message,
+              body: {
+                message,
+              },
+              method: "POST",
             },
-            ...chatContents!.messages,
-          ],
+          );
+
+          if (error) {
+            toast({
+              title: "メッセージの送信に失敗しました。",
+              variant: "destructive",
+            });
+            throw new Error();
+          } else {
+            const additionalMessage = (await res?.json()) as Message;
+            return {
+              ...chatContents!,
+              messages: [additionalMessage, ...chatContents!.messages],
+            };
+          }
         },
-        rollbackOnError: true,
-      },
-    );
-  };
+        {
+          optimisticData: {
+            ...chatContents!,
+            messages: [
+              {
+                createdAt: new Date(),
+                id: crypto.randomUUID(),
+                isMyMessage: true,
+                message,
+              },
+              ...chatContents!.messages,
+            ],
+          },
+          rollbackOnError: true,
+        },
+      );
+    },
+    [chatContents, form, id, mutate],
+  );
+
+  const handleKeyDown = useCallback(
+    async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+        await form.handleSubmit(onSubmit)(e);
+      }
+    },
+    [form, onSubmit],
+  );
 
   return {
     form,
+    handleKeyDown,
+    messageHeightRef,
     onSubmit,
+    rows,
   };
 };
