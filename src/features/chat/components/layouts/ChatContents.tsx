@@ -1,4 +1,5 @@
 import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
+import { Fragment } from "react";
 import { InView } from "react-intersection-observer";
 import { TailSpin } from "react-loader-spinner";
 
@@ -21,19 +22,18 @@ export const ChatContents = () => {
         <div className="flex flex-col-reverse space-y-10 p-4">
           <div ref={scrollBottomRef} aria-hidden />
           {chatContents?.messages.map((message) => (
-            <>
+            <Fragment key={message.id}>
               {message.isMyMessage ? (
-                <MyChatContent key={message.id} {...message} />
+                <MyChatContent {...message} />
               ) : (
                 <InterlocutorChatContent
-                  key={message.id}
                   {...message}
                   imageUrl={chatContents.imageUrl}
                   name={chatContents.name}
                 />
               )}
               <DateBadge date={message.createdAt} />
-            </>
+            </Fragment>
           ))}
           <InView
             as="div"
