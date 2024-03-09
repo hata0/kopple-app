@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { InView } from "react-intersection-observer";
 import { TailSpin } from "react-loader-spinner";
 
@@ -21,9 +20,7 @@ export const ChatCards = () => {
   return (
     <div>
       {chatCards!.map((chatCard) => (
-        <Link key={chatCard.id} href={`/chat/${chatCard.id}`}>
-          <ChatCard {...chatCard} />
-        </Link>
+        <ChatCard key={chatCard.id} {...chatCard} />
       ))}
       <InView
         as="div"
