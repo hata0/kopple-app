@@ -11,7 +11,7 @@ import { Message } from "../types/Message";
 
 import { toast } from "@/components/ui/use-toast";
 import { BACKEND_URL } from "@/constants/backendUrl";
-import { fetcher } from "@/utils/fetcher";
+import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
 const formSchema = z.object({
   message: z.string().min(1),
@@ -46,7 +46,7 @@ export const useChatForm = () => {
 
       await mutate(
         async () => {
-          const { error, res } = await fetcher<CreateMessageRequest>(
+          const { error, res } = await fetcherWithAuth<CreateMessageRequest>(
             `${BACKEND_URL}/messages/create/${id}`,
             {
               body: {
@@ -62,6 +62,11 @@ export const useChatForm = () => {
               variant: "destructive",
             });
             throw new Error();
+          } else if (res?.status === 401) {
+            toast({
+              title: "認証に失敗しました。",
+              variant: "destructive",
+            });
           } else {
             const additionalMessage = (await res?.json()) as Message;
             return {

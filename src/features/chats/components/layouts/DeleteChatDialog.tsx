@@ -17,7 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { BACKEND_URL } from "@/constants/backendUrl";
-import { fetcher } from "@/utils/fetcher";
+import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
 type Props = {
   id: string;
@@ -33,7 +33,7 @@ export const DeleteChatDialog = memo(({ id }: Props) => {
 
     await mutate(
       async () => {
-        const { error } = await fetcher(`${BACKEND_URL}/chats/${id}`, {
+        const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/chats/${id}`, {
           method: "DELETE",
         });
 
@@ -43,6 +43,11 @@ export const DeleteChatDialog = memo(({ id }: Props) => {
             variant: "destructive",
           });
           throw new Error();
+        } else if (res?.status === 401) {
+          toast({
+            title: "認証に失敗しました。",
+            variant: "destructive",
+          });
         }
 
         return updatedChatCards;

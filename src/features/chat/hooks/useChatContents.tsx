@@ -8,7 +8,7 @@ import { Message } from "../types/Message";
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
 import { BACKEND_URL } from "@/constants/backendUrl";
-import { fetcher } from "@/utils/fetcher";
+import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
 export const useChatContents = () => {
   const router = useRouter();
@@ -62,7 +62,7 @@ export const useChatContents = () => {
   };
 
   const getChatContents = useCallback(async () => {
-    const { error, res } = await fetcher(`${BACKEND_URL}/chats/${id}`);
+    const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/chats/${id}`);
 
     if (error) {
       toast({
@@ -72,6 +72,11 @@ export const useChatContents = () => {
           </ToastAction>
         ),
         title: "追加のデータ取得に失敗しました",
+        variant: "destructive",
+      });
+    } else if (res?.status === 401) {
+      toast({
+        title: "認証に失敗しました。",
         variant: "destructive",
       });
     } else {

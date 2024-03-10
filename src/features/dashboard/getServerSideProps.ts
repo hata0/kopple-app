@@ -18,9 +18,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
 
   if (error) {
     throw new Error();
-  }
-
-  if (!res?.ok) {
+  } else if (!res?.ok) {
     return { props: { error: new HttpError(res!).serialize() } };
   }
 

@@ -6,13 +6,13 @@ import { ChatCard } from "../types/ChatCard";
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
 import { BACKEND_URL } from "@/constants/backendUrl";
-import { fetcher } from "@/utils/fetcher";
+import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
 export const useChatCards = () => {
   const { data: chatCards, mutate } = useSWR<ChatCard[]>("/chats");
 
   const getChatCards = useCallback(async () => {
-    const { error, res } = await fetcher(`${BACKEND_URL}/chats`);
+    const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/chats`);
 
     if (error) {
       toast({
@@ -22,6 +22,11 @@ export const useChatCards = () => {
           </ToastAction>
         ),
         title: "追加のデータ取得に失敗しました",
+        variant: "destructive",
+      });
+    } else if (res?.status === 401) {
+      toast({
+        title: "認証に失敗しました。",
         variant: "destructive",
       });
     } else {

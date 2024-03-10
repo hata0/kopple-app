@@ -12,7 +12,7 @@ import { CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { ToggleIconButton } from "@/components/ui/case/ToggleIconButton";
 import { toast } from "@/components/ui/use-toast";
 import { BACKEND_URL } from "@/constants/backendUrl";
-import { fetcher } from "@/utils/fetcher";
+import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
 type Props = {
   current: number;
@@ -39,7 +39,7 @@ export const PortraitMenubar = memo(({ current }: Props) => {
 
     await mutate(
       async () => {
-        const { error } = await fetcher(`${BACKEND_URL}/likes/${id}`, {
+        const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/likes/${id}`, {
           method: "PUT",
         });
 
@@ -49,6 +49,11 @@ export const PortraitMenubar = memo(({ current }: Props) => {
             variant: "destructive",
           });
           throw new Error();
+        } else if (res?.status === 401) {
+          toast({
+            title: "認証に失敗しました。",
+            variant: "destructive",
+          });
         }
 
         return updatedUsers;

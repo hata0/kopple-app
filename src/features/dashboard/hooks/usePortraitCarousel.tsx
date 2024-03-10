@@ -7,7 +7,7 @@ import { CarouselApi } from "@/components/ui/carousel";
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
 import { BACKEND_URL } from "@/constants/backendUrl";
-import { fetcher } from "@/utils/fetcher";
+import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
 export const usePortraitCarousel = () => {
   const { data: portraitCards, mutate } = useSWR<PortraitCard[]>("/portraits");
@@ -25,12 +25,9 @@ export const usePortraitCarousel = () => {
       const func = async () => {
         if (!api.canScrollNext()) {
           const recursion = async () => {
-            const { error, res } = await fetcher(`${BACKEND_URL}/portraits`);
+            const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/portraits`);
 
-            if (!error) {
-              const additionalPortraitCards = (await res?.json()) as PortraitCard[];
-              await mutate([...portraitCards!, ...additionalPortraitCards], false);
-            } else {
+            if (error) {
               toast({
                 action: (
                   <ToastAction altText="再取得" onClick={() => void recursion()}>
@@ -40,6 +37,14 @@ export const usePortraitCarousel = () => {
                 title: "追加のデータ取得に失敗しました。",
                 variant: "destructive",
               });
+            } else if (res?.status === 401) {
+              toast({
+                title: "認証に失敗しました。",
+                variant: "destructive",
+              });
+            } else {
+              const additionalPortraitCards = (await res?.json()) as PortraitCard[];
+              await mutate([...portraitCards!, ...additionalPortraitCards], false);
             }
           };
           await recursion();
