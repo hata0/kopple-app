@@ -1,14 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Account } from "../types/SignUp";
-
 import { toast } from "@/components/ui/use-toast";
-import { BACKEND_URL } from "@/constants/backendUrl";
-import { fetcher } from "@/utils/fetcher";
+import { auth } from "@/lib/firebase/auth";
 
 const formSchema = z
   .object({
@@ -48,22 +46,14 @@ export const useSignUpForm = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const { email, password } = values;
 
-    const { error } = await fetcher<Account>(`${BACKEND_URL}/sign-up`, {
-      body: {
-        email,
-        password,
-      },
-      method: "POST",
-    });
-
-    if (error) {
-      setErrorMessage("新規登録に失敗しました。もう一度入力してください。");
-    } else {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
       toast({
         title: "新規登録に成功しました。",
       });
-
       await router.push("/dashboard");
+    } catch (e) {
+      setErrorMessage("新規登録に失敗しました。もう一度入力してください。");
     }
   };
 
