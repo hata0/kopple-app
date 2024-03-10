@@ -1,14 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Account } from "../types/SignIn";
-
 import { toast } from "@/components/ui/use-toast";
-import { BACKEND_URL } from "@/constants/backendUrl";
-import { fetcher } from "@/utils/fetcher";
+import { auth } from "@/lib/firebase/auth";
 
 const formSchema = z.object({
   email: z.string().email("メールアドレスの形式が不正です。"),
@@ -30,22 +28,14 @@ export const useSignInForm = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const { email, password } = values;
 
-    const { error, res } = await fetcher<Account>(`${BACKEND_URL}/sign-in`, {
-      body: {
-        email,
-        password,
-      },
-      method: "POST",
-    });
-
-    if (error || !res?.ok) {
-      setErrorMessage("認証に失敗しました。もう一度入力してください。");
-    } else {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
       toast({
         title: "ログインに成功しました",
       });
-
       await router.push("/dashboard");
+    } catch (e) {
+      setErrorMessage("認証に失敗しました。もう一度入力してください。");
     }
   };
 

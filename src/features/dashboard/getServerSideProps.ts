@@ -3,19 +3,25 @@ import { GetServerSideProps } from "next";
 import { PortraitCard } from "./types/PortraitCard";
 
 import { BACKEND_URL } from "@/constants/backendUrl";
-import { fetcher } from "@/utils/fetcher";
+import { HttpError, HttpErrorObject } from "@/utils/HttpError";
+import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
 export type Props = {
-  fallback: {
+  fallback?: {
     "/portraits": PortraitCard[];
   };
+  error?: HttpErrorObject;
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const { error, res } = await fetcher(`${BACKEND_URL}/portraits`);
+  const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/portraits`);
 
   if (error) {
     throw new Error();
+  }
+
+  if (!res?.ok) {
+    return { props: { error: new HttpError(res!).serialize() } };
   }
 
   const portraits = (await res?.json()) as PortraitCard[];
