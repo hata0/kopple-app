@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { toast } from "@/components/ui/use-toast";
-import { auth } from "@/lib/firebase/auth";
+import { firebaseClient } from "@/lib/firebase/client";
 
 const formSchema = z
   .object({
@@ -47,7 +47,7 @@ export const useSignUpForm = () => {
     const { email, password } = values;
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(firebaseClient, email, password);
       toast({
         title: "新規登録に成功しました。",
       });

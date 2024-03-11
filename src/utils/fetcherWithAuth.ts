@@ -1,6 +1,6 @@
 import { Init } from "./fetcher";
 
-import { auth } from "@/lib/firebase/auth";
+import { firebaseClient } from "@/lib/firebase/client";
 
 export const fetcherWithAuth = async <T extends object>(
   input: RequestInfo | URL,
@@ -9,7 +9,7 @@ export const fetcherWithAuth = async <T extends object>(
   let res;
   let error;
 
-  const idToken = await auth.currentUser?.getIdToken();
+  const idToken = await firebaseClient.currentUser?.getIdToken();
 
   try {
     res = await fetch(input, {

@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { toast } from "@/components/ui/use-toast";
-import { auth } from "@/lib/firebase/auth";
+import { firebaseClient } from "@/lib/firebase/client";
 
 const formSchema = z.object({
   email: z.string().email("メールアドレスの形式が不正です。"),
@@ -29,7 +29,7 @@ export const useSignInForm = () => {
     const { email, password } = values;
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(firebaseClient, email, password);
       toast({
         title: "ログインに成功しました",
       });
