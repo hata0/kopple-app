@@ -51,7 +51,7 @@ export const PortraitMenubar = memo(({ current }: Props) => {
           throw new Error();
         } else if (res?.status === 401) {
           toast({
-            title: "認証に失敗しました。",
+            title: "ログインできていません",
             variant: "destructive",
           });
         }
