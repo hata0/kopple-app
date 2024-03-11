@@ -6,7 +6,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { toast } from "@/components/ui/use-toast";
+import { API_ROUTE_URL } from "@/constants/apiRouteUrl";
 import { firebaseClient } from "@/lib/firebase/client";
+import { fetcher } from "@/utils/fetcher";
 
 const formSchema = z.object({
   email: z.string().email("メールアドレスの形式が不正です。"),
@@ -29,11 +31,22 @@ export const useSignInForm = () => {
     const { email, password } = values;
 
     try {
-      await signInWithEmailAndPassword(firebaseClient, email, password);
-      toast({
-        title: "ログインに成功しました",
+      const credential = await signInWithEmailAndPassword(firebaseClient, email, password);
+      const idToken = await credential.user.getIdToken();
+      const { error, res } = await fetcher(`${API_ROUTE_URL}/session`, {
+        headers: {
+          Authorization: idToken ? `Bearer ${idToken}` : "",
+        },
       });
-      await router.push("/dashboard");
+
+      if (error || !res?.ok) {
+        setErrorMessage("認証に失敗しました。もう一度入力してください。");
+      } else {
+        toast({
+          title: "ログインに成功しました",
+        });
+        await router.push("/dashboard");
+      }
     } catch (e) {
       setErrorMessage("認証に失敗しました。もう一度入力してください。");
     }

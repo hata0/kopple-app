@@ -13,9 +13,9 @@ export type Props = {
   error?: HttpErrorObject;
 };
 
-export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {
-  const id = params!.id as string;
-  const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/chats/${id}`);
+export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
+  const id = ctx.params!.id as string;
+  const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/chats/${id}`, ctx);
 
   if (error) {
     throw new Error();

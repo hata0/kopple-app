@@ -33,7 +33,7 @@ export const DeleteChatDialog = memo(({ id }: Props) => {
 
     await mutate(
       async () => {
-        const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/chats/${id}`, {
+        const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/chats/${id}`, undefined, {
           method: "DELETE",
         });
 

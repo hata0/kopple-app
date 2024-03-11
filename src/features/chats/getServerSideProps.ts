@@ -13,8 +13,8 @@ export type Props = {
   error?: HttpErrorObject;
 };
 
-export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/chats`);
+export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
+  const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/chats`, ctx);
 
   if (error) {
     throw new Error();

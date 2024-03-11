@@ -48,6 +48,7 @@ export const useChatForm = () => {
         async () => {
           const { error, res } = await fetcherWithAuth<CreateMessageRequest>(
             `${BACKEND_URL}/messages/create/${id}`,
+            undefined,
             {
               body: {
                 message,

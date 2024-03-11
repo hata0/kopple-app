@@ -1,22 +1,33 @@
-import { Init } from "./fetcher";
+import { ParsedUrlQuery } from "querystring";
 
-import { firebaseClient } from "@/lib/firebase/client";
+import { GetServerSidePropsContext, PreviewData } from "next";
+import nookies, { parseCookies } from "nookies";
+
+import { Init } from "./fetcher";
 
 export const fetcherWithAuth = async <T extends object>(
   input: RequestInfo | URL,
+  ctx?: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>,
   { body, headers, ...restInit }: Init<T> = {},
 ) => {
   let res;
   let error;
+  let cookies;
 
-  const idToken = await firebaseClient.currentUser?.getIdToken();
+  if (ctx) {
+    cookies = nookies.get(ctx);
+  } else {
+    cookies = parseCookies();
+  }
+
+  const session = cookies.session as string | undefined;
 
   try {
     res = await fetch(input, {
       ...restInit,
       body: body && JSON.stringify(body),
       headers: {
-        Authorization: idToken ? `Bearer ${idToken}` : "",
+        Authorization: session ? `Bearer ${session}` : "",
         "Content-Type": "application/json",
         ...headers,
       },
