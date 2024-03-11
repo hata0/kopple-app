@@ -6,13 +6,13 @@ import { ProfileContent } from "../types/ProfileContent";
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
 import { BACKEND_URL } from "@/constants/backendUrl";
-import { fetcher } from "@/utils/fetcher";
+import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
-export const useProfile = (current: number) => {
-  const { data: profileContent, mutate } = useSWR<ProfileContent>(`/user/profile/${current}`);
+export const useProfile = (id: string) => {
+  const { data: profileContent, mutate } = useSWR<ProfileContent>(`/profiles/${id}`);
 
   const fetchProfile = useCallback(async () => {
-    const { error, res } = await fetcher(`${BACKEND_URL}/user/profile/${current}`);
+    const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/profiles/${id}`);
 
     if (error) {
       toast({
@@ -24,11 +24,16 @@ export const useProfile = (current: number) => {
         title: "プロフィールデータの取得に失敗しました。",
         variant: "destructive",
       });
+    } else if (res?.status === 401) {
+      toast({
+        title: "ログインできていません",
+        variant: "destructive",
+      });
     } else {
       const data = (await res?.json()) as ProfileContent;
-      await mutate(data);
+      await mutate(data, false);
     }
-  }, [current, mutate]);
+  }, [id, mutate]);
 
   return { fetchProfile, profileContent };
 };

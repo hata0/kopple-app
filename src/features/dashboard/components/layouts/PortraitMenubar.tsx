@@ -1,36 +1,45 @@
 import { memo } from "react";
 import { AiFillLike } from "react-icons/ai";
+import { ImProfile } from "react-icons/im";
 import useSWR from "swr";
 
-import { Users } from "../../types/Users";
+import { PortraitCard } from "../../types/PortraitCard";
 
 import { ProfileDrawer } from "./ProfileDrawer";
 
+import { Button } from "@/components/ui/button";
 import { CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { ToggleIconButton } from "@/components/ui/case/ToggleIconButton";
 import { toast } from "@/components/ui/use-toast";
 import { BACKEND_URL } from "@/constants/backendUrl";
-import { fetcher } from "@/utils/fetcher";
+import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
 type Props = {
   current: number;
 };
 
 export const PortraitMenubar = memo(({ current }: Props) => {
-  const { data: users, mutate } = useSWR<Users>("/users");
-  const isLike = users!.isLikes[current];
+  const { data: portraitCards, mutate } = useSWR<PortraitCard[]>("/portraits");
+  const isLike = portraitCards![current] ? portraitCards![current].isLike : false;
+  const id = portraitCards![current] ? portraitCards![current].id : undefined;
 
   const handleLikeClick = async () => {
-    const updatedUsers = {
-      ...users!,
-      isLikes: users!.isLikes.map((isLike, index) => {
-        return index === current ? !isLike : isLike;
-      }),
-    };
+    if (!id) {
+      return;
+    }
+
+    const updatedUsers = portraitCards?.map((portraitCard, index) => {
+      return index === current
+        ? {
+            ...portraitCard,
+            isLike: !isLike,
+          }
+        : portraitCard;
+    });
 
     await mutate(
       async () => {
-        const { error } = await fetcher(`${BACKEND_URL}/like/${current}`, {
+        const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/likes/${id}`, undefined, {
           method: "PUT",
         });
 
@@ -40,6 +49,11 @@ export const PortraitMenubar = memo(({ current }: Props) => {
             variant: "destructive",
           });
           throw new Error();
+        } else if (res?.status === 401) {
+          toast({
+            title: "ログインできていません",
+            variant: "destructive",
+          });
         }
 
         return updatedUsers;
@@ -60,7 +74,18 @@ export const PortraitMenubar = memo(({ current }: Props) => {
         onClick={() => void handleLikeClick()}
         render={(className) => <AiFillLike className={className} />}
       />
-      <ProfileDrawer current={current} />
+      {id ? (
+        <ProfileDrawer id={id} />
+      ) : (
+        <Button
+          aria-label="プロフィールを表示"
+          className="rounded-full"
+          size="icon"
+          variant="outline"
+        >
+          <ImProfile />
+        </Button>
+      )}
       <CarouselNext className="static bottom-auto left-auto h-10 w-10 translate-x-0" />
     </div>
   );

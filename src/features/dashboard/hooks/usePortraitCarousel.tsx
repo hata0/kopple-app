@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-// eslint-disable-next-line import/named
-import { KeyedMutator } from "swr";
+import useSWR from "swr";
 
-import { Users } from "../types/Users";
+import { PortraitCard } from "../types/PortraitCard";
 
 import { CarouselApi } from "@/components/ui/carousel";
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
 import { BACKEND_URL } from "@/constants/backendUrl";
-import { fetcher } from "@/utils/fetcher";
+import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
-export const usePortraitCarousel = (users: Users | undefined, mutate: KeyedMutator<Users>) => {
+export const usePortraitCarousel = () => {
+  const { data: portraitCards, mutate } = useSWR<PortraitCard[]>("/portraits");
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
 
@@ -25,18 +25,9 @@ export const usePortraitCarousel = (users: Users | undefined, mutate: KeyedMutat
       const func = async () => {
         if (!api.canScrollNext()) {
           const recursion = async () => {
-            const { error, res } = await fetcher(`${BACKEND_URL}/users`);
+            const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/portraits`);
 
-            if (!error) {
-              const additionalUsers = (await res?.json()) as Users;
-              await mutate(
-                {
-                  isLikes: [...users!.isLikes, ...additionalUsers.isLikes],
-                  portraitCards: [...users!.portraitCards, ...additionalUsers.portraitCards],
-                },
-                false,
-              );
-            } else {
+            if (error) {
               toast({
                 action: (
                   <ToastAction altText="再取得" onClick={() => void recursion()}>
@@ -46,6 +37,14 @@ export const usePortraitCarousel = (users: Users | undefined, mutate: KeyedMutat
                 title: "追加のデータ取得に失敗しました。",
                 variant: "destructive",
               });
+            } else if (res?.status === 401) {
+              toast({
+                title: "ログインできていません",
+                variant: "destructive",
+              });
+            } else {
+              const additionalPortraitCards = (await res?.json()) as PortraitCard[];
+              await mutate([...portraitCards!, ...additionalPortraitCards], false);
             }
           };
           await recursion();
@@ -53,10 +52,11 @@ export const usePortraitCarousel = (users: Users | undefined, mutate: KeyedMutat
       };
       api.on("settle", () => void func());
     }
-  }, [api, mutate, users]);
+  }, [api, mutate, portraitCards]);
 
   return {
     current,
+    portraitCards,
     setApi,
   };
 };

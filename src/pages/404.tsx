@@ -10,7 +10,7 @@ export default function Custom404() {
         <h2 className="text-4xl font-medium">ページが見つかりませんでした。</h2>
       </div>
       <Button asChild>
-        <Link href="/">ホームページへ</Link>
+        <Link href="/">トップページへ</Link>
       </Button>
     </div>
   );

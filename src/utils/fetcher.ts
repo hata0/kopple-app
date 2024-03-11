@@ -1,4 +1,4 @@
-type Init<T> = Omit<RequestInit, "body"> & {
+export type Init<T> = Omit<RequestInit, "body"> & {
   body?: T;
 };
 
