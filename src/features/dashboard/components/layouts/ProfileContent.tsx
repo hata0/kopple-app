@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { ProfileContent as Props } from "../../types/ProfileContent";
 
 export const ProfileContent = ({
@@ -16,7 +18,15 @@ export const ProfileContent = ({
       <div className="m-[10px] rounded-tl-[30px] rounded-tr-[30px] bg-[rgb(255,_242,_230)] pb-px">
         <header className="relative flex h-[100px] rounded-tl-[30px] rounded-tr-[30px] bg-[rgb(255,_229,_200)]">
           <div className="float-left mx-[15px] my-[auto]">
-            <img className="h-[80px]" src={imageUrl} />
+            <div className="relative h-20 w-20">
+              <Image
+                fill
+                alt="プロフィール画像"
+                className="object-contain"
+                sizes="20vw"
+                src={imageUrl}
+              />
+            </div>
           </div>
           <div className="float-left mb-[15px] mt-auto text-[40px]">{name}</div>
           <div className="absolute -top-[30px] right-[20px] my-[0] ml-[auto] mr-[0]">
