@@ -5,7 +5,7 @@ import { Button } from "../../ui/button";
 
 import { NavLinkButton } from "@/components/ui/domain/NavLinkButton";
 import { ThemeModeToggle } from "@/components/ui/domain/ThemeModeToggle";
-import { useIsHasSession } from "@/utils/useIsHasSession";
+import { useIsHasSession } from "@/hooks/useIsHasSession";
 
 export const PreLoginHeader = () => {
   const router = useRouter();
