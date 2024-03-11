@@ -1,82 +1,78 @@
 import Image from "next/image";
+import { memo } from "react";
 
 import { ProfileContent as Props } from "../../types/ProfileContent";
 
-export const ProfileContent = ({
-  address,
-  age,
-  birthday,
-  hashtag,
-  imageUrl,
-  last,
-  message,
-  name,
-  sex,
-}: Props) => {
-  return (
-    <div>
-      <div className="m-[10px] rounded-tl-[30px] rounded-tr-[30px] bg-[rgb(255,_242,_230)] pb-px">
-        <header className="relative flex h-[100px] rounded-tl-[30px] rounded-tr-[30px] bg-[rgb(255,_229,_200)]">
-          <div className="float-left mx-[15px] my-[auto]">
-            <div className="relative h-20 w-20">
-              <Image
-                fill
-                alt="プロフィール画像"
-                className="object-contain"
-                sizes="20vw"
-                src={imageUrl}
-              />
+export const ProfileContent = memo(
+  ({ address, age, birthday, hashtag, imageUrl, last, message, name, sex }: Props) => {
+    return (
+      <div>
+        <div className="m-[10px] rounded-tl-[30px] rounded-tr-[30px] bg-[rgb(255,_242,_230)] pb-px">
+          <header className="relative flex h-[100px] rounded-tl-[30px] rounded-tr-[30px] bg-[rgb(255,_229,_200)]">
+            <div className="float-left mx-[15px] my-[auto]">
+              <div className="relative h-20 w-20">
+                <Image
+                  fill
+                  alt="プロフィール画像"
+                  className="object-contain"
+                  sizes="20vw"
+                  src={imageUrl}
+                />
+              </div>
+            </div>
+            <div className="float-left mb-[15px] mt-auto text-[40px]">{name}</div>
+            <div className="absolute -top-[30px] right-[20px] my-[0] ml-[auto] mr-[0]">
+              <img className="h-[70px]" src="/portrait/arrow.png" />
+            </div>
+          </header>
+
+          <div className="relative m-[20px] mt-[1em] rounded-[5px] border-[1.5px] border-solid border-[rgb(131,99,64)] bg-[rgb(255,_229,_200)] [box-shadow:5px_5px_3px_rgba(247,_214,_182,_0.45)]">
+            <h3 className="absolute -top-[1em] left-[0] right-[0] ml-[0.8em] mt-[5px]">
+              <span className="inline-block rounded-[5px] bg-[#744a36] px-[.5em] py-[0] text-[#fff6f6]">
+                プロフィール
+              </span>
+            </h3>
+            <div className="px-[1.5em] pb-[.5em] pt-[1.2em]">
+              <p className="m-0">
+                {age}・{sex}
+              </p>
+              <p className="m-0">誕生日:{birthday}</p>
+              <p className="m-0">住所:{address}</p>
             </div>
           </div>
-          <div className="float-left mb-[15px] mt-auto text-[40px]">{name}</div>
-          <div className="absolute -top-[30px] right-[20px] my-[0] ml-[auto] mr-[0]">
-            <img className="h-[70px]" src="/portrait/arrow.png" />
+
+          <div className="relative m-[20px] mt-[1em] rounded-[5px] border-[1.5px] border-solid border-[rgb(131,99,64)] bg-[rgb(255,_229,_200)] [box-shadow:5px_5px_3px_rgba(247,_214,_182,_0.45)]">
+            <h3 className="absolute -top-[1em] left-[0] right-[0] ml-[0.8em] mt-[5px]">
+              <span className="inline-block rounded-[5px] bg-[#744a36] px-[.5em] py-[0] text-[#fff6f6]">
+                メッセージ
+              </span>
+            </h3>
+            <div className="px-[1.5em] pb-[.5em] pt-[1.2em]">{message}</div>
           </div>
-        </header>
 
-        <div className="relative m-[20px] mt-[1em] rounded-[5px] border-[1.5px] border-solid border-[rgb(131,99,64)] bg-[rgb(255,_229,_200)] [box-shadow:5px_5px_3px_rgba(247,_214,_182,_0.45)]">
-          <h3 className="absolute -top-[1em] left-[0] right-[0] ml-[0.8em] mt-[5px]">
-            <span className="inline-block rounded-[5px] bg-[#744a36] px-[.5em] py-[0] text-[#fff6f6]">
-              プロフィール
-            </span>
-          </h3>
-          <div className="px-[1.5em] pb-[.5em] pt-[1.2em]">
-            <p className="m-0">
-              {age}・{sex}
-            </p>
-            <p className="m-0">誕生日:{birthday}</p>
-            <p className="m-0">住所:{address}</p>
+          <div className=" relative  m-[20px]">
+            <h3 className="my-[5px] ml-[5px] mr-[0]">
+              <span className="">ハッシュタグ</span>
+            </h3>
+            <div className="py-[0] pl-[20px] pr-[0.5em] font-bold text-[#1877f2]">#{hashtag}</div>
           </div>
-        </div>
 
-        <div className="relative m-[20px] mt-[1em] rounded-[5px] border-[1.5px] border-solid border-[rgb(131,99,64)] bg-[rgb(255,_229,_200)] [box-shadow:5px_5px_3px_rgba(247,_214,_182,_0.45)]">
-          <h3 className="absolute -top-[1em] left-[0] right-[0] ml-[0.8em] mt-[5px]">
-            <span className="inline-block rounded-[5px] bg-[#744a36] px-[.5em] py-[0] text-[#fff6f6]">
-              メッセージ
-            </span>
-          </h3>
-          <div className="px-[1.5em] pb-[.5em] pt-[1.2em]">{message}</div>
-        </div>
-
-        <div className=" relative  m-[20px]">
-          <h3 className="my-[5px] ml-[5px] mr-[0]">
-            <span className="">ハッシュタグ</span>
-          </h3>
-          <div className="py-[0] pl-[20px] pr-[0.5em] font-bold text-[#1877f2]">#{hashtag}</div>
-        </div>
-
-        <div className="relative m-[20px] mt-[1em] rounded-[5px] border-[1.5px] border-solid border-[rgb(131,99,64)] bg-[rgb(255,_229,_200)] [box-shadow:5px_5px_3px_rgba(247,_214,_182,_0.45)]">
-          <h3 className="absolute -top-[1em] left-[0] right-[0] ml-[0.8em] mt-[5px]">
-            <span className="inline-block rounded-[5px] bg-[#744a36] px-[.5em] py-[0] text-[#fff6f6]">
-              最後に
-            </span>
-          </h3>
-          <div className="px-[1.5em] pb-[.5em] pt-[1.2em]">{last}</div>
+          <div className="relative m-[20px] mt-[1em] rounded-[5px] border-[1.5px] border-solid border-[rgb(131,99,64)] bg-[rgb(255,_229,_200)] [box-shadow:5px_5px_3px_rgba(247,_214,_182,_0.45)]">
+            <h3 className="absolute -top-[1em] left-[0] right-[0] ml-[0.8em] mt-[5px]">
+              <span className="inline-block rounded-[5px] bg-[#744a36] px-[.5em] py-[0] text-[#fff6f6]">
+                最後に
+              </span>
+            </h3>
+            <div className="px-[1.5em] pb-[.5em] pt-[1.2em]">{last}</div>
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  },
+);
+
+ProfileContent.displayName = "ProfileContent";
+
 // <div className="m-[10px] bg-[rgb(255,_242,_230)] rounded-tl-[30px] rounded-tr-[30px] pb-px">
 //   <header className="bg-[rgb(255,_229,_200)] rounded-tl-[30px] rounded-tr-[30px] flex h-[100px] relative">
 //     <div className="float-left mx-[15px] my-[auto]">
