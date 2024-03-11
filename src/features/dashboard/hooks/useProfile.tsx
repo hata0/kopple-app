@@ -1,16 +1,15 @@
 import { useCallback } from "react";
 import useSWR from "swr";
 
-import { Profile } from "../types/Profile";
+import { ProfileContent } from "../types/ProfileContent";
 
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
 import { BACKEND_URL } from "@/constants/backendUrl";
 import { fetcher } from "@/utils/fetcher";
-import { ProfileContent } from "../components/layouts/ProfileContent";
 
 export const useProfile = (current: number) => {
-  const { data: profile, mutate } = useSWR<Profile>(`/user/profile/${current}`);
+  const { data: profileContent, mutate } = useSWR<ProfileContent>(`/user/profile/${current}`);
 
   const fetchProfile = useCallback(async () => {
     const { error, res } = await fetcher(`${BACKEND_URL}/user/profile/${current}`);
@@ -26,10 +25,10 @@ export const useProfile = (current: number) => {
         variant: "destructive",
       });
     } else {
-      const data = (await res?.json()) as Profile;
+      const data = (await res?.json()) as ProfileContent;
       await mutate(data);
     }
   }, [current, mutate]);
 
-  return { fetchProfile, profile };
+  return { fetchProfile, profileContent };
 };

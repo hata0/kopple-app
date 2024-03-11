@@ -1,7 +1,3 @@
-export type Person = {
-  profiles: ProfileContent[];
-}
-
 export type ProfileContent = {
   age: number;
   hashtag: string;

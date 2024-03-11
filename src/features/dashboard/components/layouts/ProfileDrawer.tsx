@@ -14,7 +14,7 @@ type Props = {
 };
 
 export const ProfileDrawer = memo(({ current }: Props) => {
-  const { fetchProfile, profile } = useProfile(current);
+  const { fetchProfile, profileContent } = useProfile(current);
 
   return (
     <Drawer>
@@ -30,7 +30,7 @@ export const ProfileDrawer = memo(({ current }: Props) => {
         </Button>
       </DrawerTrigger>
       <DrawerContent>
-        {profile ? <ProfileContent {...profile} /> : <ProfileSkeleton />}
+        {profileContent ? <ProfileContent {...profileContent} /> : <ProfileSkeleton />}
       </DrawerContent>
     </Drawer>
   );
