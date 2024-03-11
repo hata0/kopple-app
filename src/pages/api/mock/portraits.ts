@@ -1,6 +1,6 @@
 import { NextApiHandler } from "next";
 
-import { portraitCards } from "@/mocks/portraits";
+import { portraitCards } from "@/mocks/portraitCards";
 import { delay } from "@/utils/delay";
 
 const handler: NextApiHandler = async (req, res) => {
