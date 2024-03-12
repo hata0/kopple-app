@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next";
+import nookies from "nookies";
 
 import { ProfileContent } from "../dashboard/types/ProfileContent";
 
@@ -12,8 +13,8 @@ export type Props = {
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
-  // TODO: クッキーにuidをもたせて与える
-  const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/profiles/uid`, ctx);
+  const cookies = nookies.get(ctx);
+  const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/profiles/${cookies.uid}`, ctx);
 
   if (error) {
     throw new Error();
