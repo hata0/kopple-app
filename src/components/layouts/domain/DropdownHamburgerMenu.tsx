@@ -1,5 +1,7 @@
 import { LogOut } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import { memo } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 import { Button } from "@/components/ui/button";
@@ -15,7 +17,7 @@ import { toast } from "@/components/ui/use-toast";
 import { API_ROUTE_URL } from "@/constants/apiRouteUrl";
 import { fetcher } from "@/utils/fetcher";
 
-export const DropdownHamburgerMenu = () => {
+export const DropdownHamburgerMenu = memo(() => {
   const router = useRouter();
 
   const handleLogoutSelect = async () => {
@@ -46,6 +48,9 @@ export const DropdownHamburgerMenu = () => {
       <DropdownMenuContent>
         <DropdownMenuLabel>設定</DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href="/profile">プロフィールを編集</Link>
+        </DropdownMenuItem>
         <DropdownMenuItem onSelect={() => void handleLogoutSelect()}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>ログアウト</span>
@@ -53,4 +58,6 @@ export const DropdownHamburgerMenu = () => {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-};
+});
+
+DropdownHamburgerMenu.displayName = "DropdownHamburgerMenu";

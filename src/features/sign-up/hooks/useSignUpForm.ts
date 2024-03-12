@@ -7,8 +7,10 @@ import { z } from "zod";
 
 import { toast } from "@/components/ui/use-toast";
 import { API_ROUTE_URL } from "@/constants/apiRouteUrl";
+import { BACKEND_URL } from "@/constants/backendUrl";
 import { firebaseClient } from "@/lib/firebase/client";
 import { fetcher } from "@/utils/fetcher";
+import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
 const formSchema = z
   .object({
@@ -50,22 +52,38 @@ export const useSignUpForm = () => {
 
     try {
       const credential = await createUserWithEmailAndPassword(firebaseClient, email, password);
-      const idToken = await credential.user.getIdToken();
+      const user = credential.user;
+      const idToken = await user.getIdToken();
 
-      const { error, res } = await fetcher(`${API_ROUTE_URL}/session`, {
+      const getSessionCookieRes = await fetcher(`${API_ROUTE_URL}/session`, {
         headers: {
           Authorization: idToken ? `Bearer ${idToken}` : "",
         },
       });
 
-      if (error || !res?.ok) {
+      if (getSessionCookieRes.error || !getSessionCookieRes.res?.ok) {
         setErrorMessage("認証に失敗しました。もう一度入力してください。");
-      } else {
-        toast({
-          title: "ログインに成功しました",
-        });
-        await router.push("/dashboard");
+        return;
       }
+
+      const createUserRes = await fetcherWithAuth(`${BACKEND_URL}/user`, undefined, {
+        body: {
+          email: user.email,
+          id: user.uid,
+        },
+        method: "POST",
+      });
+
+      if (createUserRes.error || !createUserRes.res?.ok) {
+        console.log("バッグエンドでエラー");
+        setErrorMessage("認証に失敗しました。もう一度入力してください。");
+        return;
+      }
+
+      toast({
+        title: "ログインに成功しました",
+      });
+      await router.push("/dashboard");
     } catch (e) {
       setErrorMessage("新規登録に失敗しました。もう一度入力してください。");
     }
