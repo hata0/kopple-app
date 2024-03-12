@@ -13,16 +13,23 @@ export const PostLoginHeader = () => {
   const pathname = router.pathname;
 
   return (
-    <header aria-label="ヘッダー" className="flex">
-      <Button asChild variant="ghost">
-        <Link href="/dashboard">My App</Link>
-      </Button>
-      <NavLinkButton href="/chats" pathname={pathname}>
-        <IoChatboxEllipses />
-        <span>チャットリスト</span>
-      </NavLinkButton>
-      <ThemeModeToggle />
-      <DropdownHamburgerMenu />
-    </header>
+    <div className="m-2 bg-background/80">
+      <header
+        aria-label="ヘッダー"
+        className="flex w-full items-center justify-center space-x-3 rounded border-2 border-primary p-2 pr-8"
+      >
+        <div className="mr-auto flex items-center justify-center">
+          <Button asChild className="font-sans text-lg font-black" variant="ghost">
+            <Link href="/dashboard">Kopple</Link>
+          </Button>
+          <NavLinkButton href="/chats" pathname={pathname}>
+            <IoChatboxEllipses />
+            <span>チャットリスト</span>
+          </NavLinkButton>
+        </div>
+        <ThemeModeToggle />
+        <DropdownHamburgerMenu />
+      </header>
+    </div>
   );
 };
