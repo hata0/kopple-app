@@ -72,6 +72,14 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        slide: {
+          "0%": {
+            transform: "translateX(-25%)",
+          },
+          "100%": {
+            transform: "translateX(25%)",
+          },
+        },
       },
     },
   },
