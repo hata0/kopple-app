@@ -11,12 +11,29 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { toast } from "@/components/ui/use-toast";
+import { API_ROUTE_URL } from "@/constants/apiRouteUrl";
+import { fetcher } from "@/utils/fetcher";
 
 export const DropdownHamburgerMenu = () => {
   const router = useRouter();
 
   const handleLogoutSelect = async () => {
-    await router.push("/");
+    const { error, res } = await fetcher(`${API_ROUTE_URL}/session`, {
+      method: "DELETE",
+    });
+
+    if (error || !res?.ok) {
+      toast({
+        title: "ログアウトに失敗しました。",
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "ログアウトしました。",
+      });
+      await router.push("/");
+    }
   };
 
   return (

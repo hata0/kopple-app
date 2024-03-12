@@ -1,6 +1,6 @@
 import { NextApiHandler } from "next";
 import { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
-import { setCookie } from "nookies";
+import { destroyCookie, parseCookies, setCookie } from "nookies";
 
 import { firebaseAdmin } from "@/lib/firebase/admin";
 
@@ -30,6 +30,27 @@ const handler: NextApiHandler = async (req, res) => {
       } catch (e) {
         res.status(401).send({
           error: "セッションの作成に失敗しました。",
+        });
+      }
+      break;
+    case "DELETE":
+      try {
+        const auth = firebaseAdmin.auth();
+        const session = parseCookies({ req }).session ?? "";
+        console.log(session);
+        const decodedIdToken = await auth.verifySessionCookie(session);
+
+        if (decodedIdToken) {
+          await auth.revokeRefreshTokens(decodedIdToken.sub);
+        }
+
+        destroyCookie({ res }, "session", { path: "/" });
+        res.status(200).send({
+          message: "セッションの削除に成功しました。",
+        });
+      } catch (e) {
+        res.status(401).send({
+          error: "セッションの削除に失敗しました",
         });
       }
       break;
