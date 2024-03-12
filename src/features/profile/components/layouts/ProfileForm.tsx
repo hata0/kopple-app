@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { ProfileContent } from "@/features/dashboard/types/ProfileContent";
 
 const formSchema = z.object({
   address: z.string(),
@@ -35,18 +36,18 @@ const formSchema = z.object({
 
 export type FormFieldValue = z.infer<typeof formSchema>;
 
-export const ProfileForm = () => {
+export const ProfileForm = ({ address, age, hashtag, message, name, sex }: ProfileContent) => {
   const headingId = useId();
   const form = useForm<FormFieldValue>({
     defaultValues: {
-      address: "",
-      age: 18,
+      address,
+      age,
       birthday: undefined,
-      hashtag: "",
+      hashtag,
       hobby: "",
-      message: "",
-      name: "nu",
-      sex: "man",
+      message,
+      name,
+      sex,
     },
   });
 
