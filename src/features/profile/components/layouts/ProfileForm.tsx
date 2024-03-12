@@ -61,8 +61,22 @@ export const ProfileForm = ({
     },
   });
 
-  const [currentHashtags, setCurrentHashtags] = useState<Tag[]>([]);
-  const [currentHobbies, setCurrentHobbies] = useState<Tag[]>([]);
+  const [currentHashtags, setCurrentHashtags] = useState<Tag[]>(
+    hashtags.map((hashtag) => {
+      return {
+        id: crypto.randomUUID(),
+        text: hashtag,
+      };
+    }),
+  );
+  const [currentHobbies, setCurrentHobbies] = useState<Tag[]>(
+    hobbies.map((hobby) => {
+      return {
+        id: crypto.randomUUID(),
+        text: hobby,
+      };
+    }),
+  );
 
   const onSubmit = (values: FormFieldValue) => {
     console.log(values);
