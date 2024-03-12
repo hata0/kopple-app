@@ -27,8 +27,8 @@ const formSchema = z.object({
     .nonnegative("年齢を入力してください。")
     .max(130, "年齢を入力してください。"),
   birthday: z.date().optional(),
-  hashtag: z.string(),
-  hobby: z.coerce.string(),
+  hashtag: z.array(z.string()),
+  hobby: z.array(z.string()),
   message: z.string(),
   name: z.string().min(1, "名前を入力してください。"),
   sex: z.string(),
@@ -36,15 +36,24 @@ const formSchema = z.object({
 
 export type FormFieldValue = z.infer<typeof formSchema>;
 
-export const ProfileForm = ({ address, age, hashtag, message, name, sex }: ProfileContent) => {
+export const ProfileForm = ({
+  address,
+  age,
+  birthday,
+  hashtag,
+  hobby,
+  message,
+  name,
+  sex,
+}: ProfileContent) => {
   const headingId = useId();
   const form = useForm<FormFieldValue>({
     defaultValues: {
       address,
       age,
-      birthday: undefined,
+      birthday: birthday === null ? undefined : birthday,
       hashtag,
-      hobby: "",
+      hobby,
       message,
       name,
       sex,
