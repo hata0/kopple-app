@@ -1,10 +1,13 @@
+import { format } from "date-fns";
 import Image from "next/image";
 import { memo } from "react";
 
 import { ProfileContent as Props } from "../../types/ProfileContent";
 
+import { Badge } from "@/components/ui/badge";
+
 export const ProfileContent = memo(
-  ({ address, age, birthday, hashtag, imageUrl, last, message, name, sex }: Props) => {
+  ({ address, age, birthday, hashtags, hobbies, imageUrl, message, name, sex }: Props) => {
     return (
       <div>
         <div className="m-[10px] rounded-tl-[30px] rounded-tr-[30px] bg-[rgb(255,_242,_230)] pb-px">
@@ -21,9 +24,6 @@ export const ProfileContent = memo(
               </div>
             </div>
             <div className="float-left mb-[15px] mt-auto text-[40px]">{name}</div>
-            <div className="absolute -top-[30px] right-[20px] my-[0] ml-[auto] mr-[0]">
-              <img className="h-[70px]" src="/portrait/arrow.png" />
-            </div>
           </header>
 
           <div className="relative m-[20px] mt-[1em] rounded-[5px] border-[1.5px] border-solid border-[rgb(131,99,64)] bg-[rgb(255,_229,_200)] [box-shadow:5px_5px_3px_rgba(247,_214,_182,_0.45)]">
@@ -36,8 +36,8 @@ export const ProfileContent = memo(
               <p className="m-0">
                 {age}・{sex}
               </p>
-              <p className="m-0">誕生日:{birthday}</p>
-              <p className="m-0">住所:{address}</p>
+              <p className="m-0">誕生日:{birthday ? format(birthday, "M月d日") : "未設定"}</p>
+              <p className="m-0">住所:{address !== "" ? address : "未設定"}</p>
             </div>
           </div>
 
@@ -47,23 +47,45 @@ export const ProfileContent = memo(
                 メッセージ
               </span>
             </h3>
-            <div className="px-[1.5em] pb-[.5em] pt-[1.2em]">{message}</div>
+            <div className="px-[1.5em] pb-[.5em] pt-[1.2em]">
+              {message !== "" ? message : "未設定"}
+            </div>
           </div>
 
           <div className=" relative  m-[20px]">
             <h3 className="my-[5px] ml-[5px] mr-[0]">
               <span className="">ハッシュタグ</span>
             </h3>
-            <div className="py-[0] pl-[20px] pr-[0.5em] font-bold text-[#1877f2]">#{hashtag}</div>
+            <div className="flex">
+              {hashtags.length !== 0 ? (
+                hashtags.map((hashtag, index) => (
+                  <div key={index} className="py-[0] pl-[20px] pr-[0.5em] font-bold text-[#1877f2]">
+                    #{hashtag}
+                  </div>
+                ))
+              ) : (
+                <div className="pl-[20px]">未設定</div>
+              )}
+            </div>
           </div>
 
-          <div className="relative m-[20px] mt-[1em] rounded-[5px] border-[1.5px] border-solid border-[rgb(131,99,64)] bg-[rgb(255,_229,_200)] [box-shadow:5px_5px_3px_rgba(247,_214,_182,_0.45)]">
+          <div className="relative m-[20px] mt-[1em] rounded-[5px] border-[1.5px] border-solid border-[rgb(131,99,64)] bg-[rgb(255,_229,_200)] px-2 pb-2 pt-5 [box-shadow:5px_5px_3px_rgba(247,_214,_182,_0.45)]">
             <h3 className="absolute -top-[1em] left-[0] right-[0] ml-[0.8em] mt-[5px]">
               <span className="inline-block rounded-[5px] bg-[#744a36] px-[.5em] py-[0] text-[#fff6f6]">
-                最後に
+                趣味
               </span>
             </h3>
-            <div className="px-[1.5em] pb-[.5em] pt-[1.2em]">{last}</div>
+            <div className="flex">
+              {hobbies.length !== 0 ? (
+                hobbies.map((hobby, index) => (
+                  <Badge key={index} className="bg-amber-800 hover:bg-amber-800/90">
+                    {hobby}
+                  </Badge>
+                ))
+              ) : (
+                <div className="px-[1.5em] pb-[.5em] pt-[1.2em]">未設定</div>
+              )}
+            </div>
           </div>
         </div>
       </div>
