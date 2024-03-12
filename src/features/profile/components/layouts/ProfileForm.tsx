@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   address: z.string(),
@@ -118,7 +119,7 @@ export const ProfileForm = () => {
             <FormItem className="w-full">
               <FormLabel>自己紹介</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Textarea {...field} className="resize-none" />
               </FormControl>
               <FormMessage />
             </FormItem>
