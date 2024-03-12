@@ -14,7 +14,7 @@ export const MyChatContent = memo(({ createdAt, message }: Message) => {
       <div
         className={cn(
           `relative mr-5 inline-block rounded-[10px] bg-sky-400 p-2`,
-          `before:absolute before:bottom-[8px] before:right-[-4px] before:z-[-1] before:ml-0 before:block before:h-[30px] before:w-[30px] before:rounded-[50px_0_50px_0] before:bg-sky-400 before:content-[""]`,
+          `before:absolute before:bottom-[8px] before:right-[-8px] before:z-[-1] before:ml-0 before:block before:h-[30px] before:w-[30px] before:rounded-[50px_0_50px_0] before:bg-sky-400 before:content-[""]`,
         )}
       >
         {message}
