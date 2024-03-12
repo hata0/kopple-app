@@ -3,6 +3,8 @@ import { useId } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { DayOfBirthPicker } from "./DayOfBirthPicker";
+
 import { Button } from "@/components/ui/button";
 import { FormHeading } from "@/components/ui/domain/FormHeading";
 import {
@@ -23,7 +25,7 @@ const formSchema = z.object({
     .int("年齢を入力してください。")
     .nonnegative("年齢を入力してください。")
     .max(130, "年齢を入力してください。"),
-  birthday: z.date().nullable(),
+  birthday: z.date().optional(),
   hashtag: z.string(),
   hobby: z.coerce.string(),
   message: z.string(),
@@ -31,13 +33,15 @@ const formSchema = z.object({
   sex: z.string(),
 });
 
+export type FormFieldValue = z.infer<typeof formSchema>;
+
 export const ProfileForm = () => {
   const headingId = useId();
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormFieldValue>({
     defaultValues: {
       address: "",
       age: 18,
-      birthday: null,
+      birthday: undefined,
       hashtag: "",
       hobby: "",
       message: "",
@@ -46,7 +50,7 @@ export const ProfileForm = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: FormFieldValue) => {
     console.log(values);
   };
 
@@ -54,7 +58,7 @@ export const ProfileForm = () => {
     <Form {...form}>
       <form
         aria-labelledby={headingId}
-        className="flex w-full flex-col items-center justify-center space-y-2 p-8"
+        className="mb-48 flex w-full flex-col items-center justify-center space-y-2 p-8"
         onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}
       >
         <FormHeading id={headingId}>プロフィールを編集</FormHeading>
@@ -111,6 +115,17 @@ export const ProfileForm = () => {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="birthday"
+            render={({ field }) => (
+              <FormItem className="w-48">
+                <FormLabel>誕生日</FormLabel>
+                <DayOfBirthPicker {...field} />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
         <FormField
           control={form.control}
@@ -125,20 +140,6 @@ export const ProfileForm = () => {
             </FormItem>
           )}
         />
-        {/* TODO: 誕生日を設定する */}
-        {/* <FormField
-          control={form.control}
-          name="birthday"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>誕生日</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
         <FormField
           control={form.control}
           name="hobby"
