@@ -18,7 +18,7 @@ export const ChatCards = () => {
   };
 
   return (
-    <div>
+    <div className="space-y-1 px-6 py-2">
       {chatCards!.map((chatCard) => (
         <ChatCard key={chatCard.id} {...chatCard} />
       ))}
