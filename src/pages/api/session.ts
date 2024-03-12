@@ -37,7 +37,6 @@ const handler: NextApiHandler = async (req, res) => {
       try {
         const auth = firebaseAdmin.auth();
         const session = parseCookies({ req }).session ?? "";
-        console.log(session);
         const decodedIdToken = await auth.verifySessionCookie(session);
 
         if (decodedIdToken) {
@@ -45,6 +44,7 @@ const handler: NextApiHandler = async (req, res) => {
         }
 
         destroyCookie({ res }, "session", { path: "/" });
+        destroyCookie({ res }, "uid", { path: "/" });
         res.status(200).send({
           message: "セッションの削除に成功しました。",
         });

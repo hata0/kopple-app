@@ -1,6 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import { useRouter } from "next/router";
+import { setCookie } from "nookies";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -75,10 +77,21 @@ export const useSignUpForm = () => {
       });
 
       if (createUserRes.error || !createUserRes.res?.ok) {
-        console.log("バッグエンドでエラー");
         setErrorMessage("認証に失敗しました。もう一度入力してください。");
         return;
       }
+
+      // 5日
+      const expiresIn = 60 * 60 * 24 * 5 * 1000;
+
+      const options: Omit<ResponseCookie, "name" | "value"> = {
+        maxAge: expiresIn,
+        path: "/",
+        sameSite: "lax",
+        secure: true,
+      };
+
+      setCookie(null, "uid", user.uid, options);
 
       toast({
         title: "ログインに成功しました",
