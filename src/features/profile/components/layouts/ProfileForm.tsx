@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { useId } from "react";
+import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { DayOfBirthPicker } from "./DayOfBirthPicker";
+import { Tag, TagInput } from "./TagInput";
 
 import { Button } from "@/components/ui/button";
 import { FormHeading } from "@/components/ui/domain/FormHeading";
@@ -27,8 +28,8 @@ const formSchema = z.object({
     .nonnegative("年齢を入力してください。")
     .max(130, "年齢を入力してください。"),
   birthday: z.date().optional(),
-  hashtag: z.array(z.string()),
-  hobby: z.array(z.string()),
+  hashtags: z.array(z.string()),
+  hobbies: z.array(z.string()),
   message: z.string(),
   name: z.string().min(1, "名前を入力してください。"),
   sex: z.string(),
@@ -40,8 +41,8 @@ export const ProfileForm = ({
   address,
   age,
   birthday,
-  hashtag,
-  hobby,
+  hashtags,
+  hobbies,
   message,
   name,
   sex,
@@ -52,13 +53,16 @@ export const ProfileForm = ({
       address,
       age,
       birthday: birthday === null ? undefined : birthday,
-      hashtag,
-      hobby,
+      hashtags,
+      hobbies,
       message,
       name,
       sex,
     },
   });
+
+  const [currentHashtags, setCurrentHashtags] = useState<Tag[]>([]);
+  const [currentHobbies, setCurrentHobbies] = useState<Tag[]>([]);
 
   const onSubmit = (values: FormFieldValue) => {
     console.log(values);
@@ -68,7 +72,7 @@ export const ProfileForm = ({
     <Form {...form}>
       <form
         aria-labelledby={headingId}
-        className="mb-48 flex w-full flex-col items-center justify-center space-y-2 p-8"
+        className="mb-12 flex w-full flex-col items-center justify-center space-y-2 p-8"
         onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}
       >
         <FormHeading id={headingId}>プロフィールを編集</FormHeading>
@@ -152,12 +156,25 @@ export const ProfileForm = ({
         />
         <FormField
           control={form.control}
-          name="hobby"
+          name="hashtags"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>趣味</FormLabel>
+              <FormLabel>ハッシュタグ</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <TagInput
+                  {...field}
+                  className="w-48"
+                  placeholder="タグを追加"
+                  setTags={(newTags) => {
+                    setCurrentHashtags(newTags);
+                    form.setValue(
+                      "hashtags",
+                      (newTags as [Tag, ...Tag[]]).map((newTag) => newTag.text),
+                    );
+                  }}
+                  tags={currentHashtags}
+                  textCase={null}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -165,12 +182,25 @@ export const ProfileForm = ({
         />
         <FormField
           control={form.control}
-          name="hashtag"
+          name="hobbies"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>ハッシュタグ</FormLabel>
+              <FormLabel>趣味</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <TagInput
+                  textCase={null}
+                  {...field}
+                  className="w-48"
+                  placeholder="趣味を追加"
+                  setTags={(newTags) => {
+                    setCurrentHobbies(newTags);
+                    form.setValue(
+                      "hobbies",
+                      (newTags as [Tag, ...Tag[]]).map((newTag) => newTag.text),
+                    );
+                  }}
+                  tags={currentHobbies}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
