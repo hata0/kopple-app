@@ -26,7 +26,7 @@ export const SignUpForm = () => {
     <Form {...form}>
       <form
         aria-labelledby={headingId}
-        className="space-y-8"
+        className="space-y-8 px-16 py-4"
         onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}
       >
         <FormHeading id={headingId}>新規登録</FormHeading>
