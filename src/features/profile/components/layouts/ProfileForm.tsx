@@ -53,67 +53,69 @@ export const ProfileForm = () => {
     <Form {...form}>
       <form
         aria-labelledby={headingId}
-        className="space-y-8"
+        className="flex w-full flex-col items-center justify-center space-y-2 p-8"
         onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}
       >
         <FormHeading id={headingId}>プロフィールを編集</FormHeading>
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>名前</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="age"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>年齢</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="sex"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>性別</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="address"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>住所</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex h-full w-full flex-wrap items-center justify-start gap-10">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem className="w-48">
+                <FormLabel>名前</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="age"
+            render={({ field }) => (
+              <FormItem className="w-24">
+                <FormLabel>年齢</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="sex"
+            render={({ field }) => (
+              <FormItem className="w-24">
+                <FormLabel>性別</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="address"
+            render={({ field }) => (
+              <FormItem className="w-48">
+                <FormLabel>住所</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <FormField
           control={form.control}
           name="message"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-full">
               <FormLabel>自己紹介</FormLabel>
               <FormControl>
                 <Input {...field} />
@@ -140,7 +142,7 @@ export const ProfileForm = () => {
           control={form.control}
           name="hobby"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-full">
               <FormLabel>趣味</FormLabel>
               <FormControl>
                 <Input {...field} />
@@ -153,7 +155,7 @@ export const ProfileForm = () => {
           control={form.control}
           name="hashtag"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-full">
               <FormLabel>ハッシュタグ</FormLabel>
               <FormControl>
                 <Input {...field} />
@@ -162,7 +164,7 @@ export const ProfileForm = () => {
             </FormItem>
           )}
         />
-        <div className="flex space-x-8">
+        <div className="flex space-x-8 pt-5">
           <Button type="submit">更新</Button>
           <Button asChild>
             <Link href="/dashboard">キャンセル</Link>
