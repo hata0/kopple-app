@@ -44,6 +44,8 @@ export const useChatForm = () => {
       const { message } = values;
       form.reset();
 
+      let additionalMessage: Message;
+
       await mutate(
         async () => {
           const { error, res } = await fetcherWithAuth<CreateMessageRequest>(
@@ -69,7 +71,7 @@ export const useChatForm = () => {
               variant: "destructive",
             });
           } else {
-            const additionalMessage = (await res?.json()) as Message;
+            additionalMessage = (await res?.json()) as Message;
             return {
               ...chatContents!,
               messages: [additionalMessage, ...chatContents!.messages],
@@ -92,6 +94,24 @@ export const useChatForm = () => {
           rollbackOnError: true,
         },
       );
+
+      const func = async () => {
+        await mutate({
+          ...chatContents!,
+          messages: [
+            {
+              createdAt: new Date(),
+              id: crypto.randomUUID(),
+              isMyMessage: false,
+              message: "オッケー!",
+            },
+            additionalMessage,
+            ...chatContents!.messages,
+          ],
+        });
+      };
+
+      setTimeout(() => void func(), 5000);
     },
     [chatContents, form, id, mutate],
   );
