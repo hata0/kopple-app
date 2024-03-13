@@ -9,8 +9,8 @@ export const portraitCards = (): PortraitCard[] => [
     id: id(),
     imageUrl: "/portrait/1.jpg",
     isLike: false,
-    message: "こんにちは、山田太郎です！",
-    name: "山田太郎",
+    message: "こんにちは、佐藤 あやかです！",
+    name: "佐藤 あやか",
   },
   {
     age: 30,
@@ -19,7 +19,7 @@ export const portraitCards = (): PortraitCard[] => [
     imageUrl: "/portrait/2.jpg",
     isLike: false,
     message: "趣味は登山です。",
-    name: "鈴木一郎",
+    name: "田中 みさき",
   },
   {
     age: 22,
@@ -46,6 +46,6 @@ export const portraitCards = (): PortraitCard[] => [
     imageUrl: "/portrait/5.jpg",
     isLike: true,
     message: "写真を撮ることが趣味です。",
-    name: "伊藤健太",
+    name: "山本 さくら",
   },
 ];

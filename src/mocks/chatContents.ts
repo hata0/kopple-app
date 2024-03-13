@@ -64,6 +64,6 @@ export const chatContents = (): ChatContents => {
         message: "明日のミーティングについて",
       },
     ],
-    name: "ユーザー1",
+    name: "山本 さくら",
   };
 };
