@@ -18,26 +18,28 @@ export const ChatCards = () => {
   };
 
   return (
-    <div className="space-y-1 px-6 py-2">
-      {chatCards!.map((chatCard) => (
-        <ChatCard key={chatCard.id} {...chatCard} />
-      ))}
-      <InView
-        as="div"
-        className="flex h-[60px] w-full items-center justify-center"
-        onChange={(isInView) => void handleInfiniteScroll(isInView)}
-      >
-        {isClient && (
-          <TailSpin
-            visible
-            ariaLabel="ロード中"
-            color="#4fa94d"
-            height="40"
-            radius="1"
-            width="40"
-          />
-        )}
-      </InView>
+    <div className="flex flex-col items-center justify-center">
+      <div className="max-w-[720px] space-y-1 px-6 py-2">
+        {chatCards!.map((chatCard) => (
+          <ChatCard key={chatCard.id} {...chatCard} />
+        ))}
+        <InView
+          as="div"
+          className="flex h-[60px] w-full items-center justify-center"
+          onChange={(isInView) => void handleInfiniteScroll(isInView)}
+        >
+          {isClient && (
+            <TailSpin
+              visible
+              ariaLabel="ロード中"
+              color="#4fa94d"
+              height="40"
+              radius="1"
+              width="40"
+            />
+          )}
+        </InView>
+      </div>
     </div>
   );
 };
