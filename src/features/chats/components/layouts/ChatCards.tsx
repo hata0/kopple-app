@@ -19,7 +19,7 @@ export const ChatCards = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="max-w-[720px] space-y-1 px-6 py-2">
+      <div className="max-w-[960px] space-y-1 px-6 py-2 xl:w-[600px]">
         {chatCards!.map((chatCard) => (
           <ChatCard key={chatCard.id} {...chatCard} />
         ))}
