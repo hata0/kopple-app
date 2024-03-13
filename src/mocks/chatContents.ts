@@ -7,7 +7,7 @@ const randomIsMyMessage = () => (Math.random() < 0.5 ? true : false);
 
 export const chatContents = (): ChatContents => {
   return {
-    imageUrl: "/portrait/1.png",
+    imageUrl: "/portrait/1.jpg",
     messages: [
       {
         createdAt: new Date(),
