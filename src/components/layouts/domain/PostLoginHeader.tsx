@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { IoChatboxEllipses } from "react-icons/io5";
@@ -20,7 +21,10 @@ export const PostLoginHeader = () => {
       >
         <div className="mr-auto flex items-center justify-center">
           <Button asChild className="font-sans text-lg font-black" variant="ghost">
-            <Link href="/dashboard">Kopple</Link>
+            <Link className="flex items-center justify-center space-x-1" href="/dashboard">
+              <Image alt="コップルアイコン" height={28} src="/kopple.png" width={28} />
+              <span>Kopple</span>
+            </Link>
           </Button>
           <NavLinkButton href="/chats" pathname={pathname}>
             <IoChatboxEllipses />

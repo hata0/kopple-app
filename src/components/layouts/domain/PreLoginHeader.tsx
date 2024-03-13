@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -20,7 +21,10 @@ export const PreLoginHeader = () => {
       >
         <div className="mr-auto flex">
           <Button asChild className="font-sans text-lg font-black" variant="ghost">
-            <Link href="/">Kopple</Link>
+            <Link className="flex items-center justify-center space-x-1" href="/">
+              <Image alt="コップルアイコン" height={28} src="/kopple.png" width={28} />
+              <span>Kopple</span>
+            </Link>
           </Button>
           <nav aria-label="ナビゲーション">
             {isHasSession ? (
