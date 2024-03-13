@@ -46,7 +46,7 @@ export const ChatCard = memo(({ id, imageUrl, latestMessage, name, updatedAt }: 
               </AvatarFallback>
             </Avatar>
           </div>
-          <div className="w-full overflow-hidden">
+          <div className="ml-4 w-full overflow-hidden">
             <div className="truncate">{name}</div>
             <div className="truncate">{latestMessage}</div>
           </div>
