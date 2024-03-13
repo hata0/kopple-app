@@ -2,7 +2,7 @@ import { GetServerSideProps } from "next";
 
 import { PortraitCard } from "./types/PortraitCard";
 
-import { BACKEND_URL } from "@/constants/backendUrl";
+import { MOCK_API_URL } from "@/constants/mockApiUrl";
 import { HttpError, HttpErrorObject } from "@/utils/HttpError";
 import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
@@ -14,7 +14,7 @@ export type Props = {
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
-  const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/portraits`, ctx);
+  const { error, res } = await fetcherWithAuth(`${MOCK_API_URL}/portraits`, ctx);
 
   if (error) {
     throw new Error();

@@ -5,14 +5,14 @@ import { ProfileContent } from "../types/ProfileContent";
 
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
-import { BACKEND_URL } from "@/constants/backendUrl";
+import { MOCK_API_URL } from "@/constants/mockApiUrl";
 import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
 export const useProfile = (id: string) => {
   const { data: profileContent, mutate } = useSWR<ProfileContent>(`/profiles/${id}`);
 
   const fetchProfile = useCallback(async () => {
-    const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/profiles/${id}`);
+    const { error, res } = await fetcherWithAuth(`${MOCK_API_URL}/profiles/${id}`);
 
     if (error) {
       toast({

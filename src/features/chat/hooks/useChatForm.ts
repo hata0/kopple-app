@@ -10,7 +10,7 @@ import { CreateMessageRequest } from "../types/CreateMessage";
 import { Message } from "../types/Message";
 
 import { toast } from "@/components/ui/use-toast";
-import { BACKEND_URL } from "@/constants/backendUrl";
+import { MOCK_API_URL } from "@/constants/mockApiUrl";
 import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
 const formSchema = z.object({
@@ -47,7 +47,7 @@ export const useChatForm = () => {
       await mutate(
         async () => {
           const { error, res } = await fetcherWithAuth<CreateMessageRequest>(
-            `${BACKEND_URL}/messages/create/${id}`,
+            `${MOCK_API_URL}/messages/create/${id}`,
             undefined,
             {
               body: {

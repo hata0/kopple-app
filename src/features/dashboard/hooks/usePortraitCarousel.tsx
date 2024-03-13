@@ -6,7 +6,7 @@ import { PortraitCard } from "../types/PortraitCard";
 import { CarouselApi } from "@/components/ui/carousel";
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
-import { BACKEND_URL } from "@/constants/backendUrl";
+import { MOCK_API_URL } from "@/constants/mockApiUrl";
 import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
 export const usePortraitCarousel = () => {
@@ -25,7 +25,7 @@ export const usePortraitCarousel = () => {
       const func = async () => {
         if (!api.canScrollNext()) {
           const recursion = async () => {
-            const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/portraits`);
+            const { error, res } = await fetcherWithAuth(`${MOCK_API_URL}/portraits`);
 
             if (error) {
               toast({

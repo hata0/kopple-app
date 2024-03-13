@@ -9,7 +9,7 @@ import { z } from "zod";
 
 import { toast } from "@/components/ui/use-toast";
 import { API_ROUTE_URL } from "@/constants/apiRouteUrl";
-import { BACKEND_URL } from "@/constants/backendUrl";
+import { MOCK_API_URL } from "@/constants/mockApiUrl";
 import { firebaseClient } from "@/lib/firebase/client";
 import { fetcher } from "@/utils/fetcher";
 import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
@@ -68,7 +68,7 @@ export const useSignUpForm = () => {
         return;
       }
 
-      const createUserRes = await fetcherWithAuth(`${BACKEND_URL}/user`, undefined, {
+      const createUserRes = await fetcherWithAuth(`${MOCK_API_URL}/user`, undefined, {
         body: {
           email: user.email,
           id: user.uid,

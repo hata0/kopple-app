@@ -7,7 +7,7 @@ import { Message } from "../types/Message";
 
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
-import { BACKEND_URL } from "@/constants/backendUrl";
+import { MOCK_API_URL } from "@/constants/mockApiUrl";
 import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
 export const useChatContents = () => {
@@ -62,7 +62,7 @@ export const useChatContents = () => {
   };
 
   const getChatContents = useCallback(async () => {
-    const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/chats/${id}`);
+    const { error, res } = await fetcherWithAuth(`${MOCK_API_URL}/chats/${id}`);
 
     if (error) {
       toast({

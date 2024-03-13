@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
-import { BACKEND_URL } from "@/constants/backendUrl";
+import { MOCK_API_URL } from "@/constants/mockApiUrl";
 import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
 type Props = {
@@ -33,7 +33,7 @@ export const DeleteChatDialog = memo(({ id }: Props) => {
 
     await mutate(
       async () => {
-        const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/chats/${id}`, undefined, {
+        const { error, res } = await fetcherWithAuth(`${MOCK_API_URL}/chats/${id}`, undefined, {
           method: "DELETE",
         });
 

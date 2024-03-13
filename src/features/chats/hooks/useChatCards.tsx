@@ -5,14 +5,14 @@ import { ChatCard } from "../types/ChatCard";
 
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
-import { BACKEND_URL } from "@/constants/backendUrl";
+import { MOCK_API_URL } from "@/constants/mockApiUrl";
 import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
 export const useChatCards = () => {
   const { data: chatCards, mutate } = useSWR<ChatCard[]>("/chats");
 
   const getChatCards = useCallback(async () => {
-    const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/chats`);
+    const { error, res } = await fetcherWithAuth(`${MOCK_API_URL}/chats`);
 
     if (error) {
       toast({

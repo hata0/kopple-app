@@ -2,7 +2,7 @@ import { GetServerSideProps } from "next";
 
 import { ChatCard } from "./types/ChatCard";
 
-import { BACKEND_URL } from "@/constants/backendUrl";
+import { MOCK_API_URL } from "@/constants/mockApiUrl";
 import { HttpError, HttpErrorObject } from "@/utils/HttpError";
 import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
@@ -14,7 +14,7 @@ export type Props = {
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
-  const { error, res } = await fetcherWithAuth(`${BACKEND_URL}/chats`, ctx);
+  const { error, res } = await fetcherWithAuth(`${MOCK_API_URL}/chats`, ctx);
 
   if (error) {
     throw new Error();
