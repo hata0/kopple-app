@@ -9,10 +9,8 @@ import { z } from "zod";
 
 import { toast } from "@/components/ui/use-toast";
 import { API_ROUTE_URL } from "@/constants/apiRouteUrl";
-import { BACKEND_URL } from "@/constants/backendUrl";
 import { firebaseClient } from "@/lib/firebase/client";
 import { fetcher } from "@/utils/fetcher";
-import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
 const formSchema = z
   .object({
@@ -68,18 +66,19 @@ export const useSignUpForm = () => {
         return;
       }
 
-      const createUserRes = await fetcherWithAuth(`${BACKEND_URL}/user`, undefined, {
-        body: {
-          email: user.email,
-          id: user.uid,
-        },
-        method: "POST",
-      });
+      // TODO: バッグエンドできたらユーザー作成クエリを投げる
+      // const createUserRes = await fetcherWithAuth(`${BACKEND_URL}/user`, undefined, {
+      //   body: {
+      //     email: user.email,
+      //     id: user.uid,
+      //   },
+      //   method: "POST",
+      // });
 
-      if (createUserRes.error || !createUserRes.res?.ok) {
-        setErrorMessage("認証に失敗しました。もう一度入力してください。");
-        return;
-      }
+      // if (createUserRes.error || !createUserRes.res?.ok) {
+      //   setErrorMessage("認証に失敗しました。もう一度入力してください。");
+      //   return;
+      // }
 
       // 5日
       const expiresIn = 60 * 60 * 24 * 5 * 1000;
