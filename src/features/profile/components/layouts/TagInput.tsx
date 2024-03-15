@@ -6,10 +6,10 @@ import { tagVariants } from "./Tag";
 import { TagList } from "./TagList";
 import { TagPopover } from "./TagPopover";
 
-import { Button } from "@/components/ui/button";
-import { CommandInput } from "@/components/ui/command";
-import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
+import { Button } from "@/components/shadcn/ui/button";
+import { CommandInput } from "@/components/shadcn/ui/command";
+import { Input } from "@/components/shadcn/ui/input";
+import { toast } from "@/components/shadcn/ui/use-toast";
 
 export enum Delimiter {
   Comma = ",",

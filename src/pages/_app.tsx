@@ -2,7 +2,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { ThemeProvider } from "next-themes";
 
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/shadcn/ui/toaster";
 import "@/styles/globals.css";
 import { AuthProvider } from "@/providers/AuthProvider";
 

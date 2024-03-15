@@ -3,7 +3,7 @@ import { memo } from "react";
 
 import { PortraitCard as Props } from "../../types/PortraitCard";
 
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/shadcn/ui/card";
 
 export const PortraitCard = memo(({ age, hashtag, imageUrl, message, name }: Props) => {
   return (

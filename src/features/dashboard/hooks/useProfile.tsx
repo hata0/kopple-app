@@ -3,8 +3,8 @@ import useSWR from "swr";
 
 import { ProfileContent } from "../types/ProfileContent";
 
-import { ToastAction } from "@/components/ui/toast";
-import { toast } from "@/components/ui/use-toast";
+import { ToastAction } from "@/components/shadcn/ui/toast";
+import { toast } from "@/components/shadcn/ui/use-toast";
 import { MOCK_API_URL } from "@/constants/mockApiUrl";
 import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 

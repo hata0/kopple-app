@@ -9,7 +9,7 @@ import { DateBadge } from "./DateBadge";
 import { InterlocutorChatContent } from "./InterlocutorChatContent";
 import { MyChatContent } from "./MyChatContent";
 
-import { ScrollBar } from "@/components/ui/scroll-area";
+import { ScrollBar } from "@/components/shadcn/ui/scroll-area";
 import { useIsClient } from "@/hooks/useIsClient";
 
 export const ChatContents = () => {

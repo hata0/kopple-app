@@ -3,9 +3,9 @@ import useSWR from "swr";
 
 import { PortraitCard } from "../types/PortraitCard";
 
-import { CarouselApi } from "@/components/ui/carousel";
-import { ToastAction } from "@/components/ui/toast";
-import { toast } from "@/components/ui/use-toast";
+import { CarouselApi } from "@/components/shadcn/ui/carousel";
+import { ToastAction } from "@/components/shadcn/ui/toast";
+import { toast } from "@/components/shadcn/ui/use-toast";
 import { MOCK_API_URL } from "@/constants/mockApiUrl";
 import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 

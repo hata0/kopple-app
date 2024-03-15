@@ -1,6 +1,6 @@
 import { format, isEqual, isThisYear, isToday, isYesterday } from "date-fns";
 
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/shadcn/ui/badge";
 import { formatAcronymJpDayOfWeek } from "@/utils/formatAcronymJpDayOfWeek";
 
 type Props = {

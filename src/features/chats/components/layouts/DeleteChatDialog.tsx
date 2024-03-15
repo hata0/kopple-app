@@ -13,9 +13,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/use-toast";
+} from "@/components/shadcn/ui/alert-dialog";
+import { Button } from "@/components/shadcn/ui/button";
+import { toast } from "@/components/shadcn/ui/use-toast";
 import { MOCK_API_URL } from "@/constants/mockApiUrl";
 import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 

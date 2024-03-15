@@ -1,6 +1,6 @@
 import { MouseEventHandler, ReactNode } from "react";
 
-import { Button } from "../button";
+import { Button } from "../../shadcn/ui/button";
 
 type Props = {
   render: (className: string) => ReactNode;

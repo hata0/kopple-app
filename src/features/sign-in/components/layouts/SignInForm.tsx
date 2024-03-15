@@ -3,11 +3,7 @@ import { useId } from "react";
 
 import { useSignInForm } from "../../hooks/useSignInForm";
 
-import { Button } from "@/components/ui/button";
-import { RevealPasswordInput } from "@/components/ui/case/RevealPasswordInput";
-import { ErrorMessage } from "@/components/ui/domain/ErrorMessage";
-import { FormHeading } from "@/components/ui/domain/FormHeading";
-import { FormLegend } from "@/components/ui/domain/FormLegend";
+import { Button } from "@/components/shadcn/ui/button";
 import {
   Form,
   FormControl,
@@ -15,8 +11,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@/components/shadcn/ui/form";
+import { Input } from "@/components/shadcn/ui/input";
+import { RevealPasswordInput } from "@/components/ui/case/RevealPasswordInput";
+import { ErrorMessage } from "@/components/ui/domain/ErrorMessage";
+import { FormHeading } from "@/components/ui/domain/FormHeading";
+import { FormLegend } from "@/components/ui/domain/FormLegend";
 
 export const SignInForm = () => {
   const headingId = useId();

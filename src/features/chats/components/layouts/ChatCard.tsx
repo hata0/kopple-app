@@ -6,8 +6,8 @@ import { ChatCard as Props } from "../../types/ChatCard";
 
 import { DeleteChatDialog } from "./DeleteChatDialog";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/ui/avatar";
+import { Card, CardContent } from "@/components/shadcn/ui/card";
 import { formatJpDayOfWeek } from "@/utils/formatJpDayOfWeek";
 
 const formatDate = (date: Date | null) => {

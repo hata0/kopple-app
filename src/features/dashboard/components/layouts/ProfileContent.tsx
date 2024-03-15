@@ -4,7 +4,7 @@ import { memo } from "react";
 
 import { ProfileContent as Props } from "../../types/ProfileContent";
 
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/shadcn/ui/badge";
 
 export const ProfileContent = memo(
   ({ address, age, birthday, hashtags, hobbies, imageUrl, message, name, sex }: Props) => {

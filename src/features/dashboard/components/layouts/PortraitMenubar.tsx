@@ -7,10 +7,10 @@ import { PortraitCard } from "../../types/PortraitCard";
 
 import { ProfileDrawer } from "./ProfileDrawer";
 
-import { Button } from "@/components/ui/button";
-import { CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Button } from "@/components/shadcn/ui/button";
+import { CarouselNext, CarouselPrevious } from "@/components/shadcn/ui/carousel";
+import { toast } from "@/components/shadcn/ui/use-toast";
 import { ToggleIconButton } from "@/components/ui/case/ToggleIconButton";
-import { toast } from "@/components/ui/use-toast";
 import { MOCK_API_URL } from "@/constants/mockApiUrl";
 import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 

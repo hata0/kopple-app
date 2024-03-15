@@ -3,15 +3,15 @@ import * as React from "react";
 // eslint-disable-next-line import/named
 import { DayPicker, DropdownProps } from "react-day-picker";
 
-import { buttonVariants } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { buttonVariants } from "@/components/shadcn/ui/button";
+import { ScrollArea } from "@/components/shadcn/ui/scroll-area";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/shadcn/ui/select";
 import { cn } from "@/lib/utils";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;

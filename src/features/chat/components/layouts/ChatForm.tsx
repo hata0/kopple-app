@@ -2,9 +2,9 @@ import { VscSend } from "react-icons/vsc";
 
 import { useChatForm } from "../../hooks/useChatForm";
 
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/shadcn/ui/button";
+import { Form, FormControl, FormField, FormItem } from "@/components/shadcn/ui/form";
+import { Textarea } from "@/components/shadcn/ui/textarea";
 import { cn } from "@/lib/utils";
 
 export const ChatForm = () => {

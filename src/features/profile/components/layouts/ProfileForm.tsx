@@ -6,8 +6,7 @@ import { z } from "zod";
 import { DayOfBirthPicker } from "./DayOfBirthPicker";
 import { Tag, TagInput } from "./TagInput";
 
-import { Button } from "@/components/ui/button";
-import { FormHeading } from "@/components/ui/domain/FormHeading";
+import { Button } from "@/components/shadcn/ui/button";
 import {
   Form,
   FormControl,
@@ -15,9 +14,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/components/shadcn/ui/form";
+import { Input } from "@/components/shadcn/ui/input";
+import { Textarea } from "@/components/shadcn/ui/textarea";
+import { FormHeading } from "@/components/ui/domain/FormHeading";
 import { ProfileContent } from "@/features/dashboard/types/ProfileContent";
 
 const formSchema = z.object({

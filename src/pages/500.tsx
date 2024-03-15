@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/shadcn/ui/button";
 
 export default function Custom500() {
   const router = useRouter();

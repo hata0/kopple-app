@@ -5,7 +5,7 @@ import useSWR from "swr";
 
 import { ChatContents } from "../../types/ChatContents";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/shadcn/ui/button";
 
 export const ChatHeader = () => {
   const router = useRouter();

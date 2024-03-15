@@ -8,7 +8,7 @@ import {
   CommandGroup,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
+} from "@/components/shadcn/ui/command";
 
 type AutocompleteProps = {
   tags: TagType[];

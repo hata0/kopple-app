@@ -5,9 +5,9 @@ import { ControllerRenderProps } from "react-hook-form";
 import { DayOfBirthCalendar } from "./DayOfBirthCalendar";
 import { FormFieldValue } from "./ProfileForm";
 
-import { Button } from "@/components/ui/button";
-import { FormControl } from "@/components/ui/form";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/shadcn/ui/button";
+import { FormControl } from "@/components/shadcn/ui/form";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/ui/popover";
 import { cn } from "@/lib/utils";
 
 export const DayOfBirthPicker = (field: ControllerRenderProps<FormFieldValue, "birthday">) => {

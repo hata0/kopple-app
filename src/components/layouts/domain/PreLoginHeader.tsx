@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { Button } from "../../ui/button";
+import { Button } from "../../shadcn/ui/button";
 
 import { NavLinkButton } from "@/components/ui/domain/NavLinkButton";
 import { ThemeModeToggle } from "@/components/ui/domain/ThemeModeToggle";

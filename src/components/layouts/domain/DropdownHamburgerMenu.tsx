@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { memo } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/shadcn/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,8 +12,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { toast } from "@/components/ui/use-toast";
+} from "@/components/shadcn/ui/dropdown-menu";
+import { toast } from "@/components/shadcn/ui/use-toast";
 import { API_ROUTE_URL } from "@/constants/apiRouteUrl";
 import { fetcher } from "@/utils/fetcher";
 

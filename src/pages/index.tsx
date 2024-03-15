@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { PreLoginHeader } from "@/components/layouts/domain/PreLoginHeader";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/shadcn/ui/button";
 
 export default function TopPage() {
   return (

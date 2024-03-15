@@ -4,7 +4,7 @@ import { PortraitCard } from "./PortraitCard";
 import { PortraitCardSkeleton } from "./PortraitCardSkeleton";
 import { PortraitMenubar } from "./PortraitMenubar";
 
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/shadcn/ui/carousel";
 
 export const PortraitCarousel = () => {
   const { current, portraitCards, setApi } = usePortraitCarousel();

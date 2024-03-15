@@ -3,7 +3,7 @@ import React from "react";
 import { type Tag as TagType } from "./TagInput";
 import { TagList, TagListProps } from "./TagList";
 
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/ui/popover";
 
 type TagPopoverProps = {
   children: React.ReactNode;

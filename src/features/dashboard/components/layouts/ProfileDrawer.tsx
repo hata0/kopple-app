@@ -6,8 +6,8 @@ import { useProfile } from "../../hooks/useProfile";
 import { ProfileContent } from "./ProfileContent";
 import { ProfileSkeleton } from "./ProfileSkeleton";
 
-import { Button } from "@/components/ui/button";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { Button } from "@/components/shadcn/ui/button";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/shadcn/ui/drawer";
 
 type Props = {
   id: string;

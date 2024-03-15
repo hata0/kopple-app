@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/components/shadcn/ui/use-toast";
 import { API_ROUTE_URL } from "@/constants/apiRouteUrl";
 import { firebaseClient } from "@/lib/firebase/client";
 import { fetcher } from "@/utils/fetcher";

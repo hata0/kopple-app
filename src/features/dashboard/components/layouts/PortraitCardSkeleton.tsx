@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "@/components/shadcn/ui/skeleton";
 
 export const PortraitCardSkeleton = memo(() => {
   return (

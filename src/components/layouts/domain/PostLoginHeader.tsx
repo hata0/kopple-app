@@ -5,7 +5,7 @@ import { IoChatboxEllipses } from "react-icons/io5";
 
 import { DropdownHamburgerMenu } from "./DropdownHamburgerMenu";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/shadcn/ui/button";
 import { NavLinkButton } from "@/components/ui/domain/NavLinkButton";
 import { ThemeModeToggle } from "@/components/ui/domain/ThemeModeToggle";
 

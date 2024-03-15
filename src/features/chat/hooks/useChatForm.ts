@@ -9,7 +9,7 @@ import { ChatContents } from "../types/ChatContents";
 import { CreateMessageRequest } from "../types/CreateMessage";
 import { Message } from "../types/Message";
 
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/components/shadcn/ui/use-toast";
 import { MOCK_API_URL } from "@/constants/mockApiUrl";
 import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
 
