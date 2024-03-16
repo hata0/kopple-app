@@ -10,7 +10,7 @@ describe("SignInForm", () => {
     render(<SignInForm />);
 
     test("メールアドレスでないとき、エラーが表示", async () => {
-      await user.type(screen.getByRole("textbox", { name: "メールアドレス" }), "invalid@email");
+      await user.type(screen.getByRole("textbox", { name: "メールアドレス" }), "invalid value");
       await user.click(screen.getByRole("button", { name: "ログイン" }));
       expect(screen.getByText("メールアドレスの形式が不正です。")).toBeInTheDocument();
     });
