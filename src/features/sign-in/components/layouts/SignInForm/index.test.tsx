@@ -9,6 +9,11 @@ import { API_ROUTE_URL } from "@/constants/apiRouteUrl";
 import { setupMockServer } from "@/tests/setupMockServer";
 
 jest.mock("firebase/auth");
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const signInWithEmailAndPasswordMock = jest.spyOn<any, any>(
+  firebaseAuth,
+  "signInWithEmailAndPassword",
+);
 
 const user = userEvent.setup();
 const server = setupMockServer(
@@ -62,40 +67,40 @@ describe("SignInForm", () => {
   });
 
   describe("正しい入力値でonSubmitが実行された時", () => {
+    beforeEach(() => {
+      signInWithEmailAndPasswordMock.mockReset().mockResolvedValue({
+        user: {
+          getIdToken: jest.fn().mockResolvedValue("id-token"),
+        },
+      });
+    });
+
     const renderAndValidSubmit = async () => {
       render(<SignInForm />);
       await user.type(screen.getByRole("textbox", { name: "メールアドレス" }), "email@example.com");
       await user.type(screen.getByLabelText("パスワード"), "password1");
       await user.click(screen.getByRole("button", { name: "ログイン" }));
     };
+
     it("signInWithEmailAndPasswordがエラーを返したとき、認証に失敗したことを知らせる", async () => {
-      jest.spyOn(firebaseAuth, "signInWithEmailAndPassword").mockRejectedValueOnce(new Error());
+      signInWithEmailAndPasswordMock.mockRejectedValueOnce(new Error());
+
       await renderAndValidSubmit();
+
       expect(
         screen.getByText("認証に失敗しました。もう一度入力してください。"),
       ).toBeInTheDocument();
     });
 
     it("sessionを作成するクエリがエラーを返したとき、認証に失敗したことを知らせる", async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      jest.spyOn<any, any>(firebaseAuth, "signInWithEmailAndPassword").mockResolvedValueOnce({
-        user: {
-          getIdToken: jest.fn().mockResolvedValueOnce("id-token"),
-        },
-      });
       server.use(
         http.get(`${API_ROUTE_URL}/session`, () => {
-          return HttpResponse.json(
-            {
-              error: "セッションの作成に失敗しました。",
-            },
-            {
-              status: 401,
-            },
-          );
+          return HttpResponse.json({ error: "セッションの作成に失敗しました。" }, { status: 401 });
         }),
       );
+
       await renderAndValidSubmit();
+
       expect(
         screen.getByText("認証に失敗しました。もう一度入力してください。"),
       ).toBeInTheDocument();
