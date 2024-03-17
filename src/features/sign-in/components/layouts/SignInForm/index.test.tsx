@@ -1,10 +1,23 @@
 import { render, screen } from "@testing-library/react";
-// eslint-disable-next-line import/no-named-as-default
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
+import * as firebaseAuth from "firebase/auth";
+import { http, HttpResponse } from "msw";
 
 import { SignInForm } from ".";
 
+import { API_ROUTE_URL } from "@/constants/apiRouteUrl";
+import { setupMockServer } from "@/tests/setupMockServer";
+
+jest.mock("firebase/auth");
+
 const user = userEvent.setup();
+const server = setupMockServer(
+  http.get(`${API_ROUTE_URL}/session`, () => {
+    return HttpResponse.json({
+      message: "セッションを作成しました",
+    });
+  }),
+);
 
 describe("SignInForm", () => {
   describe("バリデーション", () => {
@@ -45,6 +58,47 @@ describe("SignInForm", () => {
         await clickSubmit();
         expect(passwordError()).toBeNull();
       });
+    });
+  });
+
+  describe("正しい入力値でonSubmitが実行された時", () => {
+    it("signInWithEmailAndPasswordがエラーを返したとき、認証に失敗したことを知らせる", async () => {
+      jest.spyOn(firebaseAuth, "signInWithEmailAndPassword").mockRejectedValueOnce(new Error());
+      render(<SignInForm />);
+      await user.type(screen.getByRole("textbox", { name: "メールアドレス" }), "email@example.com");
+      await user.type(screen.getByLabelText("パスワード"), "password1");
+      await user.click(screen.getByRole("button", { name: "ログイン" }));
+      expect(
+        screen.getByText("認証に失敗しました。もう一度入力してください。"),
+      ).toBeInTheDocument();
+    });
+
+    it("sessionを作成するクエリがエラーを返したとき、認証に失敗したことを知らせる", async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      jest.spyOn<any, any>(firebaseAuth, "signInWithEmailAndPassword").mockResolvedValueOnce({
+        user: {
+          getIdToken: jest.fn().mockResolvedValueOnce("id-token"),
+        },
+      });
+      server.use(
+        http.get(`${API_ROUTE_URL}/session`, () => {
+          return HttpResponse.json(
+            {
+              error: "セッションの作成に失敗しました。",
+            },
+            {
+              status: 401,
+            },
+          );
+        }),
+      );
+      render(<SignInForm />);
+      await user.type(screen.getByRole("textbox", { name: "メールアドレス" }), "email@example.com");
+      await user.type(screen.getByLabelText("パスワード"), "password1");
+      await user.click(screen.getByRole("button", { name: "ログイン" }));
+      expect(
+        screen.getByText("認証に失敗しました。もう一度入力してください。"),
+      ).toBeInTheDocument();
     });
   });
 });

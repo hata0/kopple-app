@@ -9,10 +9,21 @@ const createJestConfig = nextJest({
 // Add any custom config to be passed to Jest
 const config: Config = {
   coverageProvider: "v8",
+  preset: "ts-jest/presets/js-with-ts-esm",
+  setupFiles: ["<rootDir>/jest.polyfills.ts"],
   // Add more setup options before each test is run
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   testEnvironment: "jsdom",
+  testEnvironmentOptions: {
+    customExportConditions: [""],
+  },
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
-export default createJestConfig(config);
+// export default createJestConfig(config);
+
+// transformIgnorePatternsが機能するようにmodule.exportsする
+module.exports = async () => ({
+  ...(await createJestConfig(config)()),
+  transformIgnorePatterns: ["node_modules/(?!(firebase|@firebase))"],
+});
