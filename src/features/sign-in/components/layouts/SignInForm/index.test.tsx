@@ -49,14 +49,14 @@ describe("SignInForm", () => {
         render(<SignInForm />);
         await user.type(email(), "email@example.com");
         await clickSubmit();
-        expect(emailError()).toBeNull();
+        expect(emailError()).not.toBeInTheDocument();
       });
 
       it("パスワードであるとき", async () => {
         render(<SignInForm />);
         await user.type(password(), "password1");
         await clickSubmit();
-        expect(passwordError()).toBeNull();
+        expect(passwordError()).not.toBeInTheDocument();
       });
     });
   });
