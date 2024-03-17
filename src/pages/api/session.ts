@@ -1,5 +1,4 @@
 import { NextApiHandler } from "next";
-import { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 
 import { firebaseAdmin } from "@/lib/firebase/admin";
@@ -16,14 +15,12 @@ const handler: NextApiHandler = async (req, res) => {
           .auth()
           .createSessionCookie(idToken, { expiresIn });
 
-        const options: Omit<ResponseCookie, "name" | "value"> = {
+        setCookie({ res }, "session", sessionCookie, {
           maxAge: expiresIn,
           path: "/",
           sameSite: "lax",
           secure: true,
-        };
-
-        setCookie({ res }, "session", sessionCookie, options);
+        });
         res.status(200).send({
           message: "セッションを作成しました",
         });

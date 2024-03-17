@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import { useRouter } from "next/router";
 import { setCookie } from "nookies";
 import { useState } from "react";
@@ -80,17 +79,13 @@ export const useSignUpForm = () => {
       //   return;
       // }
 
-      // 5日
-      const expiresIn = 60 * 60 * 24 * 5 * 1000;
-
-      const options: Omit<ResponseCookie, "name" | "value"> = {
-        maxAge: expiresIn,
+      setCookie(null, "uid", user.uid, {
+        // 5日
+        maxAge: 60 * 60 * 24 * 5 * 1000,
         path: "/",
         sameSite: "lax",
         secure: true,
-      };
-
-      setCookie(null, "uid", user.uid, options);
+      });
 
       toast({
         title: "ログインに成功しました",

@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import { useRouter } from "next/router";
 import { setCookie } from "nookies";
 import { useState } from "react";
@@ -41,17 +40,13 @@ export const useSignInForm = () => {
         },
       });
 
-      // 5日
-      const expiresIn = 60 * 60 * 24 * 5 * 1000;
-
-      const options: Omit<ResponseCookie, "name" | "value"> = {
-        maxAge: expiresIn,
+      setCookie(null, "uid", credential.user.uid, {
+        // 5日
+        maxAge: 60 * 60 * 24 * 5 * 1000,
         path: "/",
         sameSite: "lax",
         secure: true,
-      };
-
-      setCookie(null, "uid", credential.user.uid, options);
+      });
 
       if (error || !res?.ok) {
         setErrorMessage("認証に失敗しました。もう一度入力してください。");
