@@ -3,6 +3,7 @@ import { userEvent } from "@testing-library/user-event";
 import * as firebaseAuth from "firebase/auth";
 import { http, HttpResponse } from "msw";
 import mockRouter from "next-router-mock";
+import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
 import { SignInForm } from ".";
 
@@ -141,5 +142,11 @@ describe("SignInForm", () => {
         expect(mockRouter.asPath).toBe("/dashboard");
       });
     });
+  });
+
+  it("新規登録ページへ遷移するボタンをクリックした時、新規登録ページへ遷移している", async () => {
+    render(<SignInForm />, { wrapper: MemoryRouterProvider });
+    await user.click(screen.getByRole("link", { name: "新規登録" }));
+    expect(mockRouter.asPath).toBe("/sign-up");
   });
 });
