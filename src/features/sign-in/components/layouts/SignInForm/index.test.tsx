@@ -62,12 +62,15 @@ describe("SignInForm", () => {
   });
 
   describe("正しい入力値でonSubmitが実行された時", () => {
-    it("signInWithEmailAndPasswordがエラーを返したとき、認証に失敗したことを知らせる", async () => {
-      jest.spyOn(firebaseAuth, "signInWithEmailAndPassword").mockRejectedValueOnce(new Error());
+    const renderAndValidSubmit = async () => {
       render(<SignInForm />);
       await user.type(screen.getByRole("textbox", { name: "メールアドレス" }), "email@example.com");
       await user.type(screen.getByLabelText("パスワード"), "password1");
       await user.click(screen.getByRole("button", { name: "ログイン" }));
+    };
+    it("signInWithEmailAndPasswordがエラーを返したとき、認証に失敗したことを知らせる", async () => {
+      jest.spyOn(firebaseAuth, "signInWithEmailAndPassword").mockRejectedValueOnce(new Error());
+      await renderAndValidSubmit();
       expect(
         screen.getByText("認証に失敗しました。もう一度入力してください。"),
       ).toBeInTheDocument();
@@ -92,10 +95,7 @@ describe("SignInForm", () => {
           );
         }),
       );
-      render(<SignInForm />);
-      await user.type(screen.getByRole("textbox", { name: "メールアドレス" }), "email@example.com");
-      await user.type(screen.getByLabelText("パスワード"), "password1");
-      await user.click(screen.getByRole("button", { name: "ログイン" }));
+      await renderAndValidSubmit();
       expect(
         screen.getByText("認証に失敗しました。もう一度入力してください。"),
       ).toBeInTheDocument();
