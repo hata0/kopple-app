@@ -105,7 +105,20 @@ describe("SignInForm", () => {
       ).toBeInTheDocument();
     });
 
-    it("sessionを作成するクエリがエラーを返したとき、認証に失敗したことを知らせる", async () => {
+    it("sessionを作成するするクエリがネットワークエラーを出したとき、認証に失敗したことを知らせる", async () => {
+      server.use(
+        http.get(`${API_ROUTE_URL}/session`, () => {
+          return HttpResponse.error();
+        }),
+      );
+      render(<SignInForm />);
+      await validSubmit();
+      expect(
+        screen.getByText("認証に失敗しました。もう一度入力してください。"),
+      ).toBeInTheDocument();
+    });
+
+    it("sessionを作成するクエリのレスポンスが ok でないとき、認証に失敗したことを知らせる", async () => {
       server.use(
         http.get(`${API_ROUTE_URL}/session`, () => {
           return HttpResponse.json({ error: "セッションの作成に失敗しました。" }, { status: 401 });
