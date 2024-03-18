@@ -1,14 +1,13 @@
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import * as firebaseAuth from "firebase/auth";
-import { http, HttpResponse } from "msw";
 import mockRouter from "next-router-mock";
 import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
 import { SignInForm } from ".";
 
 import { Toaster } from "@/components/shadcn/ui/toaster";
-import { API_ROUTE_URL } from "@/constants/apiRouteUrl";
+import { getSessionHandler } from "@/features/sign-in/services/api/session/mock";
 import { setupMockServer } from "@/tests/setupMockServer";
 
 jest.mock("firebase/auth");
@@ -19,13 +18,7 @@ const signInWithEmailAndPasswordMock = jest.spyOn<any, any>(
 );
 
 const user = userEvent.setup();
-const server = setupMockServer(
-  http.get(`${API_ROUTE_URL}/session`, () => {
-    return HttpResponse.json({
-      message: "セッションを作成しました",
-    });
-  }),
-);
+const server = setupMockServer(getSessionHandler());
 
 beforeEach(() => {
   Object.defineProperty(global.document, "cookie", {
@@ -94,11 +87,7 @@ describe("SignInForm", () => {
     });
 
     it("sessionを作成するするクエリがネットワークエラーを出したとき、認証に失敗したことを知らせる", async () => {
-      server.use(
-        http.get(`${API_ROUTE_URL}/session`, () => {
-          return HttpResponse.error();
-        }),
-      );
+      server.use(getSessionHandler({ isNetworkError: true }));
       render(<SignInForm />);
       await validSubmit();
       expect(
@@ -108,8 +97,11 @@ describe("SignInForm", () => {
 
     it("sessionを作成するクエリのレスポンスが ok でないとき、認証に失敗したことを知らせる", async () => {
       server.use(
-        http.get(`${API_ROUTE_URL}/session`, () => {
-          return HttpResponse.json({ error: "セッションの作成に失敗しました。" }, { status: 401 });
+        getSessionHandler({
+          error: {
+            message: "セッションの作成に失敗しました。",
+            status: 401,
+          },
         }),
       );
       render(<SignInForm />);

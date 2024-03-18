@@ -4,41 +4,31 @@ import { useRouter } from "next/router";
 import { setCookie } from "nookies";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+
+import { getSession, SignInInput, signInInputSchema } from "../services/api/session";
 
 import { toast } from "@/components/shadcn/ui/use-toast";
-import { API_ROUTE_URL } from "@/constants/apiRouteUrl";
 import { firebaseClient } from "@/lib/firebase/client";
-import { fetcher } from "@/utils/fetcher";
-
-const formSchema = z.object({
-  email: z.string().email("メールアドレスの形式が不正です。"),
-  password: z.string().min(1, "パスワードを入力してください。"),
-});
 
 export const useSignInForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<SignInInput>({
     defaultValues: {
       email: "",
       password: "",
     },
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(signInInputSchema),
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: SignInInput) => {
     const { email, password } = values;
 
     try {
       const credential = await signInWithEmailAndPassword(firebaseClient, email, password);
       const idToken = await credential.user.getIdToken();
-      const { error, res } = await fetcher(`${API_ROUTE_URL}/session`, {
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-        },
-      });
+      const { error, res } = await getSession(idToken);
 
       setCookie(null, "uid", credential.user.uid, {
         // 5日
