@@ -36,7 +36,7 @@ export const useSignInForm = () => {
       const idToken = await credential.user.getIdToken();
       const { error, res } = await fetcher(`${API_ROUTE_URL}/session`, {
         headers: {
-          Authorization: idToken ? `Bearer ${idToken}` : "",
+          Authorization: `Bearer ${idToken}`,
         },
       });
 
