@@ -40,41 +40,22 @@ const password = () => screen.getByLabelText("パスワード");
 const clickSubmit = async () => {
   await user.click(screen.getByRole("button", { name: "ログイン" }));
 };
+const emailError = () => screen.queryByText("メールアドレスの形式が不正です。");
+const passwordError = () => screen.queryByText("パスワードを入力してください。");
 
 describe("SignInForm", () => {
-  describe("バリデーション", () => {
-    const emailError = () => screen.queryByText("メールアドレスの形式が不正です。");
-    const passwordError = () => screen.queryByText("パスワードを入力してください。");
-
-    describe("無効な入力のとき、該当エラーが表示される", () => {
-      it("メールアドレスの形式が不正なとき", async () => {
-        render(<SignInForm />);
-        await user.type(email(), "invalid value");
-        await clickSubmit();
-        expect(emailError()).toBeInTheDocument();
-      });
-
-      it("パスワードが入力されていないとき", async () => {
-        render(<SignInForm />);
-        await clickSubmit();
-        expect(passwordError()).toBeInTheDocument();
-      });
+  describe("無効な入力のとき、バリデーションエラーが表示される", () => {
+    it("メールアドレスの形式が不正なとき", async () => {
+      render(<SignInForm />);
+      await user.type(email(), "invalid value");
+      await clickSubmit();
+      expect(emailError()).toBeInTheDocument();
     });
 
-    describe("有効な入力のとき、該当エラーは表示されない", () => {
-      it("メールアドレスであるとき", async () => {
-        render(<SignInForm />);
-        await user.type(email(), "email@example.com");
-        await clickSubmit();
-        expect(emailError()).not.toBeInTheDocument();
-      });
-
-      it("パスワードであるとき", async () => {
-        render(<SignInForm />);
-        await user.type(password(), "password1");
-        await clickSubmit();
-        expect(passwordError()).not.toBeInTheDocument();
-      });
+    it("パスワードが入力されていないとき", async () => {
+      render(<SignInForm />);
+      await clickSubmit();
+      expect(passwordError()).toBeInTheDocument();
     });
   });
 
@@ -95,6 +76,13 @@ describe("SignInForm", () => {
       await user.type(password(), "password1");
       await clickSubmit();
     };
+
+    it("バリデーションエラーは表示されない", async () => {
+      render(<SignInForm />);
+      await validSubmit();
+      expect(emailError()).not.toBeInTheDocument();
+      expect(passwordError()).not.toBeInTheDocument();
+    });
 
     it("signInWithEmailAndPasswordがエラーを返したとき、認証に失敗したことを知らせる", async () => {
       signInWithEmailAndPasswordMock.mockRejectedValueOnce(new Error());
