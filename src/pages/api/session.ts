@@ -7,16 +7,15 @@ const handler: NextApiHandler = async (req, res) => {
   switch (req.method) {
     case "GET":
       try {
-        // 5日
-        const expiresIn = 60 * 60 * 24 * 5 * 1000;
-
         const idToken = req.headers.authorization?.split(" ")[1] ?? "";
-        const sessionCookie = await firebaseAdmin
-          .auth()
-          .createSessionCookie(idToken, { expiresIn });
+        const sessionCookie = await firebaseAdmin.auth().createSessionCookie(idToken, {
+          // 5日
+          expiresIn: 60 * 60 * 24 * 5 * 1000,
+        });
 
         setCookie({ res }, "session", sessionCookie, {
-          maxAge: expiresIn,
+          // 5日
+          maxAge: 60 * 60 * 24 * 5,
           path: "/",
           sameSite: "lax",
           secure: true,

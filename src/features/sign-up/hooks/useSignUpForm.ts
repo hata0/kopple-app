@@ -81,7 +81,7 @@ export const useSignUpForm = () => {
 
       setCookie(null, "uid", user.uid, {
         // 5日
-        maxAge: 60 * 60 * 24 * 5 * 1000,
+        maxAge: 60 * 60 * 24 * 5,
         path: "/",
         sameSite: "lax",
         secure: true,
