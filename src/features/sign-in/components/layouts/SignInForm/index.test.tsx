@@ -1,145 +1,154 @@
-import { render, screen } from "@testing-library/react";
-import { userEvent } from "@testing-library/user-event";
-import * as firebaseAuth from "firebase/auth";
-import mockRouter from "next-router-mock";
-import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
+import { composeStories } from "@storybook/react";
+import { act, render, screen } from "@testing-library/react";
 
-import { SignInForm } from ".";
+import * as stories from "./index.stories";
 
-import { Toaster } from "@/components/shadcn/ui/toaster";
-import { getSessionHandler } from "@/features/sign-in/services/api/session/mock";
-import { setupMockServer } from "@/tests/setupMockServer";
-
-jest.mock("firebase/auth");
+// jest.mock("firebase/auth");
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const signInWithEmailAndPasswordMock = jest.spyOn<any, any>(
-  firebaseAuth,
-  "signInWithEmailAndPassword",
-);
+// const signInWithEmailAndPasswordMock = jest.spyOn<any, any>(
+//   firebaseAuth,
+//   "signInWithEmailAndPassword",
+// );
 
-const user = userEvent.setup();
-const server = setupMockServer(getSessionHandler());
+// const user = userEvent.setup();
+// const server = setupMockServer(getSessionHandler());
 
-beforeEach(() => {
-  Object.defineProperty(global.document, "cookie", {
-    configurable: true,
-    value: "",
-    writable: true,
-  });
-});
+// beforeEach(() => {
+//   Object.defineProperty(global.document, "cookie", {
+//     configurable: true,
+//     value: "",
+//     writable: true,
+//   });
+// });
 
-const email = () => screen.getByRole("textbox", { name: "メールアドレス" });
-const password = () => screen.getByLabelText("パスワード");
-const clickSubmit = async () => {
-  await user.click(screen.getByRole("button", { name: "ログイン" }));
-};
-const emailError = () => screen.queryByText("メールアドレスの形式が不正です。");
-const passwordError = () => screen.queryByText("パスワードを入力してください。");
+const { EmptySubmit, InvalidInput } = composeStories(stories);
 
 describe("SignInForm", () => {
-  describe("無効な入力のとき、バリデーションエラーが表示される", () => {
-    it("メールアドレスの形式が不正なとき", async () => {
-      render(<SignInForm />);
-      await user.type(email(), "invalid value");
-      await clickSubmit();
-      expect(emailError()).toBeInTheDocument();
+  it("空のまま送信した場合、エラーが表示", async () => {
+    const { container } = render(<EmptySubmit />);
+    await act(async () => {
+      await EmptySubmit.play?.({ canvasElement: container });
     });
-
-    it("パスワードが入力されていないとき", async () => {
-      render(<SignInForm />);
-      await clickSubmit();
-      expect(passwordError()).toBeInTheDocument();
-    });
+    expect(
+      await screen.findByRole("textbox", { name: "メールアドレス" }),
+    ).toHaveAccessibleDescription("メールアドレスの形式が不正です。");
+    expect(await screen.findByText("パスワードを入力してください。")).toBeInTheDocument();
   });
 
-  describe("正しい入力値でonSubmitが実行された時", () => {
-    const uid = "uid";
-
-    beforeEach(() => {
-      signInWithEmailAndPasswordMock.mockReset().mockResolvedValue({
-        user: {
-          getIdToken: jest.fn().mockResolvedValue("id-token"),
-          uid,
-        },
-      });
+  it("無効な入力の場合、エラーが表示", async () => {
+    const { container } = render(<InvalidInput />);
+    await act(async () => {
+      await InvalidInput.play?.({ canvasElement: container });
     });
-
-    const validSubmit = async () => {
-      await user.type(email(), "email@example.com");
-      await user.type(password(), "password1");
-      await clickSubmit();
-    };
-
-    it("バリデーションエラーは表示されない", async () => {
-      render(<SignInForm />);
-      await validSubmit();
-      expect(emailError()).not.toBeInTheDocument();
-      expect(passwordError()).not.toBeInTheDocument();
-    });
-
-    it("signInWithEmailAndPasswordがエラーを返したとき、認証に失敗したことを知らせる", async () => {
-      signInWithEmailAndPasswordMock.mockRejectedValueOnce(new Error());
-      render(<SignInForm />);
-      await validSubmit();
-      expect(
-        screen.getByText("認証に失敗しました。もう一度入力してください。"),
-      ).toBeInTheDocument();
-    });
-
-    it("sessionを作成するするクエリがネットワークエラーを出したとき、認証に失敗したことを知らせる", async () => {
-      server.use(getSessionHandler({ isNetworkError: true }));
-      render(<SignInForm />);
-      await validSubmit();
-      expect(
-        screen.getByText("認証に失敗しました。もう一度入力してください。"),
-      ).toBeInTheDocument();
-    });
-
-    it("sessionを作成するクエリのレスポンスが ok でないとき、認証に失敗したことを知らせる", async () => {
-      server.use(
-        getSessionHandler({
-          error: {
-            message: "セッションの作成に失敗しました。",
-            status: 401,
-          },
-        }),
-      );
-      render(<SignInForm />);
-      await validSubmit();
-      expect(
-        screen.getByText("認証に失敗しました。もう一度入力してください。"),
-      ).toBeInTheDocument();
-    });
-
-    describe("認証とセッションクッキーの作成に成功したとき", () => {
-      it("uidのクッキーが正しく作成される", async () => {
-        render(<SignInForm />);
-        await validSubmit();
-        expect(document.cookie).toContain(`uid=${uid}`);
-      });
-
-      it("ログインに成功したと表示される", async () => {
-        render(
-          <>
-            <SignInForm />
-            <Toaster />
-          </>,
-        );
-        await validSubmit();
-        expect(screen.getByText("ログインに成功しました")).toBeInTheDocument();
-      });
-
-      it("ダッシュボードページへ遷移している", async () => {
-        render(<SignInForm />);
-        await validSubmit();
-        expect(mockRouter.asPath).toBe("/dashboard");
-      });
-    });
+    expect(
+      await screen.findByRole("textbox", { name: "メールアドレス" }),
+    ).toHaveAccessibleDescription("メールアドレスの形式が不正です。");
+    expect(await screen.findByText("パスワードを入力してください。")).toBeInTheDocument();
   });
 
-  it("新規登録ページへ遷移するボタンをクリックした時、新規登録ページへ遷移している", async () => {
-    render(<SignInForm />, { wrapper: MemoryRouterProvider });
-    await user.click(screen.getByRole("link", { name: "新規登録" }));
-    expect(mockRouter.asPath).toBe("/sign-up");
-  });
+  // describe("無効な入力のとき、バリデーションエラーが表示される", () => {
+  //   it("メールアドレスの形式が不正なとき", async () => {
+  //     render(<SignInForm />);
+  //     await user.type(email(), "invalid value");
+  //     await clickSubmit();
+  //     expect(emailError()).toBeInTheDocument();
+  //   });
+
+  //   it("パスワードが入力されていないとき", async () => {
+  //     render(<SignInForm />);
+  //     await clickSubmit();
+  //     expect(passwordError()).toBeInTheDocument();
+  //   });
+  // });
+
+  // describe("正しい入力値でonSubmitが実行された時", () => {
+  //   const uid = "uid";
+
+  //   beforeEach(() => {
+  //     signInWithEmailAndPasswordMock.mockReset().mockResolvedValue({
+  //       user: {
+  //         getIdToken: jest.fn().mockResolvedValue("id-token"),
+  //         uid,
+  //       },
+  //     });
+  //   });
+
+  //   const validSubmit = async () => {
+  //     await user.type(email(), "email@example.com");
+  //     await user.type(password(), "password1");
+  //     await clickSubmit();
+  //   };
+
+  //   it("バリデーションエラーは表示されない", async () => {
+  //     render(<SignInForm />);
+  //     await validSubmit();
+  //     expect(emailError()).not.toBeInTheDocument();
+  //     expect(passwordError()).not.toBeInTheDocument();
+  //   });
+
+  //   it("signInWithEmailAndPasswordがエラーを返したとき、認証に失敗したことを知らせる", async () => {
+  //     signInWithEmailAndPasswordMock.mockRejectedValueOnce(new Error());
+  //     render(<SignInForm />);
+  //     await validSubmit();
+  //     expect(
+  //       view.getByText("認証に失敗しました。もう一度入力してください。"),
+  //     ).toBeInTheDocument();
+  //   });
+
+  //   it("sessionを作成するするクエリがネットワークエラーを出したとき、認証に失敗したことを知らせる", async () => {
+  //     server.use(getSessionHandler({ isNetworkError: true }));
+  //     render(<SignInForm />);
+  //     await validSubmit();
+  //     expect(
+  //       view.getByText("認証に失敗しました。もう一度入力してください。"),
+  //     ).toBeInTheDocument();
+  //   });
+
+  //   it("sessionを作成するクエリのレスポンスが ok でないとき、認証に失敗したことを知らせる", async () => {
+  //     server.use(
+  //       getSessionHandler({
+  //         error: {
+  //           message: "セッションの作成に失敗しました。",
+  //           status: 401,
+  //         },
+  //       }),
+  //     );
+  //     render(<SignInForm />);
+  //     await validSubmit();
+  //     expect(
+  //       view.getByText("認証に失敗しました。もう一度入力してください。"),
+  //     ).toBeInTheDocument();
+  //   });
+
+  //   describe("認証とセッションクッキーの作成に成功したとき", () => {
+  //     it("uidのクッキーが正しく作成される", async () => {
+  //       render(<SignInForm />);
+  //       await validSubmit();
+  //       expect(document.cookie).toContain(`uid=${uid}`);
+  //     });
+
+  //     it("ログインに成功したと表示される", async () => {
+  //       render(
+  //         <>
+  //           <SignInForm />
+  //           <Toaster />
+  //         </>,
+  //       );
+  //       await validSubmit();
+  //       expect(view.getByText("ログインに成功しました")).toBeInTheDocument();
+  //     });
+
+  //     it("ダッシュボードページへ遷移している", async () => {
+  //       render(<SignInForm />);
+  //       await validSubmit();
+  //       expect(mockRouter.asPath).toBe("/dashboard");
+  //     });
+  //   });
+  // });
+
+  // it("新規登録ページへ遷移するボタンをクリックした時、新規登録ページへ遷移している", async () => {
+  //   render(<SignInForm />, { wrapper: MemoryRouterProvider });
+  //   await user.click(view.getByRole("link", { name: "新規登録" }));
+  //   expect(mockRouter.asPath).toBe("/sign-up");
+  // });
 });

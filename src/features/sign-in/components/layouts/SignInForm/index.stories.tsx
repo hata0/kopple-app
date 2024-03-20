@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { expect, userEvent, within } from "@storybook/test";
+import { userEvent, within } from "@storybook/test";
 
 import { SignInForm } from ".";
 
@@ -15,8 +15,6 @@ export const EmptySubmit: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await user.click(canvas.getByRole("button", { name: "ログイン" }));
-    await expect(await canvas.findByText("メールアドレスの形式が不正です。")).toBeInTheDocument();
-    await expect(await canvas.findByText("パスワードを入力してください。")).toBeInTheDocument();
   },
 };
 
@@ -26,8 +24,6 @@ export const InvalidInput: Story = {
     const canvas = within(canvasElement);
     await user.type(canvas.getByRole("textbox", { name: "メールアドレス" }), "Invalid Input");
     await user.click(canvas.getByRole("button", { name: "ログイン" }));
-    await expect(await canvas.findByText("メールアドレスの形式が不正です。")).toBeInTheDocument();
-    await expect(await canvas.findByText("パスワードを入力してください。")).toBeInTheDocument();
   },
 };
 
