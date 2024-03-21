@@ -1,9 +1,7 @@
 let nextCredential;
 export const signInWithEmailAndPassword = () => {
   if (nextCredential) {
-    return {
-      signInWithEmailAndPassword: () => nextCredential,
-    };
+    return nextCredential;
   }
   nextCredential = null;
 };

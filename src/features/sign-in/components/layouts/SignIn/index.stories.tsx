@@ -1,7 +1,7 @@
 /* eslint-disable import/named */
 /* eslint-disable testing-library/prefer-screen-queries */
 import { Meta, StoryObj } from "@storybook/react";
-import { userEvent, within } from "@storybook/test";
+import { fn, userEvent, within } from "@storybook/test";
 // eslint-disable-next-line storybook/use-storybook-testing-library
 import {
   ByRoleMatcher,
@@ -11,6 +11,9 @@ import {
 } from "@testing-library/react";
 
 import { SignIn } from ".";
+
+import { Toaster } from "@/components/shadcn/ui/toaster";
+import { getSessionHandler } from "@/features/sign-in/services/api/session/mock";
 
 type T = typeof SignIn;
 type Story = StoryObj<T>;
@@ -29,8 +32,37 @@ const validSubmit = async ({ getByLabelText, getByRole }: ValidSubmitArgs) => {
 
 export const Default: Story = {};
 
-export const UnauthorizedError: Story = {
-  name: "認証でエラーが発生した場合",
+export const SucceedSubmit: Story = {
+  decorators: [
+    (Story) => (
+      <>
+        <Story />
+        <Toaster />
+      </>
+    ),
+  ],
+  name: "成功した場合",
+  parameters: {
+    firebaseAuth: {
+      credential: {
+        user: {
+          getIdToken: fn().mockResolvedValue("id-token"),
+          uid: "uid",
+        },
+      },
+    },
+    msw: {
+      handlers: [getSessionHandler()],
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await validSubmit(canvas);
+  },
+};
+
+export const ServerError: Story = {
+  name: "エラーが発生した場合",
   parameters: {
     firebaseAuth: {
       credential: new Error(),
