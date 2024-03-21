@@ -1,7 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import * as React from "react";
-// eslint-disable-next-line import/named
-import { DayPicker, DropdownProps } from "react-day-picker";
+import { DayPicker, type DropdownProps } from "react-day-picker";
 
 import { buttonVariants } from "@/components/shadcn/ui/button";
 import { ScrollArea } from "@/components/shadcn/ui/scroll-area";

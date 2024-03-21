@@ -1,7 +1,3 @@
-/* eslint-disable import/order */
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
 const { TextDecoder, TextEncoder } = require("node:util");
 
 Object.defineProperties(globalThis, {

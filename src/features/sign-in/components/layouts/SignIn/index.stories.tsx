@@ -1,9 +1,8 @@
-/* eslint-disable import/named */
 /* eslint-disable testing-library/prefer-screen-queries */
 import { Meta, StoryObj } from "@storybook/react";
 import { fn, userEvent, within } from "@storybook/test";
 // eslint-disable-next-line storybook/use-storybook-testing-library
-import {
+import type {
   ByRoleMatcher,
   ByRoleOptions,
   Matcher,
