@@ -1,11 +1,5 @@
-import { PreLoginHeader } from "@/components/layouts/domain/PreLoginHeader";
-import { SignInForm } from "@/features/sign-in/components/layouts/SignInForm";
+import { SignIn } from "@/features/sign-in/components/layouts/SignIn";
 
 export default function SignInPage() {
-  return (
-    <div>
-      <PreLoginHeader />
-      <SignInForm />
-    </div>
-  );
+  return <SignIn />;
 }

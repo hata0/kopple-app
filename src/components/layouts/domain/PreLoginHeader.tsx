@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { memo } from "react";
 
 import { Button } from "../../shadcn/ui/button";
 
@@ -8,7 +9,7 @@ import { NavLinkButton } from "@/components/ui/domain/NavLinkButton";
 import { ThemeModeToggle } from "@/components/ui/domain/ThemeModeToggle";
 import { useIsHasSession } from "@/hooks/useIsHasSession";
 
-export const PreLoginHeader = () => {
+export const PreLoginHeader = memo(() => {
   const router = useRouter();
   const pathname = router.pathname;
   const { isHasSession } = useIsHasSession();
@@ -49,4 +50,6 @@ export const PreLoginHeader = () => {
       </header>
     </div>
   );
-};
+});
+
+PreLoginHeader.displayName = "PreLoginHeader";

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useId } from "react";
+import { Dispatch, memo, SetStateAction, useId } from "react";
 
 import { useSignInForm } from "../../../hooks/useSignInForm";
 
@@ -17,10 +17,18 @@ import { RevealPasswordInput } from "@/components/ui/case/RevealPasswordInput";
 import { ErrorMessage } from "@/components/ui/domain/ErrorMessage";
 import { FormHeading } from "@/components/ui/domain/FormHeading";
 import { FormLegend } from "@/components/ui/domain/FormLegend";
+import { SignInInput } from "@/features/sign-in/services/api/session";
 
-export const SignInForm = () => {
+export type Props = {
+  onSubmit: (
+    values: SignInInput,
+    setErrorMessage: Dispatch<SetStateAction<string>>,
+  ) => Promise<void>;
+};
+
+export const SignInForm = memo(({ onSubmit }: Props) => {
   const headingId = useId();
-  const { errorMessage, form, onSubmit } = useSignInForm();
+  const { errorMessage, form, setErrorMessage } = useSignInForm();
 
   return (
     <Form {...form}>
@@ -28,7 +36,7 @@ export const SignInForm = () => {
         noValidate
         aria-labelledby={headingId}
         className="space-y-8 px-16 py-4"
-        onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}
+        onSubmit={(e) => void form.handleSubmit((val) => onSubmit(val, setErrorMessage))(e)}
       >
         <FormHeading id={headingId}>ログイン</FormHeading>
         <fieldset>
@@ -77,4 +85,6 @@ export const SignInForm = () => {
       </form>
     </Form>
   );
-};
+});
+
+SignInForm.displayName = "SignInForm";
