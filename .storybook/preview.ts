@@ -3,7 +3,7 @@ import "../src/styles/globals.css";
 import { decorator } from "./mocks/firebaseAuth";
 import { initialize, mswLoader } from "msw-storybook-addon";
 
-initialize();
+initialize({ onUnhandledRequest: "bypass" });
 
 const preview: Preview = {
   parameters: {

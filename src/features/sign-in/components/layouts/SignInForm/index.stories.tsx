@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { userEvent, within } from "@storybook/test";
+import { fn, userEvent, within } from "@storybook/test";
 
 import { SignInForm } from ".";
 
@@ -27,7 +27,20 @@ export const InvalidInput: Story = {
   },
 };
 
+export const ValidInput: Story = {
+  name: "有効な入力の場合",
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await user.type(canvas.getByRole("textbox", { name: "メールアドレス" }), "email@example.com");
+    await user.type(canvas.getByLabelText("パスワード"), "password1");
+    await user.click(canvas.getByRole("button", { name: "ログイン" }));
+  },
+};
+
 export default {
+  args: {
+    onSubmit: fn(),
+  },
   component: SignInForm,
   title: "Features/sign-in/SignInForm",
 } satisfies Meta<T>;
