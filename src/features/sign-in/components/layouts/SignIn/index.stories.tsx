@@ -1,6 +1,6 @@
 /* eslint-disable testing-library/prefer-screen-queries */
 import { Meta, StoryObj } from "@storybook/react";
-import { fn, userEvent, within } from "@storybook/test";
+import { fn, userEvent as user, within } from "@storybook/test";
 // eslint-disable-next-line storybook/use-storybook-testing-library
 import type {
   ByRoleMatcher,
@@ -16,8 +16,6 @@ import { getSessionHandler } from "@/features/sign-in/services/api/session/mock"
 
 type T = typeof SignIn;
 type Story = StoryObj<T>;
-
-const user = userEvent.setup();
 
 type ValidSubmitArgs = {
   getByRole: (role: ByRoleMatcher, options?: ByRoleOptions) => HTMLElement;

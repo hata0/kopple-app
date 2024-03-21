@@ -1,12 +1,10 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { fn, userEvent, within } from "@storybook/test";
+import { fn, userEvent as user, within } from "@storybook/test";
 
 import { SignInForm } from ".";
 
 type T = typeof SignInForm;
 type Story = StoryObj<T>;
-
-const user = userEvent.setup();
 
 export const Default: Story = {};
 

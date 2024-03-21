@@ -1,9 +1,13 @@
 import { composeStories } from "@storybook/react";
 import { act, render, screen } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
+import mockRouter from "next-router-mock";
+import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
 import * as stories from "./index.stories";
 
-const { EmptySubmit, InvalidInput, ValidInput } = composeStories(stories);
+const { Default, EmptySubmit, InvalidInput, ValidInput } = composeStories(stories);
+const user = userEvent.setup();
 
 describe("SignInForm", () => {
   it("空のまま送信した場合、エラーが表示", async () => {
@@ -32,17 +36,17 @@ describe("SignInForm", () => {
     const { container } = render(<ValidInput />);
     await act(async () => {
       await ValidInput.play?.({ canvasElement: container });
-      expect(
-        await screen.findByRole("textbox", { name: "メールアドレス" }),
-      ).not.toHaveAccessibleDescription("メールアドレスの形式が不正です。");
-      expect(screen.queryByText("パスワードを入力してください。")).not.toBeInTheDocument();
-      expect(ValidInput.args.onSubmit).toHaveBeenCalled();
     });
+    expect(
+      await screen.findByRole("textbox", { name: "メールアドレス" }),
+    ).not.toHaveAccessibleDescription("メールアドレスの形式が不正です。");
+    expect(screen.queryByText("パスワードを入力してください。")).not.toBeInTheDocument();
+    expect(ValidInput.args.onSubmit).toHaveBeenCalled();
   });
 
-  // it("新規登録ページへ遷移するボタンをクリックした時、新規登録ページへ遷移している", async () => {
-  //   render(<SignInForm />, { wrapper: MemoryRouterProvider });
-  //   await user.click(view.getByRole("link", { name: "新規登録" }));
-  //   expect(mockRouter.asPath).toBe("/sign-up");
-  // });
+  it("新規登録ページへ遷移するボタンをクリックした時、新規登録ページへ遷移している", async () => {
+    render(<Default />, { wrapper: MemoryRouterProvider });
+    await user.click(screen.getByRole("link", { name: "新規登録" }));
+    expect(mockRouter.asPath).toBe("/sign-up");
+  });
 });
