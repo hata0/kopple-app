@@ -46,21 +46,6 @@ describe("SignInForm", () => {
     expect(await screen.findByText("パスワードを入力してください。")).toBeInTheDocument();
   });
 
-  // describe("無効な入力のとき、バリデーションエラーが表示される", () => {
-  //   it("メールアドレスの形式が不正なとき", async () => {
-  //     render(<SignInForm />);
-  //     await user.type(email(), "invalid value");
-  //     await clickSubmit();
-  //     expect(emailError()).toBeInTheDocument();
-  //   });
-
-  //   it("パスワードが入力されていないとき", async () => {
-  //     render(<SignInForm />);
-  //     await clickSubmit();
-  //     expect(passwordError()).toBeInTheDocument();
-  //   });
-  // });
-
   // describe("正しい入力値でonSubmitが実行された時", () => {
   //   const uid = "uid";
 

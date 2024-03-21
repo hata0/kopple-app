@@ -21,6 +21,7 @@ const config: StorybookConfig = {
   webpackFinal: (config) => {
     config.resolve!.alias = {
       ...config.resolve?.alias,
+      "firebase/auth": require.resolve("./mocks/firebaseAuth.ts"),
       "@": path.resolve(__dirname, "../src"),
     };
     return config;

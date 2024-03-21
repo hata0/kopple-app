@@ -29,5 +29,5 @@ export const InvalidInput: Story = {
 
 export default {
   component: SignInForm,
-  title: "Features/SignIn/SignInForm",
+  title: "Features/sign-in/SignInForm",
 } satisfies Meta<T>;
