@@ -5,3 +5,5 @@ yarn.lock
 package-lock.json
 postcss.config.js
 coverage
+jest.polyfills.ts
+mockServiceWorker.js

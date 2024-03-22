@@ -12,14 +12,7 @@
     "plugin:testing-library/react",
     "plugin:storybook/recommended"
   ],
-  "plugins": [
-    "@typescript-eslint",
-    "import",
-    "sort",
-    "jest",
-    "jest-dom",
-    "testing-library"
-  ],
+  "plugins": ["@typescript-eslint", "import", "sort", "jest", "jest-dom", "testing-library"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json"
@@ -42,9 +35,7 @@
         "shorthandFirst": true
       }
     ],
-    "sort/imports": [
-      "off"
-    ],
+    "sort/imports": ["off"],
     "react/jsx-curly-brace-presence": "error",
     "react/jsx-boolean-value": "error",
     "react/self-closing-comp": [
