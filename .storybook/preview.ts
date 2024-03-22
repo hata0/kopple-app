@@ -3,6 +3,7 @@ import "../src/styles/globals.css";
 import { decorator } from "./mocks/firebaseAuth";
 import { initialize, mswLoader } from "msw-storybook-addon";
 import { fn } from "@storybook/test";
+import { withThemeByClassName } from "@storybook/addon-themes";
 
 initialize({ onUnhandledRequest: "bypass" });
 
@@ -23,7 +24,16 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [decorator],
+  decorators: [
+    decorator,
+    withThemeByClassName({
+      themes: {
+        light: "light",
+        dark: "dark",
+      },
+      defaultTheme: "light",
+    }),
+  ],
   loaders: [mswLoader],
 };
 

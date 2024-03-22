@@ -7,3 +7,4 @@ postcss.config.js
 coverage
 jest.polyfills.ts
 mockServiceWorker.js
+storybook-static

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { memo } from "react";
 
-import { Button } from "../../shadcn/ui/button";
+import { Button } from "../../../shadcn/ui/button";
 
 import { NavLinkButton } from "@/components/ui/domain/NavLinkButton";
 import { ThemeModeToggle } from "@/components/ui/domain/ThemeModeToggle";
