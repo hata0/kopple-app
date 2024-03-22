@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Dispatch, memo, SetStateAction, useId } from "react";
 
-import { useSignInForm } from "../../../hooks/useSignInForm";
+import { useSignInForm } from "../../hooks/useSignInForm";
 
 import { Button } from "@/components/shadcn/ui/button";
 import {
