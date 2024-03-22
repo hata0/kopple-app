@@ -1,6 +1,6 @@
 /* eslint-disable testing-library/prefer-screen-queries */
 import { Meta, StoryObj } from "@storybook/react";
-import { userEvent as user, within } from "@storybook/test";
+import { userEvent, within } from "@storybook/test";
 // eslint-disable-next-line storybook/use-storybook-testing-library
 import type {
   ByRoleMatcher,
@@ -22,9 +22,9 @@ type ValidSubmitArgs = {
   getByLabelText: (id: Matcher, options?: SelectorMatcherOptions) => HTMLElement;
 };
 const validSubmit = async ({ getByLabelText, getByRole }: ValidSubmitArgs) => {
-  await user.type(getByRole("textbox", { name: "メールアドレス" }), "email@example.com");
-  await user.type(getByLabelText("パスワード"), "password1");
-  await user.click(getByRole("button", { name: "ログイン" }));
+  await userEvent.type(getByRole("textbox", { name: "メールアドレス" }), "email@example.com");
+  await userEvent.type(getByLabelText("パスワード"), "password1");
+  await userEvent.click(getByRole("button", { name: "ログイン" }));
 };
 
 export const Default: Story = {};
