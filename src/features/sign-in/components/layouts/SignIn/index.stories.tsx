@@ -1,6 +1,6 @@
 /* eslint-disable testing-library/prefer-screen-queries */
 import { Meta, StoryObj } from "@storybook/react";
-import { fn, userEvent as user, within } from "@storybook/test";
+import { userEvent as user, within } from "@storybook/test";
 // eslint-disable-next-line storybook/use-storybook-testing-library
 import type {
   ByRoleMatcher,
@@ -40,14 +40,6 @@ export const SucceedSubmit: Story = {
   ],
   name: "成功した場合",
   parameters: {
-    firebaseAuth: {
-      credential: {
-        user: {
-          getIdToken: fn().mockResolvedValue("id-token"),
-          uid: "uid",
-        },
-      },
-    },
     msw: {
       handlers: [getSessionHandler()],
     },
