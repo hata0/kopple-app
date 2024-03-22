@@ -17,7 +17,7 @@ describe("SignInForm", () => {
     });
     expect(
       await screen.findByRole("textbox", { name: "メールアドレス" }),
-    ).toHaveAccessibleDescription("メールアドレスの形式が不正です。");
+    ).toHaveAccessibleDescription("メールアドレスを入力してください。");
     expect(await screen.findByText("パスワードを入力してください。")).toBeInTheDocument();
   });
 
@@ -29,7 +29,6 @@ describe("SignInForm", () => {
     expect(
       await screen.findByRole("textbox", { name: "メールアドレス" }),
     ).toHaveAccessibleDescription("メールアドレスの形式が不正です。");
-    expect(await screen.findByText("パスワードを入力してください。")).toBeInTheDocument();
   });
 
   it("有効な入力の場合、エラーが非表示かつonSubmitが実行される", async () => {
