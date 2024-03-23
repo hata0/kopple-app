@@ -65,5 +65,12 @@ export const ServerError: Story = {
 
 export default {
   component: SignIn,
+  parameters: {
+    nextjs: {
+      router: {
+        pathname: "/sign-in",
+      },
+    },
+  },
   title: "Features/sign-in/SignIn",
 } satisfies Meta<T>;
