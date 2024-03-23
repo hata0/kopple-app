@@ -17,7 +17,7 @@ export const RevealPasswordInput = ({ render }: Props) => {
         type: isPasswordShown ? "text" : "password",
       })}
       <Button
-        aria-label={isPasswordShown ? "パスワードを表示" : "パスワードを隠す"}
+        aria-label={isPasswordShown ? "パスワードを隠す" : "パスワードを表示"}
         onClick={() => setIsPasswordShown((prev) => !prev)}
         size="icon"
         type="button"
