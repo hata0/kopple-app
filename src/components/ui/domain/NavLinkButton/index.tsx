@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ReactNode } from "react";
 
-import { Button } from "../../shadcn/ui/button";
+import { Button } from "../../../shadcn/ui/button";
 
 type Props = {
   href: string;
