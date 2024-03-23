@@ -12,7 +12,7 @@ export const RevealPasswordInput = ({ isPasswordShown: initialValue = false, ren
   const [isPasswordShown, setIsPasswordShown] = useState(initialValue);
 
   return (
-    <div className="flex border border-input ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
+    <div className="flex rounded-md border border-input ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
       {render({
         className: "border-0 ring-0 focus-visible:ring-0 focus-visible:ring-offset-0",
         type: isPasswordShown ? "text" : "password",
