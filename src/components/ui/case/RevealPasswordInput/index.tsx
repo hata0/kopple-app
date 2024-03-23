@@ -5,10 +5,11 @@ import { Button } from "../../../shadcn/ui/button";
 
 type Props = {
   render: (inputProps: { className: string; type: string }) => ReactNode;
+  isPasswordShown?: boolean;
 };
 
-export const RevealPasswordInput = ({ render }: Props) => {
-  const [isPasswordShown, setIsPasswordShown] = useState(false);
+export const RevealPasswordInput = ({ isPasswordShown: initialValue = false, render }: Props) => {
+  const [isPasswordShown, setIsPasswordShown] = useState(initialValue);
 
   return (
     <div className="flex border border-input ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">

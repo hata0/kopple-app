@@ -19,6 +19,10 @@ export const ShowPassword: Story = {
 };
 
 export const HidePassword: Story = {
+  args: {
+    isPasswordShown: true,
+    render: (inputProps) => <Input {...inputProps} />,
+  },
   name: "パスワードを隠す",
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
