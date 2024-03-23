@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-import { Button } from "../../shadcn/ui/button";
+import { Button } from "../../../shadcn/ui/button";
 
 type Props = {
   render: (inputProps: { className: string; type: string }) => ReactNode;
