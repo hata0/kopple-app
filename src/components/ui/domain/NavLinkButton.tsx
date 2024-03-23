@@ -11,7 +11,12 @@ type Props = {
 
 export const NavLinkButton = ({ children, href, pathname }: Props) => {
   return (
-    <Button asChild className={pathname === href ? "" : "text-muted-foreground"} variant="ghost">
+    <Button
+      asChild
+      aria-current={pathname === href ? "page" : undefined}
+      className="text-muted-foreground aria-[current=page]:text-foreground"
+      variant="ghost"
+    >
       <Link href={href}>{children}</Link>
     </Button>
   );
