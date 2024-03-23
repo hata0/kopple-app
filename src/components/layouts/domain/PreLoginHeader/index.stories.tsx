@@ -7,9 +7,7 @@ import { SessionDecorator } from "@/tests/decorators/SessionDecorator";
 type T = typeof PreLoginHeader;
 type Story = StoryObj<T>;
 
-export const Top: Story = {
-  name: "トップページの場合",
-};
+export const Default: Story = {};
 
 export const SignIn: Story = {
   name: "ログインページの場合",
