@@ -29,9 +29,9 @@ export const PreLoginHeader = memo(() => {
           </Button>
           <nav aria-label="ナビゲーション">
             {isHasSession ? (
-              <NavLinkButton href="/dashboard" pathname={pathname}>
-                ダッシュボード
-              </NavLinkButton>
+              <Button asChild className="text-muted-foreground" variant="ghost">
+                <Link href="/dashboard">ダッシュボード</Link>
+              </Button>
             ) : (
               <>
                 <NavLinkButton href="/sign-in" pathname={pathname}>
