@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 
-import Error from "./_error";
+import Error from "./_error.page";
 
 import { PostLoginHeader } from "@/components/layouts/domain/PostLoginHeader";
 import { ProfileForm } from "@/features/profile/components/layouts/ProfileForm";

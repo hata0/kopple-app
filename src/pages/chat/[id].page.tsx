@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { SWRConfig } from "swr";
 
-import Error from "../_error";
+import Error from "../_error.page";
 
 import { ChatContents } from "@/features/chat/components/layouts/ChatContents";
 import { ChatForm } from "@/features/chat/components/layouts/ChatForm";

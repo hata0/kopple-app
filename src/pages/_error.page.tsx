@@ -1,5 +1,5 @@
-import Custom401 from "./401";
-import Custom500 from "./500";
+import Custom401 from "./401.page";
+import Custom500 from "./500.page";
 
 import { HttpErrorObject } from "@/utils/HttpError";
 

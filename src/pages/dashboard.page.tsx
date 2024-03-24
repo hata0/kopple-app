@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { SWRConfig } from "swr";
 
-import Error from "./_error";
+import Error from "./_error.page";
 
 import { PostLoginHeader } from "@/components/layouts/domain/PostLoginHeader";
 import { PortraitCarousel } from "@/features/dashboard/components/layouts/PortraitCarousel";
