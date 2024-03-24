@@ -20,11 +20,11 @@ const handler: NextApiHandler = async (req, res) => {
           sameSite: "lax",
           secure: true,
         });
-        res.status(200).send({
+        res.status(200).json({
           message: "セッションを作成しました",
         });
       } catch (e) {
-        res.status(401).send({
+        res.status(401).json({
           error: "セッションの作成に失敗しました。",
         });
       }
@@ -41,17 +41,17 @@ const handler: NextApiHandler = async (req, res) => {
 
         destroyCookie({ res }, "session", { path: "/" });
         destroyCookie({ res }, "uid", { path: "/" });
-        res.status(200).send({
+        res.status(200).json({
           message: "セッションの削除に成功しました。",
         });
       } catch (e) {
-        res.status(401).send({
+        res.status(401).json({
           error: "セッションの削除に失敗しました",
         });
       }
       break;
     default:
-      res.status(405).send({
+      res.status(405).json({
         error: "Method not allowed",
       });
   }
