@@ -5,7 +5,7 @@ import { ProfileContent } from "../dashboard/types/ProfileContent";
 
 import { MOCK_API_URL } from "@/constants/mockApiUrl";
 import { HttpError, HttpErrorObject } from "@/utils/HttpError";
-import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
+import { fetcher } from "@/utils/fetcher";
 
 export type Props = {
   profileContent?: ProfileContent;
@@ -14,7 +14,7 @@ export type Props = {
 
 export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
   const cookies = nookies.get(ctx);
-  const { error, res } = await fetcherWithAuth(`${MOCK_API_URL}/profiles/${cookies.uid}`, ctx);
+  const { error, res } = await fetcher(`${MOCK_API_URL}/profiles/${cookies.uid}`);
 
   if (error) {
     throw new Error();

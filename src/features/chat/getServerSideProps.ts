@@ -4,7 +4,7 @@ import { ChatContents } from "./types/ChatContents";
 
 import { MOCK_API_URL } from "@/constants/mockApiUrl";
 import { HttpError, HttpErrorObject } from "@/utils/HttpError";
-import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
+import { fetcher } from "@/utils/fetcher";
 
 export type Props = {
   fallback?: {
@@ -15,7 +15,7 @@ export type Props = {
 
 export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
   const id = ctx.params!.id as string;
-  const { error, res } = await fetcherWithAuth(`${MOCK_API_URL}/chats/${id}`, ctx);
+  const { error, res } = await fetcher(`${MOCK_API_URL}/chats/${id}`);
 
   if (error) {
     throw new Error();

@@ -4,7 +4,7 @@ import { ChatCard } from "./types/ChatCard";
 
 import { MOCK_API_URL } from "@/constants/mockApiUrl";
 import { HttpError, HttpErrorObject } from "@/utils/HttpError";
-import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
+import { fetcher } from "@/utils/fetcher";
 
 export type Props = {
   fallback?: {
@@ -13,8 +13,8 @@ export type Props = {
   error?: HttpErrorObject;
 };
 
-export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
-  const { error, res } = await fetcherWithAuth(`${MOCK_API_URL}/chats`, ctx);
+export const getServerSideProps: GetServerSideProps<Props> = async () => {
+  const { error, res } = await fetcher(`${MOCK_API_URL}/chats`);
 
   if (error) {
     throw new Error();
