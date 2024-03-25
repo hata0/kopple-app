@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import { Auth } from "firebase-admin/auth";
 
 import handler from "./session.api";
