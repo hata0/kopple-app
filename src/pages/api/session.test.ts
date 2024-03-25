@@ -10,6 +10,9 @@ import { Cookie } from "@/tests/types/Cookie";
 const createSessionMock = jest.fn();
 const verifySessionMock = jest.fn();
 const revokeMock = jest.fn();
+jest.mock("firebase-admin", () => ({
+  apps: [{ auth: () => {} }],
+}));
 jest.spyOn(firebaseAdmin, "auth").mockReturnValue({
   createSessionCookie: createSessionMock,
   revokeRefreshTokens: revokeMock,
