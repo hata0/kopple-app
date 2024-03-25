@@ -35,9 +35,7 @@ const handler: NextApiHandler = async (req, res) => {
         const session = parseCookies({ req }).session ?? "";
         const decodedIdToken = await auth.verifySessionCookie(session);
 
-        if (decodedIdToken) {
-          await auth.revokeRefreshTokens(decodedIdToken.sub);
-        }
+        await auth.revokeRefreshTokens(decodedIdToken.sub);
 
         destroyCookie({ res }, "session", { path: "/" });
         destroyCookie({ res }, "uid", { path: "/" });

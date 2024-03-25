@@ -2,24 +2,33 @@ import { NextApiHandler } from "next";
 import { RequestOptions } from "node-mocks-http";
 
 import { apiHandlerArgs } from "./apiHandlerArgs";
+import { serializeCookie as serialize } from "./serializeCookie";
+import { Cookie } from "./types/Cookie";
+
+export const sessionMock: Cookie = { name: "session", value: "session-value" };
 
 export async function testApiHandler(
   handler: NextApiHandler,
   reqOptions?: RequestOptions,
   loggedIn = true,
+  cookies?: Cookie[],
 ) {
+  const cookie = cookies?.reduce(
+    (acc, cookie) => {
+      return acc === "" ? serialize(cookie) : `${acc}; ${serialize(cookie)}`;
+    },
+    loggedIn ? serialize(sessionMock) : "",
+  );
+
   const [req, res] = apiHandlerArgs({
     reqOptions: {
-      ...(loggedIn && {
-        cookies: {
-          session: "session-value",
-        },
-      }),
       ...reqOptions,
+      headers: {
+        ...reqOptions?.headers,
+        cookie,
+      },
     },
   });
   await handler(req, res);
-  const status = res.statusCode;
-  const json = res._getJSONData() as unknown;
-  return { json, req, res, status } as const;
+  return { req, res } as const;
 }
