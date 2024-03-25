@@ -23,7 +23,7 @@ jest.spyOn(firebaseAdmin, "auth").mockReturnValue({
   verifySessionCookie: verifySessionMock,
 } as unknown as Auth);
 
-describe("session", () => {
+describe("/api/session", () => {
   describe("GET", () => {
     it("200", async () => {
       const idToken = "idToken";
