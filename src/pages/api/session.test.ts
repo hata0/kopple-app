@@ -8,7 +8,7 @@ import handler from "./session.api";
 
 import { firebaseAdmin } from "@/lib/firebase/admin";
 import { serializeCookie } from "@/tests/serializeCookie";
-import { sessionMock, testApiHandler } from "@/tests/testApiHandler";
+import { sessionCookieMock, testApiHandler } from "@/tests/testApiHandler";
 import { Cookie } from "@/tests/types/Cookie";
 
 const createSessionMock = jest.fn();
@@ -80,13 +80,13 @@ describe("session", () => {
         [uidCookie],
       );
       expect(res.statusCode).toBe(200);
-      expect(verifySessionMock).toHaveBeenCalledWith(sessionMock.value);
+      expect(verifySessionMock).toHaveBeenCalledWith(sessionCookieMock.value);
       expect(revokeMock).toHaveBeenCalledWith(decodedIdToken.sub);
       const cookies = res.getHeader("set-cookie");
       expect(cookies).toBeDefined();
       expect(cookies).toEqual(
         expect.arrayContaining([
-          expect.stringContaining(serializeCookie({ ...sessionMock, value: "" })),
+          expect.stringContaining(serializeCookie({ ...sessionCookieMock, value: "" })),
         ]),
       );
       expect(cookies).toEqual(

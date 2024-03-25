@@ -5,7 +5,7 @@ import { apiHandlerArgs } from "./apiHandlerArgs";
 import { serializeCookie as serialize } from "./serializeCookie";
 import { Cookie } from "./types/Cookie";
 
-export const sessionMock: Cookie = { name: "session", value: "session-value" };
+export const sessionCookieMock: Cookie = { name: "session", value: "session-value" };
 
 export async function testApiHandler(
   handler: NextApiHandler,
@@ -17,7 +17,7 @@ export async function testApiHandler(
     (acc, cookie) => {
       return acc === "" ? serialize(cookie) : `${acc}; ${serialize(cookie)}`;
     },
-    loggedIn ? serialize(sessionMock) : "",
+    loggedIn ? serialize(sessionCookieMock) : "",
   );
 
   const [req, res] = apiHandlerArgs({
