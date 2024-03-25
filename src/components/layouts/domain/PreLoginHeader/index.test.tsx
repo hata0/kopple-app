@@ -4,13 +4,11 @@ import mockRouter from "next-router-mock";
 
 import * as stories from "./index.stories";
 
+import { defineMockCookie } from "@/tests/defineMockCookie";
+
 const { Default, HasSession } = composeStories(stories);
 beforeEach(() => {
-  Object.defineProperty(global.document, "cookie", {
-    configurable: true,
-    value: "",
-    writable: true,
-  });
+  defineMockCookie();
 });
 
 describe("PreLoginHeader", () => {

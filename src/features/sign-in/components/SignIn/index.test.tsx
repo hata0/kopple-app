@@ -8,6 +8,7 @@ import { act } from "react-dom/test-utils";
 import * as stories from "./index.stories";
 
 import { getSessionHandler } from "@/features/sign-in/services/api/session/mock";
+import { defineMockCookie } from "@/tests/defineMockCookie";
 import { setupMockServer } from "@/tests/setupMockServer";
 
 const { ServerError, SucceedSubmit } = composeStories(stories);
@@ -27,11 +28,7 @@ beforeEach(() => {
 });
 
 beforeEach(() => {
-  Object.defineProperty(global.document, "cookie", {
-    configurable: true,
-    value: "",
-    writable: true,
-  });
+  defineMockCookie();
 });
 
 const authError = () => screen.findByText("認証に失敗しました。もう一度入力してください。");
