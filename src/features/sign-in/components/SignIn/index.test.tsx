@@ -8,10 +8,10 @@ import { act } from "react-dom/test-utils";
 import * as stories from "./index.stories";
 
 import { getSessionHandler } from "@/features/sign-in/services/api/session/mock";
-import { defineMockCookie } from "@/tests/defineMockCookie";
 import { uidCookieMock } from "@/tests/mocks/mockCookies";
-import { serializeCookie } from "@/tests/serializeCookie";
-import { setupMockServer } from "@/tests/setupMockServer";
+import { defineMockCookie } from "@/tests/utils/defineMockCookie";
+import { serializeCookie } from "@/tests/utils/serializeCookie";
+import { setupMockServer } from "@/tests/utils/setupMockServer";
 
 const { ServerError, SucceedSubmit } = composeStories(stories);
 const server = setupMockServer();

@@ -1,10 +1,11 @@
 import { NextApiHandler } from "next";
 import { RequestOptions } from "node-mocks-http";
 
+import { sessionCookieMock } from "../mocks/mockCookies";
+import { Cookie } from "../types/Cookie";
+
 import { apiHandlerArgs } from "./apiHandlerArgs";
-import { sessionCookieMock } from "./mocks/mockCookies";
 import { serializeCookie as serialize } from "./serializeCookie";
-import { Cookie } from "./types/Cookie";
 
 export const testApiHandler = async (
   handler: NextApiHandler,

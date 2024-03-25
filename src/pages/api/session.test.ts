@@ -8,8 +8,8 @@ import handler from "./session.api";
 
 import { firebaseAdmin } from "@/lib/firebase/admin";
 import { sessionCookieMock, uidCookieMock } from "@/tests/mocks/mockCookies";
-import { serializeCookie } from "@/tests/serializeCookie";
-import { testApiHandler } from "@/tests/testApiHandler";
+import { serializeCookie } from "@/tests/utils/serializeCookie";
+import { testApiHandler } from "@/tests/utils/testApiHandler";
 
 const createSessionMock = jest.fn();
 const verifySessionMock = jest.fn();
