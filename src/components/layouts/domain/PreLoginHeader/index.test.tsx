@@ -4,7 +4,9 @@ import mockRouter from "next-router-mock";
 
 import * as stories from "./index.stories";
 
+import { uidCookieMock } from "@/tests/decorators/UidDecorator";
 import { defineMockCookie } from "@/tests/defineMockCookie";
+import { serializeCookie } from "@/tests/serializeCookie";
 
 const { Default, HasSession } = composeStories(stories);
 beforeEach(() => {
@@ -20,7 +22,7 @@ describe("PreLoginHeader", () => {
 
   it("セッションがある場合、ダッシュボードへのリンクが表示される", () => {
     render(<HasSession />);
-    expect(document.cookie).toContain("session=session-value");
+    expect(document.cookie).toContain(serializeCookie(uidCookieMock));
     expect(screen.getByRole("link", { name: "ダッシュボード" })).toBeInTheDocument();
   });
 });

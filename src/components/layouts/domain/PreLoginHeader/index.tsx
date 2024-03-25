@@ -7,13 +7,13 @@ import { Button } from "../../../shadcn/ui/button";
 
 import { NavLinkButton } from "@/components/ui/domain/NavLinkButton";
 import { ThemeModeToggle } from "@/components/ui/domain/ThemeModeToggle";
-import { useIsHasSession } from "@/hooks/useIsHasSession";
+import { useIsHasUid } from "@/hooks/useIsHasUid";
 
 export const PreLoginHeader = memo(() => {
   const linkId = useId();
   const router = useRouter();
   const pathname = router.pathname;
-  const { isHasSession } = useIsHasSession();
+  const { isHasUid } = useIsHasUid();
 
   return (
     <div className="m-2 bg-background/80">
@@ -35,7 +35,7 @@ export const PreLoginHeader = memo(() => {
             </Link>
           </Button>
           <nav aria-label="ナビゲーション">
-            {isHasSession ? (
+            {isHasUid ? (
               <Button asChild className="text-muted-foreground" variant="ghost">
                 <Link href="/dashboard">ダッシュボード</Link>
               </Button>
