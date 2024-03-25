@@ -5,6 +5,7 @@ import { useEffect } from "react";
 export const SessionDecorator = (Story: StoryFn) => {
   useEffect(() => {
     setCookie(null, "session", "session-value", {
+      httpOnly: true,
       maxAge: 60 * 60 * 24 * 5,
       path: "/",
       sameSite: "lax",

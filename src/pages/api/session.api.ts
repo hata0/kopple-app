@@ -14,6 +14,7 @@ const handler: NextApiHandler = async (req, res) => {
         });
 
         setCookie({ res }, "session", sessionCookie, {
+          httpOnly: true,
           // 5日
           maxAge: 60 * 60 * 24 * 5,
           path: "/",
