@@ -9,12 +9,13 @@ import * as stories from "./index.stories";
 
 import { getSessionHandler } from "@/features/sign-in/services/api/session/mock";
 import { defineMockCookie } from "@/tests/defineMockCookie";
+import { uidCookieMock } from "@/tests/mocks/mockCookies";
+import { serializeCookie } from "@/tests/serializeCookie";
 import { setupMockServer } from "@/tests/setupMockServer";
 
 const { ServerError, SucceedSubmit } = composeStories(stories);
 const server = setupMockServer();
 const idToken = "id-token";
-const uid = "uid";
 
 jest.mock("firebase/auth");
 const authMock = jest.spyOn(firebaseAuth, "signInWithEmailAndPassword");
@@ -22,7 +23,7 @@ beforeEach(() => {
   authMock.mockReset().mockResolvedValue({
     user: {
       getIdToken: jest.fn().mockResolvedValue(idToken),
-      uid,
+      uid: uidCookieMock.value,
     },
   } as unknown as UserCredential);
 });
@@ -79,7 +80,7 @@ describe("SignIn", () => {
     await act(async () => {
       await SucceedSubmit.play?.({ canvasElement: container });
     });
-    expect(document.cookie).toContain(`uid=${uid}`);
+    expect(document.cookie).toContain(serializeCookie(uidCookieMock));
     expect(screen.getByText("ログインに成功しました")).toBeInTheDocument();
     expect(mockRouter.asPath).toBe("/dashboard");
   });

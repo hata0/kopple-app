@@ -2,9 +2,7 @@ import { StoryFn } from "@storybook/react";
 import { destroyCookie, setCookie } from "nookies";
 import { useEffect } from "react";
 
-import { Cookie } from "../types/Cookie";
-
-export const uidCookieMock: Cookie = { name: "uid", value: "uid-value" };
+import { uidCookieMock } from "../mocks/mockCookies";
 
 export const UidDecorator = (Story: StoryFn) => {
   const { name, value } = uidCookieMock;

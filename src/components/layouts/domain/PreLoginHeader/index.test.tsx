@@ -4,8 +4,8 @@ import mockRouter from "next-router-mock";
 
 import * as stories from "./index.stories";
 
-import { uidCookieMock } from "@/tests/decorators/UidDecorator";
 import { defineMockCookie } from "@/tests/defineMockCookie";
+import { uidCookieMock } from "@/tests/mocks/mockCookies";
 import { serializeCookie } from "@/tests/serializeCookie";
 
 const { Default, HasSession } = composeStories(stories);

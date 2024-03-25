@@ -7,9 +7,9 @@ import { Auth } from "firebase-admin/auth";
 import handler from "./session.api";
 
 import { firebaseAdmin } from "@/lib/firebase/admin";
+import { sessionCookieMock, uidCookieMock } from "@/tests/mocks/mockCookies";
 import { serializeCookie } from "@/tests/serializeCookie";
-import { sessionCookieMock, testApiHandler } from "@/tests/testApiHandler";
-import { Cookie } from "@/tests/types/Cookie";
+import { testApiHandler } from "@/tests/testApiHandler";
 
 const createSessionMock = jest.fn();
 const verifySessionMock = jest.fn();
@@ -27,8 +27,7 @@ describe("session", () => {
   describe("GET", () => {
     it("200", async () => {
       const idToken = "idToken";
-      const sessionValue = "session-value";
-      createSessionMock.mockResolvedValueOnce(sessionValue);
+      createSessionMock.mockResolvedValueOnce(sessionCookieMock.value);
       const { res } = await testApiHandler(
         handler,
         {
@@ -45,7 +44,7 @@ describe("session", () => {
       const cookies = res.getHeader("set-cookie");
       expect(cookies).toBeDefined();
       expect(cookies).toEqual(
-        expect.arrayContaining([expect.stringContaining(`session=${sessionValue}`)]),
+        expect.arrayContaining([expect.stringContaining(serializeCookie(sessionCookieMock))]),
       );
       expect(res._getJSONData()).toEqual({
         message: "セッションを作成しました",
@@ -64,8 +63,6 @@ describe("session", () => {
   });
 
   describe("DELETE", () => {
-    const uidCookie: Cookie = { name: "uid", value: "uid-value" };
-
     it("200", async () => {
       const decodedIdToken = {
         sub: "sub-value",
@@ -77,7 +74,7 @@ describe("session", () => {
           method: "DELETE",
         },
         true,
-        [uidCookie],
+        [uidCookieMock],
       );
       expect(res.statusCode).toBe(200);
       expect(verifySessionMock).toHaveBeenCalledWith(sessionCookieMock.value);
@@ -91,7 +88,7 @@ describe("session", () => {
       );
       expect(cookies).toEqual(
         expect.arrayContaining([
-          expect.stringContaining(serializeCookie({ ...uidCookie, value: "" })),
+          expect.stringContaining(serializeCookie({ ...uidCookieMock, value: "" })),
         ]),
       );
       expect(res._getJSONData()).toEqual({
@@ -107,7 +104,7 @@ describe("session", () => {
           method: "DELETE",
         },
         true,
-        [uidCookie],
+        [uidCookieMock],
       );
       expect(res.statusCode).toBe(401);
       expect(res.getHeader("set-cookie")).toBeUndefined();
