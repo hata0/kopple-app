@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import Image from "next/image";
 import { memo } from "react";
 
-import { ProfileContent as Props } from "../../types/ProfileContent";
+import { ProfileContent as Props } from "../types/ProfileContent";
 
 import { Badge } from "@/components/shadcn/ui/badge";
 

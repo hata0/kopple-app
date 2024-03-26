@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { ImProfile } from "react-icons/im";
 
-import { useProfile } from "../../hooks/useProfile";
+import { useProfile } from "../hooks/useProfile";
 
 import { ProfileContent } from "./ProfileContent";
 import { ProfileSkeleton } from "./ProfileSkeleton";

@@ -2,7 +2,7 @@ import { format, isThisWeek, isThisYear, isToday, isYesterday } from "date-fns";
 import { useRouter } from "next/router";
 import { memo } from "react";
 
-import { ChatCard as Props } from "../../types/ChatCard";
+import { ChatCard as Props } from "../types/ChatCard";
 
 import { DeleteChatDialog } from "./DeleteChatDialog";
 

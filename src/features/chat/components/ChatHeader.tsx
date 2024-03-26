@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { IoMdBackspace } from "react-icons/io";
 import useSWR from "swr";
 
-import { ChatContents } from "../../types/ChatContents";
+import { ChatContents } from "../types/ChatContents";
 
 import { Button } from "@/components/shadcn/ui/button";
 

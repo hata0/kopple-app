@@ -1,7 +1,7 @@
 import { InView } from "react-intersection-observer";
 import { TailSpin } from "react-loader-spinner";
 
-import { useChatCards } from "../../hooks/useChatCards";
+import { useChatCards } from "../hooks/useChatCards";
 
 import { ChatCard } from "./ChatCard";
 

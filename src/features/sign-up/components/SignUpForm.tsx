@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useId } from "react";
 
-import { useSignUpForm } from "../../hooks/useSignUpForm";
+import { useSignUpForm } from "../hooks/useSignUpForm";
 
 import { Button } from "@/components/shadcn/ui/button";
 import {

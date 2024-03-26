@@ -1,4 +1,4 @@
-import { usePortraitCarousel } from "../../hooks/usePortraitCarousel";
+import { usePortraitCarousel } from "../hooks/usePortraitCarousel";
 
 import { PortraitCard } from "./PortraitCard";
 import { PortraitCardSkeleton } from "./PortraitCardSkeleton";

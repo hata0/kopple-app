@@ -1,7 +1,7 @@
 import { memo } from "react";
 import useSWR from "swr";
 
-import { ChatCard } from "../../types/ChatCard";
+import { ChatCard } from "../types/ChatCard";
 
 import {
   AlertDialog,

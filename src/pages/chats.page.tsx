@@ -4,7 +4,7 @@ import { SWRConfig } from "swr";
 import Error from "./_error.page";
 
 import { PostLoginHeader } from "@/components/layouts/domain/PostLoginHeader";
-import { ChatCards } from "@/features/chats/components/layouts/ChatCards";
+import { ChatCards } from "@/features/chats/components/ChatCards";
 import { getServerSideProps, Props } from "@/features/chats/getServerSideProps";
 
 export { getServerSideProps };

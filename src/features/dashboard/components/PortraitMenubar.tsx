@@ -3,7 +3,7 @@ import { AiFillLike } from "react-icons/ai";
 import { ImProfile } from "react-icons/im";
 import useSWR from "swr";
 
-import { PortraitCard } from "../../types/PortraitCard";
+import { PortraitCard } from "../types/PortraitCard";
 
 import { ProfileDrawer } from "./ProfileDrawer";
 

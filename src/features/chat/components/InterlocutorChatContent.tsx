@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { memo } from "react";
 
-import { Message } from "../../types/Message";
+import { Message } from "../types/Message";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/ui/avatar";
 import { cn } from "@/lib/utils";

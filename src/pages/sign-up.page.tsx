@@ -1,5 +1,5 @@
 import { PreLoginHeader } from "@/components/layouts/domain/PreLoginHeader";
-import { SignUpForm } from "@/features/sign-up/components/layouts/SignUpForm";
+import { SignUpForm } from "@/features/sign-up/components/SignUpForm";
 
 export default function SignUpPage() {
   return (

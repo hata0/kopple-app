@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import { InView } from "react-intersection-observer";
 import { TailSpin } from "react-loader-spinner";
 
-import { useChatContents } from "../../hooks/useChatContents";
+import { useChatContents } from "../hooks/useChatContents";
 
 import { DateBadge } from "./DateBadge";
 import { InterlocutorChatContent } from "./InterlocutorChatContent";

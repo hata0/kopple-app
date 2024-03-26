@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { memo } from "react";
 
-import { PortraitCard as Props } from "../../types/PortraitCard";
+import { PortraitCard as Props } from "../types/PortraitCard";
 
 import { Card, CardContent } from "@/components/shadcn/ui/card";
 

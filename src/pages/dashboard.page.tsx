@@ -4,7 +4,7 @@ import { SWRConfig } from "swr";
 import Error from "./_error.page";
 
 import { PostLoginHeader } from "@/components/layouts/domain/PostLoginHeader";
-import { PortraitCarousel } from "@/features/dashboard/components/layouts/PortraitCarousel";
+import { PortraitCarousel } from "@/features/dashboard/components/PortraitCarousel";
 import { getServerSideProps, Props } from "@/features/dashboard/getServerSideProps";
 
 const DashboardPage: NextPage<Props> = ({ error, fallback }) => {
