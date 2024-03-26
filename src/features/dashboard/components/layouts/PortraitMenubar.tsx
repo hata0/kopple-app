@@ -12,7 +12,7 @@ import { CarouselNext, CarouselPrevious } from "@/components/shadcn/ui/carousel"
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { ToggleIconButton } from "@/components/ui/case/ToggleIconButton";
 import { MOCK_API_URL } from "@/constants/mockApiUrl";
-import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
+import { fetcher } from "@/utils/fetcher";
 
 type Props = {
   current: number;
@@ -39,7 +39,7 @@ export const PortraitMenubar = memo(({ current }: Props) => {
 
     await mutate(
       async () => {
-        const { error, res } = await fetcherWithAuth(`${MOCK_API_URL}/likes/${id}`, undefined, {
+        const { error, res } = await fetcher(`${MOCK_API_URL}/likes/${id}`, {
           method: "PUT",
         });
 

@@ -7,7 +7,7 @@ import { CarouselApi } from "@/components/shadcn/ui/carousel";
 import { ToastAction } from "@/components/shadcn/ui/toast";
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { MOCK_API_URL } from "@/constants/mockApiUrl";
-import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
+import { fetcher } from "@/utils/fetcher";
 
 export const usePortraitCarousel = () => {
   const { data: portraitCards, mutate } = useSWR<PortraitCard[]>("/portraits");
@@ -25,7 +25,7 @@ export const usePortraitCarousel = () => {
       const func = async () => {
         if (!api.canScrollNext()) {
           const recursion = async () => {
-            const { error, res } = await fetcherWithAuth(`${MOCK_API_URL}/portraits`);
+            const { error, res } = await fetcher(`${MOCK_API_URL}/portraits`);
 
             if (error) {
               toast({

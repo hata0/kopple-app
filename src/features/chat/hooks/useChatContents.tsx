@@ -8,7 +8,7 @@ import { Message } from "../types/Message";
 import { ToastAction } from "@/components/shadcn/ui/toast";
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { MOCK_API_URL } from "@/constants/mockApiUrl";
-import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
+import { fetcher } from "@/utils/fetcher";
 
 export const useChatContents = () => {
   const router = useRouter();
@@ -62,7 +62,7 @@ export const useChatContents = () => {
   };
 
   const getChatContents = useCallback(async () => {
-    const { error, res } = await fetcherWithAuth(`${MOCK_API_URL}/chats/${id}`);
+    const { error, res } = await fetcher(`${MOCK_API_URL}/chats/${id}`);
 
     if (error) {
       toast({

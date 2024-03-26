@@ -11,7 +11,7 @@ import { Message } from "../types/Message";
 
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { MOCK_API_URL } from "@/constants/mockApiUrl";
-import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
+import { fetcher } from "@/utils/fetcher";
 
 const formSchema = z.object({
   message: z.string().min(1),
@@ -48,9 +48,8 @@ export const useChatForm = () => {
 
       await mutate(
         async () => {
-          const { error, res } = await fetcherWithAuth<CreateMessageRequest>(
+          const { error, res } = await fetcher<CreateMessageRequest>(
             `${MOCK_API_URL}/messages/create/${id}`,
-            undefined,
             {
               body: {
                 message,

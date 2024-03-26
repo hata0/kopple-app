@@ -17,7 +17,7 @@ import {
 import { Button } from "@/components/shadcn/ui/button";
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { MOCK_API_URL } from "@/constants/mockApiUrl";
-import { fetcherWithAuth } from "@/utils/fetcherWithAuth";
+import { fetcher } from "@/utils/fetcher";
 
 type Props = {
   id: string;
@@ -33,7 +33,7 @@ export const DeleteChatDialog = memo(({ id }: Props) => {
 
     await mutate(
       async () => {
-        const { error, res } = await fetcherWithAuth(`${MOCK_API_URL}/chats/${id}`, undefined, {
+        const { error, res } = await fetcher(`${MOCK_API_URL}/chats/${id}`, {
           method: "DELETE",
         });
 
