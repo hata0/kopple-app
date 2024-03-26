@@ -3,8 +3,8 @@ import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { DayOfBirthPicker } from "./DayOfBirthPicker";
-import { Tag, TagInput } from "./TagInput";
+import { DayOfBirthPicker } from "../DayOfBirthPicker";
+import { Tag, TagInput } from "../TagInput";
 
 import { Button } from "@/components/shadcn/ui/button";
 import {
