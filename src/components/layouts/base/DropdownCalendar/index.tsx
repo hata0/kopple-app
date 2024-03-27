@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/shadcn/ui/select";
+import { cn } from "@/lib/utils";
 
 type Props = CalendarProps & {
   date: {
@@ -40,11 +41,12 @@ export const createToDate = ({ date, month, year }: DateType) => {
   }
 };
 
-export const DropdownCalendar = ({ classNames, components, date, ...props }: Props) => {
+export const DropdownCalendar = ({ className, classNames, components, date, ...props }: Props) => {
   return (
     <Calendar
       fixedWeeks
       captionLayout="dropdown-buttons"
+      className={cn("inline-block", className)}
       classNames={{
         caption_dropdowns: "flex justify-center gap-1",
         ...classNames,
