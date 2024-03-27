@@ -42,6 +42,7 @@ export const DropdownCalendar = ({ classNames, components, date, ...props }: Pro
 
   return (
     <Calendar
+      fixedWeeks
       captionLayout="dropdown-buttons"
       classNames={{
         caption_dropdowns: "flex justify-center gap-1",
