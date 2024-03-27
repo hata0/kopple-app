@@ -26,20 +26,20 @@ type DateType = {
   date?: number;
 };
 
-export const DropdownCalendar = ({ classNames, components, date, ...props }: Props) => {
-  const createFromDate = ({ date = 1, month = 1, year }: DateType) => {
+export const createFromDate = ({ date = 1, month = 1, year }: DateType) => {
+  return new Date(year, month - 1, date);
+};
+export const createToDate = ({ date, month, year }: DateType) => {
+  if (!month) {
+    return subDays(new Date(year + 1, 0, 1), 1);
+  } else if (!date) {
+    return subDays(new Date(year, month, 1), 1);
+  } else {
     return new Date(year, month - 1, date);
-  };
-  const createToDate = ({ date, month, year }: DateType) => {
-    if (!month) {
-      return subDays(new Date(year + 1, 0, 1), 1);
-    } else if (!date) {
-      return subDays(new Date(year, month, 1), 1);
-    } else {
-      return new Date(year, month - 1, date);
-    }
-  };
+  }
+};
 
+export const DropdownCalendar = ({ classNames, components, date, ...props }: Props) => {
   return (
     <Calendar
       fixedWeeks
@@ -50,7 +50,7 @@ export const DropdownCalendar = ({ classNames, components, date, ...props }: Pro
       }}
       components={{
         // 年と月をセレクトできるようにしている
-        Dropdown: ({ children, onChange, value }: DropdownProps) => {
+        Dropdown: ({ children, name, onChange, value }: DropdownProps) => {
           const options = Children.toArray(children) as ReactElement<
             HTMLProps<HTMLOptionElement>
           >[];
@@ -68,7 +68,10 @@ export const DropdownCalendar = ({ classNames, components, date, ...props }: Pro
               }}
               value={value?.toString()}
             >
-              <SelectTrigger className="pr-1.5 focus:outline-gray-400 focus:ring-0">
+              <SelectTrigger
+                aria-label={name}
+                className="pr-1.5 focus:outline-gray-400 focus:ring-0"
+              >
                 <SelectValue>{selected?.props?.children}</SelectValue>
               </SelectTrigger>
               <SelectContent position="popper">
