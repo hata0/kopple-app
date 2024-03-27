@@ -33,6 +33,13 @@ describe("DropdownCalendar", () => {
       expect(createFromDate({ date: 20, month: 5, year: 2000 })).toEqual(new Date(2000, 4, 20));
       expect(createToDate({ date: 12, month: 2, year: 2025 })).toEqual(new Date(2025, 1, 12));
     });
+    it("任意の Date クラス", () => {
+      jest.useFakeTimers();
+      jest.setSystemTime(new Date(2022, 0, 1, 1, 0, 0));
+      expect(createFromDate(new Date())).toEqual(new Date());
+      expect(createToDate(new Date())).toEqual(new Date());
+      jest.useRealTimers();
+    });
   });
 
   it("2000/7/12を選択できる", async () => {

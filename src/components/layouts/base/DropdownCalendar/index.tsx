@@ -21,23 +21,35 @@ type Props = CalendarProps & {
   };
 };
 
-type DateType = {
-  year: number;
-  // 1 <= month <= 12
-  month?: number;
-  date?: number;
-};
+type DateType =
+  | {
+      year: number;
+      // 1 <= month <= 12
+      month?: number;
+      date?: number;
+    }
+  | Date;
 
-export const createFromDate = ({ date = 1, month = 1, year }: DateType) => {
-  return new Date(year, month - 1, date);
-};
-export const createToDate = ({ date, month, year }: DateType) => {
-  if (!month) {
-    return subDays(new Date(year + 1, 0, 1), 1);
-  } else if (!date) {
-    return subDays(new Date(year, month, 1), 1);
+export const createFromDate = (arg: DateType) => {
+  if (arg instanceof Date) {
+    return arg;
   } else {
+    const { date = 1, month = 1, year } = arg;
     return new Date(year, month - 1, date);
+  }
+};
+export const createToDate = (arg: DateType) => {
+  if (arg instanceof Date) {
+    return arg;
+  } else {
+    const { date, month, year } = arg;
+    if (!month) {
+      return subDays(new Date(year + 1, 0, 1), 1);
+    } else if (!date) {
+      return subDays(new Date(year, month, 1), 1);
+    } else {
+      return new Date(year, month - 1, date);
+    }
   }
 };
 

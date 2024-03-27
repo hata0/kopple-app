@@ -26,7 +26,7 @@ export const Month: Story = {
   name: "2000/5/1 ~ 2025/2/28",
 };
 
-export const Date: Story = {
+export const DateObj: Story = {
   args: {
     date: {
       from: {
@@ -42,6 +42,16 @@ export const Date: Story = {
     },
   },
   name: "2000/5/20 ~ 2025/2/12",
+};
+
+export const CustomDate: Story = {
+  args: {
+    date: {
+      from: new Date(2000, 4, 20),
+      to: new Date(2025, 1, 12),
+    },
+  },
+  name: "Date クラスから定義した場合",
 };
 
 export const PickDate: Story = {
