@@ -7,7 +7,13 @@ import { cn } from "@/lib/utils";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
-function Calendar({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) {
+function Calendar({
+  className,
+  classNames,
+  components,
+  showOutsideDays = true,
+  ...props
+}: CalendarProps) {
   return (
     <DayPicker
       className={cn("p-3", className)}
@@ -46,6 +52,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
       components={{
         IconLeft: () => <ChevronLeft className="h-4 w-4" />,
         IconRight: () => <ChevronRight className="h-4 w-4" />,
+        ...components,
       }}
       showOutsideDays={showOutsideDays}
       {...props}
