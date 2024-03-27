@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
+import { fn } from "@storybook/test";
 
 import { DropdownCalendar } from ".";
 
@@ -41,6 +42,22 @@ export const Date: Story = {
     },
   },
   name: "2000/5/20 ~ 2025/2/12",
+};
+
+export const PickDate: Story = {
+  args: {
+    date: {
+      from: {
+        year: 2000,
+      },
+      to: {
+        year: 2025,
+      },
+    },
+    mode: "single",
+    onSelect: fn(),
+  },
+  name: "任意の日付を選択した場合",
 };
 
 export default {
