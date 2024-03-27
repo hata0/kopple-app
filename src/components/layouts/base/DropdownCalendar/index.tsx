@@ -1,4 +1,5 @@
 import { subDays } from "date-fns";
+import { ja } from "date-fns/locale";
 import { ChangeEvent, Children, HTMLProps, ReactElement } from "react";
 import { type DropdownProps } from "react-day-picker";
 
@@ -92,6 +93,7 @@ export const DropdownCalendar = ({ classNames, components, date, ...props }: Pro
         ...components,
       }}
       fromDate={createFromDate(date.from)}
+      locale={ja}
       toDate={createToDate(date.to)}
       {...props}
     />

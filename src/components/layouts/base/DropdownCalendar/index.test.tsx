@@ -38,7 +38,7 @@ describe("DropdownCalendar", () => {
   it("2000/7/12を選択できる", async () => {
     render(<PickDate />);
     await user.click(screen.getByRole("combobox", { name: "months" }));
-    await user.click(screen.getByRole("option", { name: "July" }));
+    await user.click(screen.getByRole("option", { name: "7月" }));
     await user.click(screen.getByRole("combobox", { name: "years" }));
     await user.click(screen.getByRole("option", { name: "2000" }));
     await user.click(screen.getByRole("gridcell", { name: "12" }));
