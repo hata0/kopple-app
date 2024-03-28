@@ -27,6 +27,6 @@ describe("TagInput", () => {
     await act(async () => {
       await DeleteTag.play?.({ canvasElement: container });
     });
-    expect(screen.queryByText(DeleteTag.args.tags![0])).not.toBeInTheDocument();
+    expect(screen.queryByText(DeleteTag.args.tags![0].name)).not.toBeInTheDocument();
   });
 });

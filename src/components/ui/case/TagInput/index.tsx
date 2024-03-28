@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
+import { Tag } from "../Tag";
 import { TagList } from "../TagList";
 
 import { Button } from "@/components/shadcn/ui/button";
@@ -8,7 +9,7 @@ import { Input } from "@/components/shadcn/ui/input";
 import { toast } from "@/components/shadcn/ui/use-toast";
 
 type Props = {
-  tags: string[];
+  tags: Tag[];
 };
 
 export const TagInput = ({ tags: initialTags }: Props) => {
@@ -18,11 +19,11 @@ export const TagInput = ({ tags: initialTags }: Props) => {
 
   // TODO: 後で削除
   const onAddTag = () => {
-    setTags((prev) => [...prev, text]);
+    setTags((prev) => [...prev, { id: crypto.randomUUID(), name: text }]);
   };
 
   const handleAddTag = () => {
-    if (!tags.find((name) => name === text)) {
+    if (!tags.find(({ name }) => name === text)) {
       // TODO: この中で引数の関数を呼び出して処理する
       onAddTag();
 
@@ -35,8 +36,8 @@ export const TagInput = ({ tags: initialTags }: Props) => {
     }
   };
 
-  const handleDeleteTag = (nameToDelete: string) => {
-    setTags((prev) => prev.filter((name) => name !== nameToDelete));
+  const handleDeleteTag = (idToDelete: string) => {
+    setTags((prev) => prev.filter(({ id }) => id !== idToDelete));
   };
 
   return (

@@ -21,7 +21,7 @@ export const AddTag: Story = {
 
 export const AddSameTag: Story = {
   args: {
-    tags: ["tag name"],
+    tags: [{ id: crypto.randomUUID(), name: "tag name" }],
   },
   name: "同じタグ名で作成する場合",
   play: async ({ canvasElement }) => {
@@ -33,13 +33,13 @@ export const AddSameTag: Story = {
 
 export const DeleteTag: Story = {
   args: {
-    tags: ["tag name"],
+    tags: [{ id: crypto.randomUUID(), name: "tag name" }],
   },
   name: "タグを削除する場合",
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(
-      canvas.getByRole("button", { name: `「${DeleteTag.args!.tags![0]}」を削除` }),
+      canvas.getByRole("button", { name: `「${DeleteTag.args!.tags![0].name}」を削除` }),
     );
   },
 };

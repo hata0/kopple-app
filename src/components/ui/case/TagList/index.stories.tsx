@@ -19,7 +19,10 @@ export const EmptyList: Story = {
 export default {
   args: {
     onDeleteTag: fn(),
-    tags: ["tag1", "tag2"],
+    tags: [
+      { id: crypto.randomUUID(), name: "tag1" },
+      { id: crypto.randomUUID(), name: "tag2" },
+    ],
   },
   component: TagList,
 } satisfies Meta<T>;
