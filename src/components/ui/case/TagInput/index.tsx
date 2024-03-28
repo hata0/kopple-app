@@ -1,33 +1,43 @@
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
-import { Tag } from "../Tag";
+import { TagList } from "../TagList";
 
 import { Button } from "@/components/shadcn/ui/button";
 import { Input } from "@/components/shadcn/ui/input";
+import { toast } from "@/components/shadcn/ui/use-toast";
 
 export const TagInput = () => {
   // TODO: 後で削除
   const [tags, setTags] = useState<string[]>([]);
   const [text, setText] = useState("");
 
-  const handleAddTag = () => {
-    // TODO: この中で関数を呼び出して処理する
+  // TODO: 後で削除
+  const onAddTag = () => {
     setTags((prev) => [...prev, text]);
-    setText("");
   };
 
-  const handleDeleteTag = (tag: string) => {
-    setTags((prevs) => prevs.filter((prev) => prev !== tag));
+  const handleAddTag = () => {
+    if (!tags.find((name) => name === text)) {
+      // TODO: この中で引数の関数を呼び出して処理する
+      onAddTag();
+
+      setText("");
+    } else {
+      toast({
+        title: "同じ名前のタグは設定できません",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDeleteTag = (nameToDelete: string) => {
+    setTags((prev) => prev.filter((name) => name !== nameToDelete));
   };
 
   return (
     <div className="flex h-[52px] justify-center space-x-2">
-      <div className="flex w-full items-center space-x-1 rounded-md border border-border px-3 py-2">
-        {tags.map((tag, idx) => (
-          <Tag key={idx} name={tag} onDeleteTag={() => handleDeleteTag(tag)} />
-        ))}
-      </div>
+      <TagList onDeleteTag={handleDeleteTag} tags={tags} />
       <div className="flex h-full items-center justify-center space-x-2">
         <Input className="w-40" onChange={(e) => setText(e.target.value)} value={text} />
         <Button aria-label="追加" disabled={text === ""} onClick={handleAddTag} size="icon">
