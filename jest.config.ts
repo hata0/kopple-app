@@ -8,6 +8,7 @@ const createJestConfig = nextJest({
 
 // Add any custom config to be passed to Jest
 const config: Config = {
+  coveragePathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/src/components/shadcn/"],
   coverageProvider: "v8",
   preset: "ts-jest/presets/js-with-ts-esm",
   setupFiles: ["<rootDir>/jest.polyfills.ts"],

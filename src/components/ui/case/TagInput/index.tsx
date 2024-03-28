@@ -7,9 +7,13 @@ import { Button } from "@/components/shadcn/ui/button";
 import { Input } from "@/components/shadcn/ui/input";
 import { toast } from "@/components/shadcn/ui/use-toast";
 
-export const TagInput = () => {
+type Props = {
+  tags: string[];
+};
+
+export const TagInput = ({ tags: initialTags }: Props) => {
   // TODO: 後で削除
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState(initialTags);
   const [text, setText] = useState("");
 
   // TODO: 後で削除
@@ -40,7 +44,13 @@ export const TagInput = () => {
       <TagList onDeleteTag={handleDeleteTag} tags={tags} />
       <div className="flex h-full items-center justify-center space-x-2">
         <Input className="w-40" onChange={(e) => setText(e.target.value)} value={text} />
-        <Button aria-label="追加" disabled={text === ""} onClick={handleAddTag} size="icon">
+        <Button
+          aria-label="追加"
+          disabled={text === ""}
+          onClick={handleAddTag}
+          size="icon"
+          type="button"
+        >
           <FaPlus />
         </Button>
       </div>
