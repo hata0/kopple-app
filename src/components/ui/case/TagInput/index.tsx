@@ -44,7 +44,12 @@ export const TagInput = ({ tags: initialTags }: Props) => {
     <div className="flex h-[52px] justify-center space-x-2">
       <TagList onDeleteTag={handleDeleteTag} tags={tags} />
       <div className="flex h-full items-center justify-center space-x-2">
-        <Input className="w-40" onChange={(e) => setText(e.target.value)} value={text} />
+        <Input
+          className="w-40"
+          onChange={(e) => setText(e.target.value)}
+          placeholder="タグを追加する"
+          value={text}
+        />
         <Button
           aria-label="追加"
           disabled={text === ""}

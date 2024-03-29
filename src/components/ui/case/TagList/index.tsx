@@ -7,9 +7,11 @@ type Props = {
 export const TagList = ({ tags, ...tagProps }: Props) => {
   return (
     <div className="flex h-[52px] w-full items-center space-x-1 rounded-md border border-border px-3 py-2">
-      {tags.map((tag, idx) => (
-        <Tag key={idx} {...tag} {...tagProps} />
-      ))}
+      {tags.length === 0 ? (
+        <div className="text-muted-foreground">現在、タグは設定されていません</div>
+      ) : (
+        tags.map((tag, idx) => <Tag key={idx} {...tag} {...tagProps} />)
+      )}
     </div>
   );
 };
