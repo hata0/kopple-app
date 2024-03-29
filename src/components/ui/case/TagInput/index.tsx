@@ -1,6 +1,6 @@
 import { type DragEndEvent, type DragStartEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
 import { Tag } from "../../base/Tag";
@@ -14,7 +14,7 @@ type Props = {
   tags: Tag[];
 };
 
-export const TagInput = ({ tags: initialTags }: Props) => {
+export const TagInput = memo(({ tags: initialTags }: Props) => {
   // TODO: 後で削除
   const [tags, setTags] = useState(initialTags);
   const [text, setText] = useState("");
@@ -90,4 +90,5 @@ export const TagInput = ({ tags: initialTags }: Props) => {
       </div>
     </div>
   );
-};
+});
+TagInput.displayName = "TagInput";

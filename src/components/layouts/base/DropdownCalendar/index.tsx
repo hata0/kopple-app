@@ -1,6 +1,6 @@
 import { subDays } from "date-fns";
 import { ja } from "date-fns/locale";
-import { ChangeEvent, Children, HTMLProps, ReactElement } from "react";
+import { ChangeEvent, Children, HTMLProps, memo, ReactElement } from "react";
 import { type DropdownProps } from "react-day-picker";
 
 import { Calendar, CalendarProps } from "@/components/shadcn/ui/calendar";
@@ -53,63 +53,66 @@ export const createToDate = (arg: DateType) => {
   }
 };
 
-export const DropdownCalendar = ({ className, classNames, components, date, ...props }: Props) => {
-  return (
-    <Calendar
-      fixedWeeks
-      captionLayout="dropdown-buttons"
-      className={cn("inline-block", className)}
-      classNames={{
-        caption_dropdowns: "flex justify-center gap-1",
-        ...classNames,
-      }}
-      components={{
-        // 年と月をセレクトできるようにしている
-        Dropdown: ({ children, name, onChange, value }: DropdownProps) => {
-          const options = Children.toArray(children) as ReactElement<
-            HTMLProps<HTMLOptionElement>
-          >[];
-          const selected = options.find((child) => child.props.value === value);
-          const handleChange = (value: string) => {
-            const changeEvent = {
-              target: { value },
-            } as ChangeEvent<HTMLSelectElement>;
-            onChange?.(changeEvent);
-          };
-          return (
-            <Select
-              onValueChange={(value) => {
-                handleChange(value);
-              }}
-              value={value?.toString()}
-            >
-              <SelectTrigger
-                aria-label={name}
-                className="pr-1.5 focus:outline-gray-400 focus:ring-0"
+export const DropdownCalendar = memo(
+  ({ className, classNames, components, date, ...props }: Props) => {
+    return (
+      <Calendar
+        fixedWeeks
+        captionLayout="dropdown-buttons"
+        className={cn("inline-block", className)}
+        classNames={{
+          caption_dropdowns: "flex justify-center gap-1",
+          ...classNames,
+        }}
+        components={{
+          // 年と月をセレクトできるようにしている
+          Dropdown: ({ children, name, onChange, value }: DropdownProps) => {
+            const options = Children.toArray(children) as ReactElement<
+              HTMLProps<HTMLOptionElement>
+            >[];
+            const selected = options.find((child) => child.props.value === value);
+            const handleChange = (value: string) => {
+              const changeEvent = {
+                target: { value },
+              } as ChangeEvent<HTMLSelectElement>;
+              onChange?.(changeEvent);
+            };
+            return (
+              <Select
+                onValueChange={(value) => {
+                  handleChange(value);
+                }}
+                value={value?.toString()}
               >
-                <SelectValue>{selected?.props?.children}</SelectValue>
-              </SelectTrigger>
-              <SelectContent position="popper">
-                <ScrollArea className="h-72">
-                  {options.map((option, id: number) => (
-                    <SelectItem
-                      key={`${option.props.value as string}-${id}`}
-                      value={option.props.value?.toString() ?? ""}
-                    >
-                      {option.props.children}
-                    </SelectItem>
-                  ))}
-                </ScrollArea>
-              </SelectContent>
-            </Select>
-          );
-        },
-        ...components,
-      }}
-      fromDate={createFromDate(date.from)}
-      locale={ja}
-      toDate={createToDate(date.to)}
-      {...props}
-    />
-  );
-};
+                <SelectTrigger
+                  aria-label={name}
+                  className="pr-1.5 focus:outline-gray-400 focus:ring-0"
+                >
+                  <SelectValue>{selected?.props?.children}</SelectValue>
+                </SelectTrigger>
+                <SelectContent position="popper">
+                  <ScrollArea className="h-72">
+                    {options.map((option, id: number) => (
+                      <SelectItem
+                        key={`${option.props.value as string}-${id}`}
+                        value={option.props.value?.toString() ?? ""}
+                      >
+                        {option.props.children}
+                      </SelectItem>
+                    ))}
+                  </ScrollArea>
+                </SelectContent>
+              </Select>
+            );
+          },
+          ...components,
+        }}
+        fromDate={createFromDate(date.from)}
+        locale={ja}
+        toDate={createToDate(date.to)}
+        {...props}
+      />
+    );
+  },
+);
+DropdownCalendar.displayName = "DropdownCalendar";

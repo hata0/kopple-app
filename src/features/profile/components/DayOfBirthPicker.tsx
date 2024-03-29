@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import { memo } from "react";
 import { ControllerRenderProps } from "react-hook-form";
 
 import { FormFieldValue } from "./ProfileForm";
@@ -10,7 +11,7 @@ import { FormControl } from "@/components/shadcn/ui/form";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/ui/popover";
 import { cn } from "@/lib/utils";
 
-export const DayOfBirthPicker = (field: ControllerRenderProps<FormFieldValue, "birthday">) => {
+export const DayOfBirthPicker = memo((field: ControllerRenderProps<FormFieldValue, "birthday">) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -40,4 +41,5 @@ export const DayOfBirthPicker = (field: ControllerRenderProps<FormFieldValue, "b
       </PopoverContent>
     </Popover>
   );
-};
+});
+DayOfBirthPicker.displayName = "DayOfBirthPicker";
