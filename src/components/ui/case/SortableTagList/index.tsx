@@ -27,17 +27,10 @@ export const SortableTagList = ({ onDragEnd, tags, ...tagProps }: Props) => {
 };
 
 const SortableTag = (props: TagProps) => {
-  const {
-    attributes,
-    isDragging,
-    listeners,
-    setActivatorNodeRef,
-    setNodeRef,
-    transform,
-    transition,
-  } = useSortable({
-    id: props.id,
-  });
+  const { attributes, isDragging, listeners, setActivatorNodeRef, setNodeRef, transform } =
+    useSortable({
+      id: props.id,
+    });
 
   return (
     <Tag
@@ -46,7 +39,6 @@ const SortableTag = (props: TagProps) => {
         ref: setNodeRef,
         style: {
           transform: CSS.Transform.toString(transform),
-          transition,
         },
       }}
       nameProps={{
