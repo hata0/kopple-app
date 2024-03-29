@@ -18,7 +18,7 @@ export const SortableTagList = ({
   ...tagProps
 }: Props) => {
   return (
-    <div className="flex h-[52px] w-full items-center space-x-1 rounded-md border border-border px-3 py-2">
+    <div className="flex min-h-[52px] w-full flex-wrap items-center gap-1 rounded-md border border-border px-3 py-2">
       {tags.length === 0 ? (
         <div className="text-muted-foreground">現在、タグは設定されていません</div>
       ) : (

@@ -63,7 +63,7 @@ export const TagInput = ({ tags: initialTags }: Props) => {
   };
 
   return (
-    <div className="flex h-[52px] justify-center space-x-2">
+    <div className="flex flex-col items-end space-y-2">
       <SortableTagList
         draggingTag={draggingTag}
         onDeleteTag={handleDeleteTag}
