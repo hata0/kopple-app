@@ -1,4 +1,4 @@
-import { DndContext, type DragEndEvent } from "@dnd-kit/core";
+import { DndContext, type DragEndEvent, DragOverlay, type DragStartEvent } from "@dnd-kit/core";
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
@@ -7,19 +7,28 @@ import { Tag, type Tag as TagType, TagProps } from "../../base/Tag";
 type Props = {
   tags: TagType[];
   onDragEnd: (event: DragEndEvent) => void;
+  onDragStart: (event: DragStartEvent) => void;
+  draggingTag: TagType | null;
 } & Omit<TagProps, "name" | "id">;
-export const SortableTagList = ({ onDragEnd, tags, ...tagProps }: Props) => {
+export const SortableTagList = ({
+  draggingTag,
+  onDragEnd,
+  onDragStart,
+  tags,
+  ...tagProps
+}: Props) => {
   return (
     <div className="flex h-[52px] w-full items-center space-x-1 rounded-md border border-border px-3 py-2">
       {tags.length === 0 ? (
         <div className="text-muted-foreground">現在、タグは設定されていません</div>
       ) : (
-        <DndContext onDragEnd={onDragEnd}>
+        <DndContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
           <SortableContext items={tags}>
             {tags.map((tag, idx) => (
               <SortableTag key={idx} {...tag} {...tagProps} />
             ))}
           </SortableContext>
+          <DragOverlay>{draggingTag && <Tag {...draggingTag} />}</DragOverlay>
         </DndContext>
       )}
     </div>
@@ -36,6 +45,7 @@ const SortableTag = (props: TagProps) => {
     <Tag
       {...props}
       containerProps={{
+        className: isDragging ? "opacity-50" : "",
         ref: setNodeRef,
         style: {
           transform: CSS.Transform.toString(transform),

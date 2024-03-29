@@ -1,4 +1,4 @@
-import { type DragEndEvent } from "@dnd-kit/core";
+import { type DragEndEvent, type DragStartEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
@@ -18,6 +18,7 @@ export const TagInput = ({ tags: initialTags }: Props) => {
   // TODO: 後で削除
   const [tags, setTags] = useState(initialTags);
   const [text, setText] = useState("");
+  const [draggingTag, setDraggingTag] = useState<Tag | null>(null);
 
   // TODO: 後で削除
   const onAddTag = () => {
@@ -42,21 +43,34 @@ export const TagInput = ({ tags: initialTags }: Props) => {
     setTags((prev) => prev.filter(({ id }) => id !== idToDelete));
   };
 
-  const handleSortTag = ({ active, over }: DragEndEvent) => {
-    if (over === null || active.id === over.id) {
+  const handleDragEnd = ({ active, over }: DragEndEvent) => {
+    if (over === null) {
       return;
+    } else if (active.id === over.id) {
+      setDraggingTag(null);
     } else {
       setTags((prev) => {
         const oldIndex = prev.findIndex((tag) => tag.id === active.id);
         const newIndex = prev.findIndex((tag) => tag.id === over.id);
         return arrayMove(prev, oldIndex, newIndex);
       });
+      setDraggingTag(null);
     }
+  };
+
+  const handleDragStart = ({ active }: DragStartEvent) => {
+    setDraggingTag(tags.find((tag) => tag.id === active.id) as Tag);
   };
 
   return (
     <div className="flex h-[52px] justify-center space-x-2">
-      <SortableTagList onDeleteTag={handleDeleteTag} onDragEnd={handleSortTag} tags={tags} />
+      <SortableTagList
+        draggingTag={draggingTag}
+        onDeleteTag={handleDeleteTag}
+        onDragEnd={handleDragEnd}
+        onDragStart={handleDragStart}
+        tags={tags}
+      />
       <div className="flex h-full items-center justify-center space-x-2">
         <Input
           className="w-40"

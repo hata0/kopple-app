@@ -9,7 +9,7 @@ export type Tag = {
   id: string;
 };
 export type TagProps = {
-  onDeleteTag: (idToDelete: string) => void;
+  onDeleteTag?: (idToDelete: string) => void;
   containerProps?: ComponentProps<"div">;
   deleteProps?: Omit<ButtonProps, "onClick">;
   nameProps?: ComponentProps<"span">;
@@ -44,7 +44,7 @@ export const Tag = ({
           "ml-0.5 h-full w-4 bg-transparent py-2 pl-0 pr-2 transition-colors hover:bg-transparent hover:text-red-500",
           deleteProps?.className,
         )}
-        onClick={() => onDeleteTag(id)}
+        onClick={() => onDeleteTag?.(id)}
         type="button"
       >
         <ImCross />
