@@ -16,6 +16,7 @@ export const EmptyList: Story = {
     },
     onDeleteTag: fn(),
     onDragEnd: fn(),
+    onDragStart: fn(),
     tags: [],
   },
   name: "タグがない場合",
@@ -29,6 +30,7 @@ export const ManyTag: Story = {
     },
     onDeleteTag: fn(),
     onDragEnd: fn(),
+    onDragStart: fn(),
     tags: Array.from({ length: 20 }).map((_, idx) => ({ id: idx.toString(), name: "tag" })),
   },
   name: "タグが大量にある場合",
@@ -42,6 +44,7 @@ export default {
     },
     onDeleteTag: fn(),
     onDragEnd: fn(),
+    onDragStart: fn(),
     tags: [
       { id: crypto.randomUUID(), name: "tag1" },
       { id: crypto.randomUUID(), name: "tag2" },
