@@ -27,7 +27,7 @@ export const Tag = ({
     <div
       {...containerProps}
       className={cn(
-        "inline-flex items-center justify-center rounded-md bg-cyan-500 text-primary-foreground transition-colors hover:bg-cyan-500/90",
+        "inline-flex h-8 items-center justify-center text-nowrap rounded-md bg-cyan-500 text-primary-foreground transition-colors hover:bg-cyan-500/90",
         containerProps?.className,
       )}
     >
