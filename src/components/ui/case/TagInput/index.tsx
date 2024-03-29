@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
-import { Tag } from "../Tag";
+import { Tag } from "../../base/Tag";
 import { TagList } from "../TagList";
 
 import { Button } from "@/components/shadcn/ui/button";

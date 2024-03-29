@@ -1,4 +1,4 @@
-import { Tag, type Tag as TagType, TagProps } from "../Tag";
+import { Tag, type Tag as TagType, TagProps } from "../../base/Tag";
 
 type Props = {
   tags: TagType[];
