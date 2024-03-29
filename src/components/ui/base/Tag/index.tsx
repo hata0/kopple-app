@@ -1,6 +1,8 @@
+import { ComponentProps } from "react";
 import { ImCross } from "react-icons/im";
 
-import { Button } from "@/components/shadcn/ui/button";
+import { Button, ButtonProps } from "@/components/shadcn/ui/button";
+import { cn } from "@/lib/utils";
 
 export type Tag = {
   name: string;
@@ -8,15 +10,40 @@ export type Tag = {
 };
 export type TagProps = {
   onDeleteTag: (idToDelete: string) => void;
+  containerProps?: ComponentProps<"div">;
+  deleteProps?: Omit<ButtonProps, "onClick">;
+  nameProps?: ComponentProps<"span">;
 } & Tag;
 
-export const Tag = ({ id, name, onDeleteTag }: TagProps) => {
+export const Tag = ({
+  containerProps,
+  deleteProps,
+  id,
+  name,
+  nameProps,
+  onDeleteTag,
+}: TagProps) => {
   return (
-    <div className="inline-flex items-center justify-center space-x-2 rounded-md bg-cyan-500 px-2 py-1 text-primary-foreground transition-colors hover:bg-cyan-500/90">
-      <span className="flex h-full items-center font-medium">{name}</span>
+    <div
+      {...containerProps}
+      className={cn(
+        "inline-flex items-center justify-center rounded-md bg-cyan-500 text-primary-foreground transition-colors hover:bg-cyan-500/90",
+        containerProps?.className,
+      )}
+    >
+      <span
+        {...nameProps}
+        className={cn("flex h-full items-center py-1 pl-2 pr-3 font-medium", nameProps?.className)}
+      >
+        {name}
+      </span>
       <Button
+        {...deleteProps}
         aria-label={`「${name}」を削除`}
-        className="ml-0.5 h-4 w-4 bg-transparent p-1 transition-colors hover:bg-transparent hover:text-red-500"
+        className={cn(
+          "ml-0.5 h-full w-4 bg-transparent py-2 pl-0 pr-2 transition-colors hover:bg-transparent hover:text-red-500",
+          deleteProps?.className,
+        )}
         onClick={() => onDeleteTag(id)}
         type="button"
       >

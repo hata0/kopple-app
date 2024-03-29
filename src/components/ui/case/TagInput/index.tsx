@@ -1,8 +1,10 @@
+import { type DragEndEvent } from "@dnd-kit/core";
+import { arrayMove } from "@dnd-kit/sortable";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
 import { Tag } from "../../base/Tag";
-import { TagList } from "../TagList";
+import { SortableTagList } from "../SortableTagList";
 
 import { Button } from "@/components/shadcn/ui/button";
 import { Input } from "@/components/shadcn/ui/input";
@@ -40,9 +42,21 @@ export const TagInput = ({ tags: initialTags }: Props) => {
     setTags((prev) => prev.filter(({ id }) => id !== idToDelete));
   };
 
+  const handleSortTag = ({ active, over }: DragEndEvent) => {
+    if (over === null || active.id === over.id) {
+      return;
+    } else {
+      setTags((prev) => {
+        const oldIndex = prev.findIndex((tag) => tag.id === active.id);
+        const newIndex = prev.findIndex((tag) => tag.id === over.id);
+        return arrayMove(prev, oldIndex, newIndex);
+      });
+    }
+  };
+
   return (
     <div className="flex h-[52px] justify-center space-x-2">
-      <TagList onDeleteTag={handleDeleteTag} tags={tags} />
+      <SortableTagList onDeleteTag={handleDeleteTag} onDragEnd={handleSortTag} tags={tags} />
       <div className="flex h-full items-center justify-center space-x-2">
         <Input
           className="w-40"

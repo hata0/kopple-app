@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 
-import { TagList } from ".";
+import { SortableTagList } from ".";
 
-type T = typeof TagList;
+type T = typeof SortableTagList;
 type Story = StoryObj<T>;
 
 export const Default: Story = {};
@@ -24,5 +24,5 @@ export default {
       { id: crypto.randomUUID(), name: "tag2" },
     ],
   },
-  component: TagList,
+  component: SortableTagList,
 } satisfies Meta<T>;
