@@ -41,7 +41,7 @@ export const Tag = ({
         {...deleteProps}
         aria-label={`「${name}」を削除`}
         className={cn(
-          "ml-0.5 h-full w-4 bg-transparent py-2 pl-0 pr-2 transition-colors hover:bg-transparent hover:text-red-500",
+          "ml-0.5 h-full w-4 bg-transparent py-2 pl-0 pr-2 ring-offset-transparent transition-colors hover:bg-transparent hover:text-red-500 focus-visible:ring-1 focus-visible:ring-cyan-600/80",
           deleteProps?.className,
         )}
         onClick={() => onDeleteTag?.(id)}
