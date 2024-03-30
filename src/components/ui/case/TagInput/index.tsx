@@ -19,68 +19,71 @@ type Props = {
   onAddTag: (e: AddTagEvent) => void;
   onDeleteTag: (idToDelete: string) => void;
   onDragEnd: (e: DragEndEvent) => void;
+  disableSameNameError: boolean;
 };
-export const TagInput = memo(({ onAddTag, onDeleteTag, onDragEnd, tags }: Props) => {
-  const [text, setText] = useState("");
-  const [draggingTag, setDraggingTag] = useState<Tag | null>(null);
+export const TagInput = memo(
+  ({ disableSameNameError = false, onAddTag, onDeleteTag, onDragEnd, tags }: Props) => {
+    const [text, setText] = useState("");
+    const [draggingTag, setDraggingTag] = useState<Tag | null>(null);
 
-  const handleAddTag = () => {
-    const isSameTagName = !!tags.find(({ name }) => name === text);
-    onAddTag({ isSameTagName, text });
+    const handleAddTag = () => {
+      const isSameTagName = !!tags.find(({ name }) => name === text);
+      onAddTag({ isSameTagName, text });
 
-    if (isSameTagName) {
-      toast({
-        title: "同じ名前のタグは設定できません",
-        variant: "destructive",
-      });
-    } else {
-      setText("");
-    }
-  };
+      if (!disableSameNameError && isSameTagName) {
+        toast({
+          title: "同じ名前のタグは設定できません",
+          variant: "destructive",
+        });
+      } else {
+        setText("");
+      }
+    };
 
-  const handleDragEnd = (e: DragEndEvent) => {
-    const { active, over } = e;
-    onDragEnd(e);
+    const handleDragEnd = (e: DragEndEvent) => {
+      const { active, over } = e;
+      onDragEnd(e);
 
-    if (over === null) {
-      return;
-    } else if (active.id === over.id) {
-      setDraggingTag(null);
-    } else {
-      setDraggingTag(null);
-    }
-  };
-  const handleDragStart = ({ active }: DragStartEvent) => {
-    setDraggingTag(tags.find((tag) => tag.id === active.id) as Tag);
-  };
+      if (over === null) {
+        return;
+      } else if (active.id === over.id) {
+        setDraggingTag(null);
+      } else {
+        setDraggingTag(null);
+      }
+    };
+    const handleDragStart = ({ active }: DragStartEvent) => {
+      setDraggingTag(tags.find((tag) => tag.id === active.id) as Tag);
+    };
 
-  return (
-    <div className="flex flex-col items-end space-y-2">
-      <SortableTagList
-        draggingTag={draggingTag}
-        onDeleteTag={onDeleteTag}
-        onDragEnd={handleDragEnd}
-        onDragStart={handleDragStart}
-        tags={tags}
-      />
-      <div className="flex h-full items-center justify-center space-x-2">
-        <Input
-          className="w-40"
-          onChange={(e) => setText(e.target.value)}
-          placeholder="タグを追加する"
-          value={text}
+    return (
+      <div className="flex flex-col items-end space-y-2">
+        <SortableTagList
+          draggingTag={draggingTag}
+          onDeleteTag={onDeleteTag}
+          onDragEnd={handleDragEnd}
+          onDragStart={handleDragStart}
+          tags={tags}
         />
-        <Button
-          aria-label="追加"
-          disabled={text === ""}
-          onClick={handleAddTag}
-          size="icon"
-          type="button"
-        >
-          <FaPlus />
-        </Button>
+        <div className="flex h-full items-center justify-center space-x-2">
+          <Input
+            className="w-40"
+            onChange={(e) => setText(e.target.value)}
+            placeholder="タグを追加する"
+            value={text}
+          />
+          <Button
+            aria-label="追加"
+            disabled={text === ""}
+            onClick={handleAddTag}
+            size="icon"
+            type="button"
+          >
+            <FaPlus />
+          </Button>
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  },
+);
 TagInput.displayName = "TagInput";

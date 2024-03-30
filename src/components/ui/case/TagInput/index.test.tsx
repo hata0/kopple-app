@@ -3,7 +3,9 @@ import { act, render, screen } from "@testing-library/react";
 
 import * as stories from "./index.stories";
 
-const { AddSameTag, AddTag, DeleteTag } = composeStories(stories);
+import { deleteAllToast } from "@/components/shadcn/ui/use-toast";
+
+const { AddSameTag, AddTag, DeleteTag, DisableSameNameError } = composeStories(stories);
 
 describe("TagInput", () => {
   it("タグを作成する関数が呼ばれる", async () => {
@@ -35,5 +37,18 @@ describe("TagInput", () => {
       await DeleteTag.play?.({ canvasElement: container });
     });
     expect(DeleteTag.args.onDeleteTag).toHaveBeenCalledWith(DeleteTag.args.tags![0].id);
+  });
+
+  it("DisableSameNameErrorを設定したとき、エラーは表示されず関数が呼ばれる", async () => {
+    deleteAllToast();
+    const { container } = render(<DisableSameNameError />);
+    await act(async () => {
+      await DisableSameNameError.play?.({ canvasElement: container });
+    });
+    expect(DisableSameNameError.args.onAddTag).toHaveBeenCalledWith({
+      isSameTagName: true,
+      text: "tag name",
+    });
+    expect(screen.queryByText("同じ名前のタグは設定できません")).not.toBeInTheDocument();
   });
 });

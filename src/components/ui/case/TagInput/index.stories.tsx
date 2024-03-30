@@ -50,6 +50,22 @@ export const DeleteTag: Story = {
   },
 };
 
+export const DisableSameNameError: Story = {
+  args: {
+    disableSameNameError: true,
+    onAddTag: fn(),
+    onDeleteTag: fn(),
+    onDragEnd: fn(),
+    tags: [{ id: crypto.randomUUID(), name: "tag name" }],
+  },
+  name: "DisableSameNameErrorを設定したとき",
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.type(canvas.getByRole("textbox"), "tag name");
+    await userEvent.click(canvas.getByRole("button", { name: "追加" }));
+  },
+};
+
 export default {
   args: {
     onAddTag: fn(),

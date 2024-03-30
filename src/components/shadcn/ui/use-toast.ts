@@ -184,4 +184,8 @@ function useToast() {
   };
 }
 
-export { toast, useToast };
+const deleteAllToast = () => {
+  memoryState = { toasts: [] };
+};
+
+export { deleteAllToast, toast, useToast };
