@@ -10,9 +10,10 @@ type Props = {
   onDragEnd: (event: DragEndEvent) => void;
   onDragStart: (event: DragStartEvent) => void;
   draggingTag: TagType | null;
-} & Omit<TagProps, "name" | "id">;
+  onDeleteTag?: (idToDelete: string) => void;
+};
 export const SortableTagList = memo(
-  ({ draggingTag, onDragEnd, onDragStart, tags, ...tagProps }: Props) => {
+  ({ draggingTag, onDeleteTag, onDragEnd, onDragStart, tags }: Props) => {
     return (
       <div className="flex min-h-[52px] w-full flex-wrap items-center gap-1 rounded-md border border-border px-3 py-2">
         {tags.length === 0 ? (
@@ -21,7 +22,7 @@ export const SortableTagList = memo(
           <DndContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
             <SortableContext items={tags}>
               {tags.map((tag, idx) => (
-                <SortableTag key={idx} {...tag} {...tagProps} />
+                <SortableTag key={idx} {...tag} onDeleteTag={onDeleteTag} />
               ))}
             </SortableContext>
             <DragOverlay>{draggingTag && <Tag {...draggingTag} />}</DragOverlay>

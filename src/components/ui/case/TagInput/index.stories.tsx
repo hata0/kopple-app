@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { userEvent, within } from "@storybook/test";
+import { fn, userEvent, within } from "@storybook/test";
 
 import { TagInput } from ".";
 
@@ -21,6 +21,9 @@ export const AddTag: Story = {
 
 export const AddSameTag: Story = {
   args: {
+    onAddTag: fn(),
+    onDeleteTag: fn(),
+    onDragEnd: fn(),
     tags: [{ id: crypto.randomUUID(), name: "tag name" }],
   },
   name: "同じタグ名で作成する場合",
@@ -33,6 +36,9 @@ export const AddSameTag: Story = {
 
 export const DeleteTag: Story = {
   args: {
+    onAddTag: fn(),
+    onDeleteTag: fn(),
+    onDragEnd: fn(),
     tags: [{ id: crypto.randomUUID(), name: "tag name" }],
   },
   name: "タグを削除する場合",
@@ -46,7 +52,15 @@ export const DeleteTag: Story = {
 
 export default {
   args: {
-    tags: [],
+    onAddTag: fn(),
+    onDeleteTag: fn(),
+    onDragEnd: fn(),
+    tags: [
+      { id: crypto.randomUUID(), name: "tag1" },
+      { id: crypto.randomUUID(), name: "tag2" },
+      { id: crypto.randomUUID(), name: "tag3" },
+      { id: crypto.randomUUID(), name: "tag4" },
+    ],
   },
   component: TagInput,
   decorators: [
