@@ -6,27 +6,34 @@ import * as stories from "./index.stories";
 const { AddSameTag, AddTag, DeleteTag } = composeStories(stories);
 
 describe("TagInput", () => {
-  it("タグを作成できる", async () => {
+  it("タグを作成する関数が呼ばれる", async () => {
     const { container } = render(<AddTag />);
     await act(async () => {
       await AddTag.play?.({ canvasElement: container });
     });
-    expect(screen.getByText("tag name")).toBeInTheDocument();
+    expect(AddTag.args.onAddTag).toHaveBeenCalledWith({
+      isSameTagName: false,
+      text: "tag name",
+    });
   });
 
-  it("同名のタグを作成したときにエラーが表示", async () => {
+  it("同名のタグを作成したときにエラーが表示され、関数が呼ばれる", async () => {
     const { container } = render(<AddSameTag />);
     await act(async () => {
       await AddSameTag.play?.({ canvasElement: container });
     });
+    expect(AddSameTag.args.onAddTag).toHaveBeenCalledWith({
+      isSameTagName: true,
+      text: "tag name",
+    });
     expect(screen.getByText("同じ名前のタグは設定できません")).toBeInTheDocument();
   });
 
-  it("タグを削除できる", async () => {
+  it("タグを削除する関数が呼ばれる", async () => {
     const { container } = render(<DeleteTag />);
     await act(async () => {
       await DeleteTag.play?.({ canvasElement: container });
     });
-    expect(screen.queryByText(DeleteTag.args.tags![0].name)).not.toBeInTheDocument();
+    expect(DeleteTag.args.onDeleteTag).toHaveBeenCalledWith(DeleteTag.args.tags![0].id);
   });
 });
