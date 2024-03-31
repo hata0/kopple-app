@@ -1,4 +1,3 @@
-import { arrayMove } from "@dnd-kit/sortable";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useId } from "react";
@@ -32,14 +31,12 @@ const formSchema = z.object({
   birthday: z.date().optional(),
   hashtags: z.array(
     z.object({
-      id: z.string().min(1, "idが必要です"),
-      name: z.string().min(1, "名前が必要です"),
+      name: z.string().min(1, "ハッシュタグ名が必要です"),
     }),
   ),
   hobbies: z.array(
     z.object({
-      id: z.string().min(1, "idが必要です"),
-      name: z.string().min(1, "名前が必要です"),
+      name: z.string().min(1, "趣味名が必要です"),
     }),
   ),
   message: z.string(),
@@ -186,26 +183,20 @@ export const ProfileForm = ({
                       return;
                     } else {
                       hashtagFields.append({
-                        id: crypto.randomUUID(),
                         name: text,
                       });
                     }
                   }}
-                  onDeleteTag={(idToDelete) => {
-                    form.setValue(
-                      "hashtags",
-                      tags.filter(({ id }) => id !== idToDelete),
-                    );
+                  onDeleteTag={(deleteIndex) => {
+                    hashtagFields.remove(deleteIndex);
                   }}
-                  onDragEnd={({ active, over }) => {
+                  onDragEnd={({ active, newIndex, oldIndex, over }) => {
                     if (over === null) {
                       return;
                     } else if (active.id === over.id) {
                       return;
                     } else {
-                      const oldIndex = tags.findIndex((tag) => tag.id === active.id);
-                      const newIndex = tags.findIndex((tag) => tag.id === over.id);
-                      form.setValue("hashtags", arrayMove(tags, oldIndex, newIndex));
+                      hashtagFields.swap(oldIndex, newIndex);
                     }
                   }}
                   render={(props) => (
@@ -213,7 +204,7 @@ export const ProfileForm = ({
                       <Input {...props} />
                     </FormControl>
                   )}
-                  tags={tags}
+                  tags={tags.map(({ name }) => name)}
                 />
                 <FormMessage />
               </FormItem>
@@ -234,26 +225,20 @@ export const ProfileForm = ({
                       return;
                     } else {
                       hobbyFields.append({
-                        id: crypto.randomUUID(),
                         name: text,
                       });
                     }
                   }}
-                  onDeleteTag={(idToDelete) => {
-                    form.setValue(
-                      "hobbies",
-                      tags.filter(({ id }) => id !== idToDelete),
-                    );
+                  onDeleteTag={(deleteIndex) => {
+                    hobbyFields.remove(deleteIndex);
                   }}
-                  onDragEnd={({ active, over }) => {
+                  onDragEnd={({ active, newIndex, oldIndex, over }) => {
                     if (over === null) {
                       return;
                     } else if (active.id === over.id) {
                       return;
                     } else {
-                      const oldIndex = tags.findIndex((tag) => tag.id === active.id);
-                      const newIndex = tags.findIndex((tag) => tag.id === over.id);
-                      form.setValue("hobbies", arrayMove(tags, oldIndex, newIndex));
+                      hobbyFields.swap(oldIndex, newIndex);
                     }
                   }}
                   render={(props) => (
@@ -261,7 +246,7 @@ export const ProfileForm = ({
                       <Input {...props} />
                     </FormControl>
                   )}
-                  tags={tags}
+                  tags={tags.map(({ name }) => name)}
                 />
                 <FormMessage />
               </FormItem>

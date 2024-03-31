@@ -1,15 +1,11 @@
 export type ProfileContent = {
   age: number;
-  hashtags: Tag[];
+  hashtags: { name: string }[];
   imageUrl: string;
   message: string;
   name: string;
   sex: string;
   birthday: Date | null;
-  hobbies: Tag[];
+  hobbies: { name: string }[];
   address: string;
-};
-type Tag = {
-  name: string;
-  id: string;
 };
