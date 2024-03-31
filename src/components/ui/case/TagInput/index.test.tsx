@@ -9,7 +9,12 @@ const { AddSameTag, AddTag, Default, DeleteTag, DisableSameNameError, OptionalIn
   composeStories(stories);
 
 describe("TagInput", () => {
-  it("タグを作成する関数が呼ばれる", async () => {
+  it("入力されていないとき、追加ボタンはdisabledである", () => {
+    render(<Default />);
+    expect(screen.getByRole("button", { name: "追加" })).toBeDisabled();
+  });
+
+  it("タグの作成に成功したとき、関数が呼ばれ、inputがリセットされる", async () => {
     const { container } = render(<AddTag />);
     await act(async () => {
       await AddTag.play?.({ canvasElement: container });
@@ -18,9 +23,10 @@ describe("TagInput", () => {
       isSameTagName: false,
       text: "tag name",
     });
+    expect(screen.getByRole("textbox")).toHaveValue("");
   });
 
-  it("同名のタグを作成したときにエラーが表示され、関数が呼ばれる", async () => {
+  it("同名のタグを作成したときにエラーが表示され、inputはリセットされず、関数が呼ばれる", async () => {
     const { container } = render(<AddSameTag />);
     await act(async () => {
       await AddSameTag.play?.({ canvasElement: container });
@@ -30,17 +36,10 @@ describe("TagInput", () => {
       text: "tag name",
     });
     expect(screen.getByText("同じ名前のタグは設定できません")).toBeInTheDocument();
+    expect(screen.getByRole("textbox")).toHaveValue("tag name");
   });
 
-  it("タグを削除する関数が呼ばれる", async () => {
-    const { container } = render(<DeleteTag />);
-    await act(async () => {
-      await DeleteTag.play?.({ canvasElement: container });
-    });
-    expect(DeleteTag.args.onDeleteTag).toHaveBeenCalledWith(0);
-  });
-
-  it("DisableSameNameErrorを設定したとき、エラーは表示されず関数が呼ばれる", async () => {
+  it("DisableSameNameErrorを設定したとき、エラーは表示されず関数が呼ばれ、inputはリセットされる", async () => {
     deleteAllToast();
     const { container } = render(<DisableSameNameError />);
     await act(async () => {
@@ -51,6 +50,15 @@ describe("TagInput", () => {
       text: "tag name",
     });
     expect(screen.queryByText("同じ名前のタグは設定できません")).not.toBeInTheDocument();
+    expect(screen.getByRole("textbox")).toHaveValue("");
+  });
+
+  it("タグを削除する関数が呼ばれる", async () => {
+    const { container } = render(<DeleteTag />);
+    await act(async () => {
+      await DeleteTag.play?.({ canvasElement: container });
+    });
+    expect(DeleteTag.args.onDeleteTag).toHaveBeenCalledWith(0);
   });
 
   it("render関数に適切な引数が渡される", () => {
