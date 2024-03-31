@@ -1,5 +1,5 @@
 import { type DragEndEvent, type DragStartEvent } from "@dnd-kit/core";
-import { memo, useState } from "react";
+import { ChangeEventHandler, memo, ReactNode, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
 import { Tag } from "../../base/Tag";
@@ -20,9 +20,15 @@ type Props = {
   onDeleteTag: (idToDelete: string) => void;
   onDragEnd: (e: DragEndEvent) => void;
   disableSameNameError: boolean;
+  render?: (inputProps: {
+    className: string;
+    onChange: ChangeEventHandler<HTMLInputElement>;
+    placeholder: string;
+    value: string;
+  }) => ReactNode;
 };
 export const TagInput = memo(
-  ({ disableSameNameError = false, onAddTag, onDeleteTag, onDragEnd, tags }: Props) => {
+  ({ disableSameNameError = false, onAddTag, onDeleteTag, onDragEnd, render, tags }: Props) => {
     const [text, setText] = useState("");
     const [draggingTag, setDraggingTag] = useState<Tag | null>(null);
 
@@ -39,7 +45,6 @@ export const TagInput = memo(
         setText("");
       }
     };
-
     const handleDragEnd = (e: DragEndEvent) => {
       const { active, over } = e;
       onDragEnd(e);
@@ -66,12 +71,19 @@ export const TagInput = memo(
           tags={tags}
         />
         <div className="flex h-full items-center justify-center space-x-2">
-          <Input
-            className="w-40"
-            onChange={(e) => setText(e.target.value)}
-            placeholder="タグを追加する"
-            value={text}
-          />
+          {render?.({
+            className: "w-40",
+            onChange: (e) => setText(e.target.value),
+            placeholder: "タグを追加する",
+            value: text,
+          }) || (
+            <Input
+              className="w-40"
+              onChange={(e) => setText(e.target.value)}
+              placeholder="タグを追加する"
+              value={text}
+            />
+          )}
           <Button
             aria-label="追加"
             disabled={text === ""}

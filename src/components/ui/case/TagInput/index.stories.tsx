@@ -66,11 +66,23 @@ export const DisableSameNameError: Story = {
   },
 };
 
+export const OptionalInput: Story = {
+  args: {
+    onAddTag: fn(),
+    onDeleteTag: fn(),
+    onDragEnd: fn(),
+    render: () => <div data-testid="test">Test</div>,
+    tags: [],
+  },
+  name: "任意のInputを使う場合",
+};
+
 export default {
   args: {
     onAddTag: fn(),
     onDeleteTag: fn(),
     onDragEnd: fn(),
+    render: fn().mockReturnValue(undefined),
     tags: [
       { id: crypto.randomUUID(), name: "tag1" },
       { id: crypto.randomUUID(), name: "tag2" },
