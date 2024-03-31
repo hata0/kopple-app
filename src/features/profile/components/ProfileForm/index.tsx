@@ -2,7 +2,7 @@ import { arrayMove } from "@dnd-kit/sortable";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useId } from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { DayOfBirthPicker } from "../DayOfBirthPicker";
@@ -72,6 +72,14 @@ export const ProfileForm = ({
       sex,
     },
     resolver: zodResolver(formSchema),
+  });
+  const hashtagFields = useFieldArray({
+    control: form.control,
+    name: "hashtags",
+  });
+  const hobbyFields = useFieldArray({
+    control: form.control,
+    name: "hobbies",
   });
 
   const onSubmit = (values: FormFieldValue) => {
@@ -177,13 +185,10 @@ export const ProfileForm = ({
                     if (isSameTagName) {
                       return;
                     } else {
-                      form.setValue("hashtags", [
-                        ...tags,
-                        {
-                          id: crypto.randomUUID(),
-                          name: text,
-                        },
-                      ]);
+                      hashtagFields.append({
+                        id: crypto.randomUUID(),
+                        name: text,
+                      });
                     }
                   }}
                   onDeleteTag={(idToDelete) => {
@@ -228,13 +233,10 @@ export const ProfileForm = ({
                     if (isSameTagName) {
                       return;
                     } else {
-                      form.setValue("hobbies", [
-                        ...tags,
-                        {
-                          id: crypto.randomUUID(),
-                          name: text,
-                        },
-                      ]);
+                      hobbyFields.append({
+                        id: crypto.randomUUID(),
+                        name: text,
+                      });
                     }
                   }}
                   onDeleteTag={(idToDelete) => {
