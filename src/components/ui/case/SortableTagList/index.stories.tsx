@@ -10,10 +10,7 @@ export const Default: Story = {};
 
 export const EmptyList: Story = {
   args: {
-    draggingTag: {
-      id: crypto.randomUUID(),
-      name: "dragging tag",
-    },
+    draggingTag: "dragging tag",
     onDeleteTag: fn(),
     onDragEnd: fn(),
     onDragStart: fn(),
@@ -24,10 +21,7 @@ export const EmptyList: Story = {
 
 export const ManyTag: Story = {
   args: {
-    draggingTag: {
-      id: crypto.randomUUID(),
-      name: "dragging tag",
-    },
+    draggingTag: "dragging tag",
     onDeleteTag: fn(),
     onDragEnd: fn(),
     onDragStart: fn(),
@@ -38,10 +32,7 @@ export const ManyTag: Story = {
 
 export default {
   args: {
-    draggingTag: {
-      id: crypto.randomUUID(),
-      name: "dragging tag",
-    },
+    draggingTag: "dragging tag",
     onDeleteTag: fn(),
     onDragEnd: fn(),
     onDragStart: fn(),

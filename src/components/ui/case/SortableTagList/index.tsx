@@ -3,14 +3,15 @@ import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { memo } from "react";
 
-import { Tag, type Tag as TagType, TagProps } from "../../base/Tag";
+import { Tag, TagProps } from "../../base/Tag";
+import { Tag as TagType } from "../TagInput";
 
 type Props = {
   tags: TagType[];
   onDragEnd: (event: DragEndEvent) => void;
   onDragStart: (event: DragStartEvent) => void;
-  draggingTag: TagType | null;
-  onDeleteTag?: (idToDelete: string) => void;
+  draggingTag: string | null;
+  onDeleteTag?: (deleteIndex: number) => void;
 };
 export const SortableTagList = memo(
   ({ draggingTag, onDeleteTag, onDragEnd, onDragStart, tags }: Props) => {
@@ -22,10 +23,10 @@ export const SortableTagList = memo(
           <DndContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
             <SortableContext items={tags}>
               {tags.map((tag, idx) => (
-                <SortableTag key={idx} {...tag} onDeleteTag={onDeleteTag} />
+                <SortableTag key={tag.id} {...tag} index={idx} onDeleteTag={onDeleteTag} />
               ))}
             </SortableContext>
-            <DragOverlay>{draggingTag && <Tag {...draggingTag} />}</DragOverlay>
+            <DragOverlay>{draggingTag && <Tag index={0} name={draggingTag} />}</DragOverlay>
           </DndContext>
         )}
       </div>
@@ -34,7 +35,10 @@ export const SortableTagList = memo(
 );
 SortableTagList.displayName = "SortableTagList";
 
-const SortableTag = (props: TagProps) => {
+type SortableTagProps = {
+  id: string;
+} & TagProps;
+const SortableTag = (props: SortableTagProps) => {
   const { attributes, isDragging, listeners, setActivatorNodeRef, setNodeRef, transform } =
     useSortable({
       id: props.id,
