@@ -9,8 +9,14 @@ export const Default: Story = {};
 
 export default {
   args: {
+    address: "",
+    age: 20,
+    birthday: null,
     hashtags: [],
     hobbies: [],
+    message: "",
+    name: "bob",
+    sex: "man",
   },
   component: ProfileForm,
   title: "Features/profile/ProfileForm",

@@ -1,4 +1,5 @@
 import { arrayMove } from "@dnd-kit/sortable";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useId } from "react";
 import { useForm } from "react-hook-form";
@@ -70,6 +71,7 @@ export const ProfileForm = ({
       name,
       sex,
     },
+    resolver: zodResolver(formSchema),
   });
 
   const onSubmit = (values: FormFieldValue) => {
