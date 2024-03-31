@@ -24,7 +24,7 @@ export const AddSameTag: Story = {
     onAddTag: fn(),
     onDeleteTag: fn(),
     onDragEnd: fn(),
-    tags: [{ id: crypto.randomUUID(), name: "tag name" }],
+    tags: ["tag name"],
   },
   name: "同じタグ名で作成する場合",
   play: async ({ canvasElement }) => {
@@ -39,13 +39,13 @@ export const DeleteTag: Story = {
     onAddTag: fn(),
     onDeleteTag: fn(),
     onDragEnd: fn(),
-    tags: [{ id: crypto.randomUUID(), name: "tag name" }],
+    tags: ["tag name"],
   },
   name: "タグを削除する場合",
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(
-      canvas.getByRole("button", { name: `「${DeleteTag.args!.tags![0].name}」を削除` }),
+      canvas.getByRole("button", { name: `「${DeleteTag.args!.tags![0]}」を削除` }),
     );
   },
 };
@@ -56,7 +56,7 @@ export const DisableSameNameError: Story = {
     onAddTag: fn(),
     onDeleteTag: fn(),
     onDragEnd: fn(),
-    tags: [{ id: crypto.randomUUID(), name: "tag name" }],
+    tags: ["tag name"],
   },
   name: "DisableSameNameErrorを設定したとき",
   play: async ({ canvasElement }) => {
@@ -83,12 +83,7 @@ export default {
     onDeleteTag: fn(),
     onDragEnd: fn(),
     render: fn().mockReturnValue(undefined),
-    tags: [
-      { id: crypto.randomUUID(), name: "tag1" },
-      { id: crypto.randomUUID(), name: "tag2" },
-      { id: crypto.randomUUID(), name: "tag3" },
-      { id: crypto.randomUUID(), name: "tag4" },
-    ],
+    tags: ["tag1", "tag2", "tag3", "tag4"],
   },
   component: TagInput,
   decorators: [

@@ -1,5 +1,5 @@
 import { type DragEndEvent, type DragStartEvent } from "@dnd-kit/core";
-import { ChangeEventHandler, memo, ReactNode, useState } from "react";
+import { ChangeEventHandler, memo, ReactNode, useMemo, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
 import { Tag } from "../../base/Tag";
@@ -15,7 +15,7 @@ export type AddTagEvent = {
 };
 
 type Props = {
-  tags: Tag[];
+  tags: string[];
   onAddTag: (e: AddTagEvent) => void;
   onDeleteTag: (idToDelete: string) => void;
   onDragEnd: (e: DragEndEvent) => void;
@@ -28,7 +28,22 @@ type Props = {
   }) => ReactNode;
 };
 export const TagInput = memo(
-  ({ disableSameNameError = false, onAddTag, onDeleteTag, onDragEnd, render, tags }: Props) => {
+  ({
+    disableSameNameError = false,
+    onAddTag,
+    onDeleteTag,
+    onDragEnd,
+    render,
+    tags: initialTags,
+  }: Props) => {
+    const tags = useMemo(
+      () =>
+        initialTags.map((name) => ({
+          id: crypto.randomUUID(),
+          name,
+        })),
+      [initialTags],
+    );
     const [text, setText] = useState("");
     const [draggingTag, setDraggingTag] = useState<Tag | null>(null);
 
