@@ -13,16 +13,20 @@ export type Tag = {
   name: string;
   id: string;
 };
-export type AddTagEvent = {
+export type AddTagArgs = {
   text: string;
   isSameTagName: boolean;
 };
+export type DragEndArgs = {
+  oldIndex: number;
+  newIndex: number;
+} & DragEndEvent;
 
 type Props = {
   tags: string[];
-  onAddTag: (e: AddTagEvent) => void;
+  onAddTag: (args: AddTagArgs) => void;
   onDeleteTag: (deleteIndex: number) => void;
-  onDragEnd: (e: DragEndEvent) => void;
+  onDragEnd: (args: DragEndArgs) => void;
   disableSameNameError?: boolean;
   render?: (inputProps: {
     className: string;
@@ -66,7 +70,9 @@ export const TagInput = memo(
     };
     const handleDragEnd = (e: DragEndEvent) => {
       const { active, over } = e;
-      onDragEnd(e);
+      const oldIndex = tags.findIndex((tag) => tag.id === active.id);
+      const newIndex = tags.findIndex((tag) => tag.id === over?.id);
+      onDragEnd({ ...e, newIndex, oldIndex });
 
       if (over === null) {
         return;
