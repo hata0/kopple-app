@@ -21,7 +21,7 @@ export type AddTagEvent = {
 type Props = {
   tags: string[];
   onAddTag: (e: AddTagEvent) => void;
-  onDeleteTag: (idToDelete: string) => void;
+  onDeleteTag: (deleteIndex: number) => void;
   onDragEnd: (e: DragEndEvent) => void;
   disableSameNameError?: boolean;
   render?: (inputProps: {
@@ -49,7 +49,7 @@ export const TagInput = memo(
       [initialTags],
     );
     const [text, setText] = useState("");
-    const [draggingTag, setDraggingTag] = useState<Tag | null>(null);
+    const [draggingTag, setDraggingTag] = useState<string | null>(null);
 
     const handleAddTag = () => {
       const isSameTagName = !!tags.find(({ name }) => name === text);
@@ -77,7 +77,7 @@ export const TagInput = memo(
       }
     };
     const handleDragStart = ({ active }: DragStartEvent) => {
-      setDraggingTag(tags.find((tag) => tag.id === active.id) as Tag);
+      setDraggingTag(tags.find((tag) => tag.id === active.id)!.name);
     };
 
     return (

@@ -37,7 +37,7 @@ describe("TagInput", () => {
     await act(async () => {
       await DeleteTag.play?.({ canvasElement: container });
     });
-    expect(DeleteTag.args.onDeleteTag).toHaveBeenCalledWith(DeleteTag.args.tags![0].id);
+    expect(DeleteTag.args.onDeleteTag).toHaveBeenCalledWith(0);
   });
 
   it("DisableSameNameErrorを設定したとき、エラーは表示されず関数が呼ばれる", async () => {
