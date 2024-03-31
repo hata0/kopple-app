@@ -1,10 +1,10 @@
+import { arrayMove } from "@dnd-kit/sortable";
 import Link from "next/link";
-import { useId, useState } from "react";
+import { useId } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { DayOfBirthPicker } from "../DayOfBirthPicker";
-import { Tag, TagInput } from "../TagInput";
 
 import { Button } from "@/components/shadcn/ui/button";
 import {
@@ -17,6 +17,7 @@ import {
 } from "@/components/shadcn/ui/form";
 import { Input } from "@/components/shadcn/ui/input";
 import { Textarea } from "@/components/shadcn/ui/textarea";
+import { TagInput } from "@/components/ui/case/TagInput";
 import { FormHeading } from "@/components/ui/domain/FormHeading";
 import { ProfileContent } from "@/features/dashboard/types/ProfileContent";
 
@@ -28,8 +29,18 @@ const formSchema = z.object({
     .nonnegative("年齢を入力してください。")
     .max(130, "年齢を入力してください。"),
   birthday: z.date().optional(),
-  hashtags: z.array(z.string()),
-  hobbies: z.array(z.string()),
+  hashtags: z.array(
+    z.object({
+      id: z.string().min(1, "idが必要です"),
+      name: z.string().min(1, "名前が必要です"),
+    }),
+  ),
+  hobbies: z.array(
+    z.object({
+      id: z.string().min(1, "idが必要です"),
+      name: z.string().min(1, "名前が必要です"),
+    }),
+  ),
   message: z.string(),
   name: z.string().min(1, "名前を入力してください。"),
   sex: z.string(),
@@ -60,23 +71,6 @@ export const ProfileForm = ({
       sex,
     },
   });
-
-  const [currentHashtags, setCurrentHashtags] = useState<Tag[]>(
-    hashtags.map((hashtag) => {
-      return {
-        id: crypto.randomUUID(),
-        text: hashtag,
-      };
-    }),
-  );
-  const [currentHobbies, setCurrentHobbies] = useState<Tag[]>(
-    hobbies.map((hobby) => {
-      return {
-        id: crypto.randomUUID(),
-        text: hobby,
-      };
-    }),
-  );
 
   const onSubmit = (values: FormFieldValue) => {
     console.log(values);
@@ -171,54 +165,104 @@ export const ProfileForm = ({
         <FormField
           control={form.control}
           name="hashtags"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel>ハッシュタグ</FormLabel>
-              <FormControl>
+          render={({ field }) => {
+            const tags = field.value;
+            return (
+              <FormItem className="w-full">
+                <FormLabel>ハッシュタグ</FormLabel>
                 <TagInput
-                  {...field}
-                  className="w-48"
-                  placeholder="タグを追加"
-                  setTags={(newTags) => {
-                    setCurrentHashtags(newTags);
+                  onAddTag={({ isSameTagName, text }) => {
+                    if (isSameTagName) {
+                      return;
+                    } else {
+                      form.setValue("hashtags", [
+                        ...tags,
+                        {
+                          id: crypto.randomUUID(),
+                          name: text,
+                        },
+                      ]);
+                    }
+                  }}
+                  onDeleteTag={(idToDelete) => {
                     form.setValue(
                       "hashtags",
-                      (newTags as [Tag, ...Tag[]]).map((newTag) => newTag.text),
+                      tags.filter(({ id }) => id !== idToDelete),
                     );
                   }}
-                  tags={currentHashtags}
-                  textCase={null}
+                  onDragEnd={({ active, over }) => {
+                    if (over === null) {
+                      return;
+                    } else if (active.id === over.id) {
+                      return;
+                    } else {
+                      const oldIndex = tags.findIndex((tag) => tag.id === active.id);
+                      const newIndex = tags.findIndex((tag) => tag.id === over.id);
+                      form.setValue("hashtags", arrayMove(tags, oldIndex, newIndex));
+                    }
+                  }}
+                  render={(props) => (
+                    <FormControl>
+                      <Input {...field} {...props} />
+                    </FormControl>
+                  )}
+                  tags={tags}
                 />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
         <FormField
           control={form.control}
           name="hobbies"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel>趣味</FormLabel>
-              <FormControl>
+          render={({ field }) => {
+            const tags = field.value;
+            return (
+              <FormItem className="w-full">
+                <FormLabel>趣味</FormLabel>
                 <TagInput
-                  textCase={null}
-                  {...field}
-                  className="w-48"
-                  placeholder="趣味を追加"
-                  setTags={(newTags) => {
-                    setCurrentHobbies(newTags);
+                  onAddTag={({ isSameTagName, text }) => {
+                    if (isSameTagName) {
+                      return;
+                    } else {
+                      form.setValue("hobbies", [
+                        ...tags,
+                        {
+                          id: crypto.randomUUID(),
+                          name: text,
+                        },
+                      ]);
+                    }
+                  }}
+                  onDeleteTag={(idToDelete) => {
                     form.setValue(
                       "hobbies",
-                      (newTags as [Tag, ...Tag[]]).map((newTag) => newTag.text),
+                      tags.filter(({ id }) => id !== idToDelete),
                     );
                   }}
-                  tags={currentHobbies}
+                  onDragEnd={({ active, over }) => {
+                    if (over === null) {
+                      return;
+                    } else if (active.id === over.id) {
+                      return;
+                    } else {
+                      const oldIndex = tags.findIndex((tag) => tag.id === active.id);
+                      const newIndex = tags.findIndex((tag) => tag.id === over.id);
+                      form.setValue("hobbies", arrayMove(tags, oldIndex, newIndex));
+                    }
+                  }}
+                  render={(props) => (
+                    <FormControl>
+                      <Input {...field} {...props} />
+                    </FormControl>
+                  )}
+                  tags={tags}
                 />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
         <div className="flex space-x-8 pt-5">
           <Button type="submit">更新</Button>

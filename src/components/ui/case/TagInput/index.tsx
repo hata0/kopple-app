@@ -19,7 +19,7 @@ type Props = {
   onAddTag: (e: AddTagEvent) => void;
   onDeleteTag: (idToDelete: string) => void;
   onDragEnd: (e: DragEndEvent) => void;
-  disableSameNameError: boolean;
+  disableSameNameError?: boolean;
   render?: (inputProps: {
     className: string;
     onChange: ChangeEventHandler<HTMLInputElement>;
