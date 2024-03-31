@@ -143,7 +143,7 @@ export const ProfileForm = ({
             render={({ field }) => (
               <FormItem className="w-48">
                 <FormLabel>誕生日</FormLabel>
-                <DayOfBirthPicker {...field} />
+                <DayOfBirthPicker onChange={field.onChange} value={field.value} />
                 <FormMessage />
               </FormItem>
             )}
@@ -203,7 +203,7 @@ export const ProfileForm = ({
                   }}
                   render={(props) => (
                     <FormControl>
-                      <Input {...field} {...props} />
+                      <Input {...props} />
                     </FormControl>
                   )}
                   tags={tags}
@@ -254,7 +254,7 @@ export const ProfileForm = ({
                   }}
                   render={(props) => (
                     <FormControl>
-                      <Input {...field} {...props} />
+                      <Input {...props} />
                     </FormControl>
                   )}
                   tags={tags}
