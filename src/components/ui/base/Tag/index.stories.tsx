@@ -11,11 +11,6 @@ const tagName = "tag name";
 export const Default: Story = {};
 
 export const DeleteClick: Story = {
-  args: {
-    id: crypto.randomUUID(),
-    name: tagName,
-    onDeleteTag: fn(),
-  },
   name: "削除ボタンをクリックした時",
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -25,7 +20,7 @@ export const DeleteClick: Story = {
 
 export default {
   args: {
-    id: crypto.randomUUID(),
+    index: 0,
     name: tagName,
     onDeleteTag: fn(),
   },

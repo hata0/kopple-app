@@ -9,6 +9,10 @@ import { Button } from "@/components/shadcn/ui/button";
 import { Input } from "@/components/shadcn/ui/input";
 import { toast } from "@/components/shadcn/ui/use-toast";
 
+export type Tag = {
+  name: string;
+  id: string;
+};
 export type AddTagEvent = {
   text: string;
   isSameTagName: boolean;
@@ -36,7 +40,7 @@ export const TagInput = memo(
     render,
     tags: initialTags,
   }: Props) => {
-    const tags = useMemo(
+    const tags: Tag[] = useMemo(
       () =>
         initialTags.map((name) => ({
           id: crypto.randomUUID(),

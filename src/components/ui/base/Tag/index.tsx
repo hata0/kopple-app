@@ -4,21 +4,19 @@ import { ImCross } from "react-icons/im";
 import { Button, ButtonProps } from "@/components/shadcn/ui/button";
 import { cn } from "@/lib/utils";
 
-export type Tag = {
-  name: string;
-  id: string;
-};
 export type TagProps = {
-  onDeleteTag?: (idToDelete: string) => void;
+  name: string;
+  index: number;
+  onDeleteTag?: (deleteIndex: number) => void;
   containerProps?: ComponentProps<"div">;
   deleteProps?: Omit<ButtonProps, "onClick">;
   nameProps?: ComponentProps<"span">;
-} & Tag;
+};
 
 export const Tag = ({
   containerProps,
   deleteProps,
-  id,
+  index,
   name,
   nameProps,
   onDeleteTag,
@@ -44,7 +42,7 @@ export const Tag = ({
           "ml-0.5 h-full w-4 bg-transparent py-2 pl-0 pr-2 ring-offset-transparent transition-colors hover:bg-transparent hover:text-red-500 focus-visible:ring-1 focus-visible:ring-cyan-600/80",
           deleteProps?.className,
         )}
-        onClick={() => onDeleteTag?.(id)}
+        onClick={() => onDeleteTag?.(index)}
         type="button"
       >
         <ImCross />

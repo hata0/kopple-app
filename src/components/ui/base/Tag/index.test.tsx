@@ -11,6 +11,6 @@ describe("Tag", () => {
     await act(async () => {
       await DeleteClick.play?.({ canvasElement: container });
     });
-    expect(DeleteClick.args.onDeleteTag).toHaveBeenCalledWith(DeleteClick.args.id);
+    expect(DeleteClick.args.onDeleteTag).toHaveBeenCalledWith(DeleteClick.args.index);
   });
 });
