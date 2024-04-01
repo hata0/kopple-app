@@ -18,10 +18,21 @@ export const DeleteClick: Story = {
   },
 };
 
+export const HideDelete: Story = {
+  args: {
+    hideDelete: true,
+    value: {
+      name: tagName,
+    },
+  },
+  name: "hideDeleteのとき",
+};
+
 export default {
   args: {
-    index: 0,
-    onDeleteTag: fn(),
+    deleteProps: {
+      onClick: fn(),
+    },
     value: {
       name: tagName,
     },

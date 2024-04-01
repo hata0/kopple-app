@@ -7,19 +7,17 @@ import { Tag as TagType } from "@/types/Tag";
 
 export type TagProps = {
   value: TagType;
-  index: number;
-  onDeleteTag?: (deleteIndex: number) => void;
+  hideDelete?: boolean;
   containerProps?: ComponentProps<"div">;
-  deleteProps?: Omit<ButtonProps, "onClick">;
+  deleteProps?: ButtonProps;
   nameProps?: ComponentProps<"span">;
 };
 
 export const Tag = ({
   containerProps,
   deleteProps,
-  index,
+  hideDelete = false,
   nameProps,
-  onDeleteTag,
   value,
 }: TagProps) => {
   return (
@@ -36,18 +34,19 @@ export const Tag = ({
       >
         {value.name}
       </span>
-      <Button
-        {...deleteProps}
-        aria-label={`「${value.name}」を削除`}
-        className={cn(
-          "ml-0.5 h-full w-4 bg-transparent py-2 pl-0 pr-2 ring-offset-transparent transition-colors hover:bg-transparent hover:text-red-500 focus-visible:ring-1 focus-visible:ring-cyan-600/80",
-          deleteProps?.className,
-        )}
-        onClick={() => onDeleteTag?.(index)}
-        type="button"
-      >
-        <ImCross />
-      </Button>
+      {hideDelete || (
+        <Button
+          {...deleteProps}
+          aria-label={`「${value.name}」を削除`}
+          className={cn(
+            "ml-0.5 h-full w-4 bg-transparent py-2 pl-0 pr-2 ring-offset-transparent transition-colors hover:bg-transparent hover:text-red-500 focus-visible:ring-1 focus-visible:ring-cyan-600/80",
+            deleteProps?.className,
+          )}
+          type="button"
+        >
+          <ImCross />
+        </Button>
+      )}
     </div>
   );
 };
