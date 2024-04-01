@@ -11,7 +11,7 @@ type Props = {
   onDragEnd: (event: DragEndEvent) => void;
   onDragStart: (event: DragStartEvent) => void;
   draggingTag: string | null;
-  onDeleteTag?: (deleteIndex: number) => void;
+  onDeleteTag: (deleteIndex: number) => void;
 };
 export const SortableTagList = memo(
   ({ draggingTag, onDeleteTag, onDragEnd, onDragStart, tags }: Props) => {
@@ -26,9 +26,7 @@ export const SortableTagList = memo(
                 <SortableTag key={tag.id} {...tag} index={idx} onDeleteTag={onDeleteTag} />
               ))}
             </SortableContext>
-            <DragOverlay>
-              {draggingTag && <Tag index={0} value={{ name: draggingTag }} />}
-            </DragOverlay>
+            <DragOverlay>{draggingTag && <Tag value={{ name: draggingTag }} />}</DragOverlay>
           </DndContext>
         )}
       </div>
@@ -38,12 +36,14 @@ export const SortableTagList = memo(
 SortableTagList.displayName = "SortableTagList";
 
 type SortableTagProps = {
+  index: number;
+  onDeleteTag: (deleteIndex: number) => void;
   id: string;
 } & TagProps;
-const SortableTag = (props: SortableTagProps) => {
+const SortableTag = ({ id, index, onDeleteTag, ...props }: SortableTagProps) => {
   const { attributes, isDragging, listeners, setActivatorNodeRef, setNodeRef, transform } =
     useSortable({
-      id: props.id,
+      id,
     });
 
   return (
@@ -55,6 +55,9 @@ const SortableTag = (props: SortableTagProps) => {
         style: {
           transform: CSS.Transform.toString(transform),
         },
+      }}
+      deleteProps={{
+        onClick: () => onDeleteTag(index),
       }}
       nameProps={{
         ...attributes,
