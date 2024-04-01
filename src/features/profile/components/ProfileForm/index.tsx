@@ -2,8 +2,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useId } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { z } from "zod";
 
+import { profileFormInputSchema } from "../../services/backend/profiles/[id]/schema";
+import { ProfileFormInput } from "../../services/backend/profiles/[id]/type";
 import { DayOfBirthPicker } from "../DayOfBirthPicker";
 
 import { Button } from "@/components/shadcn/ui/button";
@@ -28,31 +29,6 @@ import { TagInput } from "@/components/ui/case/TagInput";
 import { FormHeading } from "@/components/ui/domain/FormHeading";
 import { ProfileContent } from "@/types/ProfileContent";
 
-const formSchema = z.object({
-  address: z.string(),
-  age: z.coerce
-    .number()
-    .int("年齢を入力してください。")
-    .nonnegative("年齢を入力してください。")
-    .max(130, "年齢を入力してください。"),
-  birthday: z.date().optional(),
-  hashtags: z.array(
-    z.object({
-      name: z.string().min(1, "ハッシュタグ名が必要です"),
-    }),
-  ),
-  hobbies: z.array(
-    z.object({
-      name: z.string().min(1, "趣味名が必要です"),
-    }),
-  ),
-  message: z.string(),
-  name: z.string().min(1, "名前を入力してください。"),
-  sex: z.enum(["man", "woman"]),
-});
-
-export type FormFieldValue = z.infer<typeof formSchema>;
-
 export const ProfileForm = ({
   address,
   age,
@@ -64,7 +40,7 @@ export const ProfileForm = ({
   sex,
 }: ProfileContent) => {
   const headingId = useId();
-  const form = useForm<FormFieldValue>({
+  const form = useForm<ProfileFormInput>({
     defaultValues: {
       address,
       age,
@@ -75,7 +51,7 @@ export const ProfileForm = ({
       name,
       sex,
     },
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(profileFormInputSchema),
   });
   const hashtagFields = useFieldArray({
     control: form.control,
@@ -86,7 +62,7 @@ export const ProfileForm = ({
     name: "hobbies",
   });
 
-  const onSubmit = (values: FormFieldValue) => {
+  const onSubmit = (values: ProfileFormInput) => {
     console.log(values);
   };
 
