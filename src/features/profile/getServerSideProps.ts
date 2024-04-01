@@ -1,9 +1,8 @@
 import { GetServerSideProps } from "next";
 import nookies from "nookies";
 
-import { ProfileContent } from "../dashboard/types/ProfileContent";
-
 import { MOCK_API_URL } from "@/constants/mockApiUrl";
+import { ProfileContent } from "@/types/ProfileContent";
 import { HttpError, HttpErrorObject } from "@/utils/HttpError";
 import { fetcher } from "@/utils/fetcher";
 

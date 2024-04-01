@@ -19,7 +19,7 @@ import { Input } from "@/components/shadcn/ui/input";
 import { Textarea } from "@/components/shadcn/ui/textarea";
 import { TagInput } from "@/components/ui/case/TagInput";
 import { FormHeading } from "@/components/ui/domain/FormHeading";
-import { ProfileContent } from "@/features/dashboard/types/ProfileContent";
+import { ProfileContent } from "@/types/ProfileContent";
 
 const formSchema = z.object({
   address: z.string(),

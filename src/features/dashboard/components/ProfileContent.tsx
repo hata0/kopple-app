@@ -2,9 +2,8 @@ import { format } from "date-fns";
 import Image from "next/image";
 import { memo } from "react";
 
-import { ProfileContent as Props } from "../types/ProfileContent";
-
 import { Badge } from "@/components/shadcn/ui/badge";
+import { ProfileContent as Props } from "@/types/ProfileContent";
 
 export const ProfileContent = memo(
   ({ address, age, birthday, hashtags, hobbies, imageUrl, message, name, sex }: Props) => {
@@ -60,7 +59,7 @@ export const ProfileContent = memo(
               {hashtags.length !== 0 ? (
                 hashtags.map((hashtag, index) => (
                   <div key={index} className="py-[0] pl-[20px] pr-[0.5em] font-bold text-[#1877f2]">
-                    #{hashtag}
+                    #{hashtag.name}
                   </div>
                 ))
               ) : (
@@ -79,7 +78,7 @@ export const ProfileContent = memo(
               {hobbies.length !== 0 ? (
                 hobbies.map((hobby, index) => (
                   <Badge key={index} className="bg-amber-800 hover:bg-amber-800/90">
-                    {hobby}
+                    {hobby.name}
                   </Badge>
                 ))
               ) : (
