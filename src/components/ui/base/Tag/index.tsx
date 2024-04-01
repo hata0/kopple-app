@@ -3,9 +3,10 @@ import { ImCross } from "react-icons/im";
 
 import { Button, ButtonProps } from "@/components/shadcn/ui/button";
 import { cn } from "@/lib/utils";
+import { Tag as TagType } from "@/types/Tag";
 
 export type TagProps = {
-  name: string;
+  value: TagType;
   index: number;
   onDeleteTag?: (deleteIndex: number) => void;
   containerProps?: ComponentProps<"div">;
@@ -17,9 +18,9 @@ export const Tag = ({
   containerProps,
   deleteProps,
   index,
-  name,
   nameProps,
   onDeleteTag,
+  value,
 }: TagProps) => {
   return (
     <div
@@ -33,11 +34,11 @@ export const Tag = ({
         {...nameProps}
         className={cn("flex h-full items-center py-1 pl-2 pr-3 font-medium", nameProps?.className)}
       >
-        {name}
+        {value.name}
       </span>
       <Button
         {...deleteProps}
-        aria-label={`「${name}」を削除`}
+        aria-label={`「${value.name}」を削除`}
         className={cn(
           "ml-0.5 h-full w-4 bg-transparent py-2 pl-0 pr-2 ring-offset-transparent transition-colors hover:bg-transparent hover:text-red-500 focus-visible:ring-1 focus-visible:ring-cyan-600/80",
           deleteProps?.className,

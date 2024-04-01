@@ -204,7 +204,7 @@ export const ProfileForm = ({
                       <Input {...props} />
                     </FormControl>
                   )}
-                  tags={tags.map(({ name }) => name)}
+                  tags={tags}
                 />
                 <FormMessage />
               </FormItem>
@@ -246,7 +246,7 @@ export const ProfileForm = ({
                       <Input {...props} />
                     </FormControl>
                   )}
-                  tags={tags.map(({ name }) => name)}
+                  tags={tags}
                 />
                 <FormMessage />
               </FormItem>

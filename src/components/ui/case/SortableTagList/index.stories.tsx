@@ -25,7 +25,10 @@ export const ManyTag: Story = {
     onDeleteTag: fn(),
     onDragEnd: fn(),
     onDragStart: fn(),
-    tags: Array.from({ length: 20 }).map((_, idx) => ({ id: idx.toString(), name: "tag" })),
+    tags: Array.from({ length: 20 }).map((_, idx) => ({
+      id: idx.toString(),
+      value: { name: "tag" },
+    })),
   },
   name: "タグが大量にある場合",
 };
@@ -37,11 +40,11 @@ export default {
     onDragEnd: fn(),
     onDragStart: fn(),
     tags: [
-      { id: crypto.randomUUID(), name: "tag1" },
-      { id: crypto.randomUUID(), name: "tag2" },
-      { id: crypto.randomUUID(), name: "tag3" },
-      { id: crypto.randomUUID(), name: "tag4" },
-      { id: crypto.randomUUID(), name: "tag5" },
+      { id: crypto.randomUUID(), value: { name: "tag1" } },
+      { id: crypto.randomUUID(), value: { name: "tag2" } },
+      { id: crypto.randomUUID(), value: { name: "tag3" } },
+      { id: crypto.randomUUID(), value: { name: "tag4" } },
+      { id: crypto.randomUUID(), value: { name: "tag5" } },
     ],
   },
   component: SortableTagList,

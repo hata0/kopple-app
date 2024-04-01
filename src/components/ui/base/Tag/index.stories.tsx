@@ -21,8 +21,10 @@ export const DeleteClick: Story = {
 export default {
   args: {
     index: 0,
-    name: tagName,
     onDeleteTag: fn(),
+    value: {
+      name: tagName,
+    },
   },
   component: Tag,
 } satisfies Meta<T>;

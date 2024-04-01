@@ -4,10 +4,10 @@ import { CSS } from "@dnd-kit/utilities";
 import { memo } from "react";
 
 import { Tag, TagProps } from "../../base/Tag";
-import { Tag as TagType } from "../TagInput";
+import { TagWithId } from "../TagInput";
 
 type Props = {
-  tags: TagType[];
+  tags: TagWithId[];
   onDragEnd: (event: DragEndEvent) => void;
   onDragStart: (event: DragStartEvent) => void;
   draggingTag: string | null;
@@ -26,7 +26,9 @@ export const SortableTagList = memo(
                 <SortableTag key={tag.id} {...tag} index={idx} onDeleteTag={onDeleteTag} />
               ))}
             </SortableContext>
-            <DragOverlay>{draggingTag && <Tag index={0} name={draggingTag} />}</DragOverlay>
+            <DragOverlay>
+              {draggingTag && <Tag index={0} value={{ name: draggingTag }} />}
+            </DragOverlay>
           </DndContext>
         )}
       </div>

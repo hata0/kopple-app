@@ -2,15 +2,15 @@ import { type DragEndEvent, type DragStartEvent } from "@dnd-kit/core";
 import { ChangeEventHandler, memo, ReactNode, useMemo, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
-import { Tag } from "../../base/Tag";
 import { SortableTagList } from "../SortableTagList";
 
 import { Button } from "@/components/shadcn/ui/button";
 import { Input } from "@/components/shadcn/ui/input";
 import { toast } from "@/components/shadcn/ui/use-toast";
+import { Tag } from "@/types/Tag";
 
-export type Tag = {
-  name: string;
+export type TagWithId = {
+  value: Tag;
   id: string;
 };
 export type AddTagArgs = {
@@ -23,7 +23,7 @@ export type DragEndArgs = {
 } & DragEndEvent;
 
 type Props = {
-  tags: string[];
+  tags: Tag[];
   onAddTag: (args: AddTagArgs) => void;
   onDeleteTag: (deleteIndex: number) => void;
   onDragEnd: (args: DragEndArgs) => void;
@@ -44,11 +44,11 @@ export const TagInput = memo(
     render,
     tags: initialTags,
   }: Props) => {
-    const tags: Tag[] = useMemo(
+    const tags: TagWithId[] = useMemo(
       () =>
-        initialTags.map((name) => ({
+        initialTags.map((tag) => ({
           id: crypto.randomUUID(),
-          name,
+          value: tag,
         })),
       [initialTags],
     );
@@ -56,7 +56,7 @@ export const TagInput = memo(
     const [draggingTag, setDraggingTag] = useState<string | null>(null);
 
     const handleAddTag = () => {
-      const isSameTagName = !!tags.find(({ name }) => name === text);
+      const isSameTagName = !!tags.find(({ value }) => value.name === text);
       onAddTag({ isSameTagName, text });
 
       if (!disableSameNameError && isSameTagName) {
@@ -83,7 +83,7 @@ export const TagInput = memo(
       }
     };
     const handleDragStart = ({ active }: DragStartEvent) => {
-      setDraggingTag(tags.find((tag) => tag.id === active.id)!.name);
+      setDraggingTag(tags.find((tag) => tag.id === active.id)!.value.name);
     };
 
     return (
