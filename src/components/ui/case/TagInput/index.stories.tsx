@@ -34,22 +34,6 @@ export const AddSameTag: Story = {
   },
 };
 
-export const DeleteTag: Story = {
-  args: {
-    onAddTag: fn(),
-    onDeleteTag: fn(),
-    onDragEnd: fn(),
-    tags: [{ name: "tag name" }],
-  },
-  name: "タグを削除する場合",
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    await userEvent.click(
-      canvas.getByRole("button", { name: `「${DeleteTag.args!.tags![0].name}」を削除` }),
-    );
-  },
-};
-
 export const DisableSameNameError: Story = {
   args: {
     disableSameNameError: true,
@@ -63,6 +47,22 @@ export const DisableSameNameError: Story = {
     const canvas = within(canvasElement);
     await userEvent.type(canvas.getByRole("textbox"), "tag name");
     await userEvent.click(canvas.getByRole("button", { name: "追加" }));
+  },
+};
+
+export const DeleteTag: Story = {
+  args: {
+    onAddTag: fn(),
+    onDeleteTag: fn(),
+    onDragEnd: fn(),
+    tags: [{ name: "tag name" }],
+  },
+  name: "タグを削除する場合",
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(
+      canvas.getByRole("button", { name: `「${DeleteTag.args!.tags![0].name}」を削除` }),
+    );
   },
 };
 
