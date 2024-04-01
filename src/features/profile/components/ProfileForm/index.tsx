@@ -1,9 +1,7 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useId } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
 
-import { profileFormInputSchema } from "../../services/backend/profiles/[id]/schema";
+import { useProfileForm } from "../../hooks/useProfileForm";
 import { ProfileFormInput } from "../../services/backend/profiles/[id]/type";
 import { DayOfBirthPicker } from "../DayOfBirthPicker";
 
@@ -29,38 +27,9 @@ import { TagInput } from "@/components/ui/case/TagInput";
 import { FormHeading } from "@/components/ui/domain/FormHeading";
 import { ProfileContent } from "@/types/ProfileContent";
 
-export const ProfileForm = ({
-  address,
-  age,
-  birthday,
-  hashtags,
-  hobbies,
-  message,
-  name,
-  sex,
-}: ProfileContent) => {
+export const ProfileForm = (props: ProfileContent) => {
   const headingId = useId();
-  const form = useForm<ProfileFormInput>({
-    defaultValues: {
-      address,
-      age,
-      birthday: birthday === null ? undefined : birthday,
-      hashtags,
-      hobbies,
-      message,
-      name,
-      sex,
-    },
-    resolver: zodResolver(profileFormInputSchema),
-  });
-  const hashtagFields = useFieldArray({
-    control: form.control,
-    name: "hashtags",
-  });
-  const hobbyFields = useFieldArray({
-    control: form.control,
-    name: "hobbies",
-  });
+  const { form, hashtagFields, hobbyFields } = useProfileForm(props);
 
   const onSubmit = (values: ProfileFormInput) => {
     console.log(values);
