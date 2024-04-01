@@ -16,7 +16,7 @@ const PROFILE_CONTENTS: ProfileContent[] = [
     message:
       "冒険心旺盛な登山家です。新たな山々や景色を求めて旅を続けています。一緒に自然の美しさを共有しませんか？",
     name: "田中 みさき",
-    sex: "女",
+    sex: "woman",
   },
   {
     address: "東京都",
@@ -28,7 +28,7 @@ const PROFILE_CONTENTS: ProfileContent[] = [
     message:
       "登山が大好きで、山頂からの絶景に心を奪われます。一緒に山に登って、感動の瞬間を共有しましょう。よろしくおねがいします。",
     name: "佐藤 あやか",
-    sex: "女",
+    sex: "woman",
   },
   {
     address: "大阪府",
@@ -40,7 +40,7 @@ const PROFILE_CONTENTS: ProfileContent[] = [
     message:
       "新しいことに興味津々で、世界中の未知の場所や文化に触れたいと思っています。一緒に冒険し、新たな体験を楽しみましょう！たくさんの人と話してみたいです！",
     name: "佐藤花子",
-    sex: "女",
+    sex: "woman",
   },
   {
     address: "愛知県",
@@ -52,7 +52,7 @@ const PROFILE_CONTENTS: ProfileContent[] = [
     message:
       "グルメな食事を楽しむことが大好きで、美味しい料理を求めて街を彷徨います。好物はたこ焼きとお好み焼きです。よろしくね！",
     name: "田中美咲",
-    sex: "女",
+    sex: "woman",
   },
   {
     address: "",
@@ -63,6 +63,6 @@ const PROFILE_CONTENTS: ProfileContent[] = [
     imageUrl: "/portrait/5.jpg",
     message: "",
     name: "山本 さくら",
-    sex: "女",
+    sex: "woman",
   },
 ];

@@ -6,7 +6,7 @@ export type ProfileContent = {
   imageUrl: string;
   message: string;
   name: string;
-  sex: string;
+  sex: "man" | "woman";
   birthday: Date | null;
   hobbies: Tag[];
   address: string;

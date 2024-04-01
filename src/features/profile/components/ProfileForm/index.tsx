@@ -16,6 +16,13 @@ import {
   FormMessage,
 } from "@/components/shadcn/ui/form";
 import { Input } from "@/components/shadcn/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/shadcn/ui/select";
 import { Textarea } from "@/components/shadcn/ui/textarea";
 import { TagInput } from "@/components/ui/case/TagInput";
 import { FormHeading } from "@/components/ui/domain/FormHeading";
@@ -41,7 +48,7 @@ const formSchema = z.object({
   ),
   message: z.string(),
   name: z.string().min(1, "名前を入力してください。"),
-  sex: z.string(),
+  sex: z.enum(["man", "woman"]),
 });
 
 export type FormFieldValue = z.infer<typeof formSchema>;
@@ -124,9 +131,17 @@ export const ProfileForm = ({
             render={({ field }) => (
               <FormItem className="w-24">
                 <FormLabel>性別</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
+                <Select defaultValue={field.value} onValueChange={field.onChange}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="性別を選択する" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="man">男性</SelectItem>
+                    <SelectItem value="woman">女性</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
