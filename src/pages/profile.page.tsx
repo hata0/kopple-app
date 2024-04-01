@@ -2,22 +2,12 @@ import { NextPage } from "next";
 
 import Error from "./_error.page";
 
-import { PostLoginHeader } from "@/components/layouts/domain/PostLoginHeader";
-import { ProfileFormInput } from "@/features/profile/components/ProfileForm";
+import { Profile } from "@/features/profile/components/Profile";
 import { getServerSideProps, Props } from "@/features/profile/getServerSideProps";
 
 export { getServerSideProps };
 
 export const ProfilePage: NextPage<Props> = ({ error, profileContent }) => {
-  if (error) {
-    return <Error {...error} />;
-  }
-
-  return (
-    <div>
-      <PostLoginHeader />
-      <ProfileForm {...profileContent!} />
-    </div>
-  );
+  return error ? <Error {...error} /> : <Profile {...profileContent!} />;
 };
 export default ProfilePage;

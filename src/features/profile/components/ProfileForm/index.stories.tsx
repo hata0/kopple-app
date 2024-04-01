@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
+import { fn } from "@storybook/test";
 
 import { ProfileForm } from ".";
 
@@ -9,14 +10,17 @@ export const Default: Story = {};
 
 export default {
   args: {
-    address: "",
-    age: 20,
-    birthday: null,
-    hashtags: [],
-    hobbies: [],
-    message: "",
-    name: "bob",
-    sex: "man",
+    onSubmit: fn(),
+    profileContent: {
+      address: "",
+      age: 20,
+      birthday: null,
+      hashtags: [],
+      hobbies: [],
+      message: "",
+      name: "bob",
+      sex: "man",
+    },
   },
   component: ProfileForm,
   title: "Features/profile/ProfileForm",

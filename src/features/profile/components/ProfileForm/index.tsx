@@ -27,13 +27,13 @@ import { TagInput } from "@/components/ui/case/TagInput";
 import { FormHeading } from "@/components/ui/domain/FormHeading";
 import { ProfileContent } from "@/types/ProfileContent";
 
-export const ProfileForm = (props: ProfileContent) => {
+type Props = {
+  profileContent: ProfileContent;
+  onSubmit: (values: ProfileFormInput) => void;
+};
+export const ProfileForm = ({ onSubmit, profileContent }: Props) => {
   const headingId = useId();
-  const { form, hashtagFields, hobbyFields } = useProfileForm(props);
-
-  const onSubmit = (values: ProfileFormInput) => {
-    console.log(values);
-  };
+  const { form, hashtagFields, hobbyFields } = useProfileForm(profileContent);
 
   return (
     <Form {...form}>
