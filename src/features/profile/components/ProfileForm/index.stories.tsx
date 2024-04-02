@@ -17,6 +17,7 @@ export default {
       birthday: null,
       hashtags: [],
       hobbies: [],
+      imageUrl: "/portrait/1.jpg",
       message: "",
       name: "bob",
       sex: "man",
