@@ -6,6 +6,7 @@ import { ProfileFormInput } from "../services/backend/profiles/[id]/type";
 
 import { ProfileContent } from "@/types/ProfileContent";
 
+type Props = Omit<ProfileContent, "imageUrl">;
 export const useProfileForm = ({
   address,
   age,
@@ -15,7 +16,7 @@ export const useProfileForm = ({
   message,
   name,
   sex,
-}: ProfileContent) => {
+}: Props) => {
   const form = useForm<ProfileFormInput>({
     defaultValues: {
       address,
@@ -23,6 +24,7 @@ export const useProfileForm = ({
       birthday: birthday === null ? undefined : birthday,
       hashtags,
       hobbies,
+      image: undefined,
       message,
       name,
       sex,

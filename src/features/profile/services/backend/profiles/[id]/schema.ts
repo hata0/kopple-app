@@ -18,6 +18,7 @@ export const profileFormInputSchema = z.object({
       name: z.string().min(1, "趣味名が必要です"),
     }),
   ),
+  image: z.instanceof(File).optional(),
   message: z.string(),
   name: z.string().min(1, "名前を入力してください。"),
   sex: z.enum(["man", "woman"]),

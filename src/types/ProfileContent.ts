@@ -3,7 +3,7 @@ import { Tag } from "@/types/Tag";
 export type ProfileContent = {
   age: number;
   hashtags: Tag[];
-  imageUrl: string;
+  imageUrl: string | null;
   message: string;
   name: string;
   sex: "man" | "woman";
