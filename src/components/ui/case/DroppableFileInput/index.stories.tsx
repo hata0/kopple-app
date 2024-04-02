@@ -19,8 +19,9 @@ export const SelectFile: Story = {
   },
 };
 
-export const RenderMock = {
+export const Mock = {
   args: {
+    className: fn(),
     dropOptions: {
       onDrop: fn(),
     },
@@ -30,6 +31,7 @@ export const RenderMock = {
 
 export default {
   args: {
+    className: fn(),
     dropOptions: {
       onDrop: fn(),
     },

@@ -3,14 +3,16 @@ import { act, render } from "@testing-library/react";
 
 import * as stories from "./index.stories";
 
-const { RenderMock, SelectFile } = composeStories(stories);
+const { Mock, SelectFile } = composeStories(stories);
 
 describe("DroppableFileInput", () => {
-  it("renderに適切な引数が渡される", () => {
-    render(<RenderMock />);
-    expect(RenderMock.args.render).toHaveBeenCalledWith({
+  it("各関数に適切な引数が渡される", () => {
+    render(<Mock />);
+    const dropState = {
       isDragActive: false,
-    });
+    };
+    expect(Mock.args.className).toHaveBeenCalledWith(dropState);
+    expect(Mock.args.render).toHaveBeenCalledWith(dropState);
   });
 
   it("ファイルが選択された時、関数が呼ばれる", async () => {
