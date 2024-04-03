@@ -15,28 +15,28 @@ import { TagInput } from "@/components/ui/case/TagInput";
 
 type Props = {
   control: Control<ProfileFormInput>;
-  hashtagFields: UseFieldArrayReturn<ProfileFormInput, "hashtags", "id">;
+  hobbyFields: UseFieldArrayReturn<ProfileFormInput, "hobbies", "id">;
 };
-export const HashtagFormField = memo(({ control, hashtagFields }: Props) => {
+export const HobbyFormField = memo(({ control, hobbyFields }: Props) => {
   return (
     <FormField
       control={control}
-      name="hashtags"
+      name="hobbies"
       render={({ field }) => (
         <FormItem className="w-full">
-          <FormLabel>ハッシュタグ</FormLabel>
+          <FormLabel>趣味</FormLabel>
           <TagInput
             onAddTag={({ isSameTagName, text }) => {
               if (isSameTagName) {
                 return;
               } else {
-                hashtagFields.append({
+                hobbyFields.append({
                   name: text,
                 });
               }
             }}
             onDeleteTag={(deleteIndex) => {
-              hashtagFields.remove(deleteIndex);
+              hobbyFields.remove(deleteIndex);
             }}
             onDragEnd={({ active, newIndex, oldIndex, over }) => {
               if (over === null) {
@@ -44,7 +44,7 @@ export const HashtagFormField = memo(({ control, hashtagFields }: Props) => {
               } else if (active.id === over.id) {
                 return;
               } else {
-                hashtagFields.swap(oldIndex, newIndex);
+                hobbyFields.swap(oldIndex, newIndex);
               }
             }}
             render={(props) => (
@@ -60,4 +60,4 @@ export const HashtagFormField = memo(({ control, hashtagFields }: Props) => {
     />
   );
 });
-HashtagFormField.displayName = "HashtagFormField";
+HobbyFormField.displayName = "HobbyFormField";

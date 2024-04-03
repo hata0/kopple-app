@@ -4,6 +4,8 @@ import { useId } from "react";
 import { useProfileForm } from "../../hooks/useProfileForm";
 import { ProfileFormInput } from "../../services/backend/profiles/[id]/type";
 import { BirthdayFormField } from "../BirthdayFormField";
+import { HashtagFormField } from "../HashtagFormField";
+import { HobbyFormField } from "../HobbyFormField";
 import { PortraitFormField } from "../PortraitFormField";
 
 import { Button } from "@/components/shadcn/ui/button";
@@ -24,7 +26,6 @@ import {
   SelectValue,
 } from "@/components/shadcn/ui/select";
 import { Textarea } from "@/components/shadcn/ui/textarea";
-import { TagInput } from "@/components/ui/case/TagInput";
 import { FormHeading } from "@/components/ui/domain/FormHeading";
 import { ProfileContent } from "@/types/ProfileContent";
 
@@ -125,90 +126,8 @@ export const ProfileForm = ({ onSubmit, profileContent }: Props) => {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="hashtags"
-          render={({ field }) => {
-            const tags = field.value;
-            return (
-              <FormItem className="w-full">
-                <FormLabel>ハッシュタグ</FormLabel>
-                <TagInput
-                  onAddTag={({ isSameTagName, text }) => {
-                    if (isSameTagName) {
-                      return;
-                    } else {
-                      hashtagFields.append({
-                        name: text,
-                      });
-                    }
-                  }}
-                  onDeleteTag={(deleteIndex) => {
-                    hashtagFields.remove(deleteIndex);
-                  }}
-                  onDragEnd={({ active, newIndex, oldIndex, over }) => {
-                    if (over === null) {
-                      return;
-                    } else if (active.id === over.id) {
-                      return;
-                    } else {
-                      hashtagFields.swap(oldIndex, newIndex);
-                    }
-                  }}
-                  render={(props) => (
-                    <FormControl>
-                      <Input {...props} />
-                    </FormControl>
-                  )}
-                  tags={tags}
-                />
-                <FormMessage />
-              </FormItem>
-            );
-          }}
-        />
-        <FormField
-          control={form.control}
-          name="hobbies"
-          render={({ field }) => {
-            const tags = field.value;
-            return (
-              <FormItem className="w-full">
-                <FormLabel>趣味</FormLabel>
-                <TagInput
-                  onAddTag={({ isSameTagName, text }) => {
-                    if (isSameTagName) {
-                      return;
-                    } else {
-                      hobbyFields.append({
-                        name: text,
-                      });
-                    }
-                  }}
-                  onDeleteTag={(deleteIndex) => {
-                    hobbyFields.remove(deleteIndex);
-                  }}
-                  onDragEnd={({ active, newIndex, oldIndex, over }) => {
-                    if (over === null) {
-                      return;
-                    } else if (active.id === over.id) {
-                      return;
-                    } else {
-                      hobbyFields.swap(oldIndex, newIndex);
-                    }
-                  }}
-                  render={(props) => (
-                    <FormControl>
-                      <Input {...props} />
-                    </FormControl>
-                  )}
-                  tags={tags}
-                />
-                <FormMessage />
-              </FormItem>
-            );
-          }}
-        />
+        <HashtagFormField control={form.control} hashtagFields={hashtagFields} />
+        <HobbyFormField control={form.control} hobbyFields={hobbyFields} />
         <div className="flex space-x-8 pt-5">
           <Button type="submit">更新</Button>
           <Button asChild>
