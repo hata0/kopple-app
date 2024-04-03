@@ -4,7 +4,7 @@ import { useId } from "react";
 import { useProfileForm } from "../../hooks/useProfileForm";
 import { ProfileFormInput } from "../../services/backend/profiles/[id]/type";
 import { DayOfBirthPicker } from "../DayOfBirthPicker";
-import { PortraitFormItem } from "../PortraitFormItem";
+import { PortraitFormField } from "../PortraitFormField";
 
 import { Button } from "@/components/shadcn/ui/button";
 import {
@@ -117,7 +117,7 @@ export const ProfileForm = ({ onSubmit, profileContent }: Props) => {
             )}
           />
         </div>
-        <PortraitFormItem
+        <PortraitFormField
           control={form.control}
           imageUrl={profileContent.imageUrl}
           setValue={form.setValue}

@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Control, UseFormSetValue } from "react-hook-form";
 import { FaPortrait } from "react-icons/fa";
 
-import { ProfileFormInput } from "../../services/backend/profiles/[id]/type";
+import { ProfileFormInput } from "../services/backend/profiles/[id]/type";
 
 import {
   FormControl,
@@ -21,7 +21,7 @@ type Props = {
   setValue: UseFormSetValue<ProfileFormInput>;
   imageUrl: string | null;
 };
-export const PortraitFormItem = ({ control, imageUrl, setValue }: Props) => {
+export const PortraitFormField = ({ control, imageUrl, setValue }: Props) => {
   return (
     <FormField
       control={control}
