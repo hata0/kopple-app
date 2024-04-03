@@ -23,7 +23,7 @@ export const Empty: Story = {
       sex: "man",
     },
   },
-  name: "一部が空の時",
+  name: "空を含む時",
 };
 
 export default {
