@@ -3,7 +3,7 @@ import { useId } from "react";
 
 import { useProfileForm } from "../../hooks/useProfileForm";
 import { ProfileFormInput } from "../../services/backend/profiles/[id]/type";
-import { DayOfBirthPicker } from "../DayOfBirthPicker";
+import { BirthdayFormField } from "../BirthdayFormField";
 import { PortraitFormField } from "../PortraitFormField";
 
 import { Button } from "@/components/shadcn/ui/button";
@@ -105,17 +105,7 @@ export const ProfileForm = ({ onSubmit, profileContent }: Props) => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="birthday"
-            render={({ field }) => (
-              <FormItem className="w-48">
-                <FormLabel>誕生日</FormLabel>
-                <DayOfBirthPicker onChange={field.onChange} value={field.value} />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <BirthdayFormField control={form.control} />
         </div>
         <PortraitFormField
           control={form.control}
