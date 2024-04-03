@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { memo } from "react";
 import { Control, UseFormSetValue } from "react-hook-form";
 import { FaPortrait } from "react-icons/fa";
 
@@ -21,7 +22,7 @@ type Props = {
   setValue: UseFormSetValue<ProfileFormInput>;
   imageUrl: string | null;
 };
-export const PortraitFormField = ({ control, imageUrl, setValue }: Props) => {
+export const PortraitFormField = memo(({ control, imageUrl, setValue }: Props) => {
   return (
     <FormField
       control={control}
@@ -85,4 +86,5 @@ export const PortraitFormField = ({ control, imageUrl, setValue }: Props) => {
       )}
     />
   );
-};
+});
+PortraitFormField.displayName = "PortraitFormField";
