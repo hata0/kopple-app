@@ -26,6 +26,9 @@ export const HobbyFormField = memo(({ control, hobbyFields }: Props) => {
         <FormItem className="w-full">
           <FormLabel>趣味</FormLabel>
           <TagInput
+            addProps={{
+              "aria-label": "趣味を追加",
+            }}
             onAddTag={({ isSameTagName, text }) => {
               if (isSameTagName) {
                 return;

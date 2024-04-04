@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
+import { fn, userEvent, within } from "@storybook/test";
 
 import { ProfileForm } from ".";
 
@@ -23,7 +23,29 @@ export const Empty: Story = {
       sex: "man",
     },
   },
-  name: "空を含む時",
+  name: "初期値が空の時",
+};
+
+export const EmptySubmit: Story = {
+  args: {
+    onSubmit: fn(),
+    profileContent: {
+      address: "",
+      age: 0,
+      birthday: null,
+      hashtags: [],
+      hobbies: [],
+      imageUrl: null,
+      message: "",
+      name: "",
+      sex: "man",
+    },
+  },
+  name: "空のまま送信したとき",
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole("button", { name: "更新" }));
+  },
 };
 
 export default {

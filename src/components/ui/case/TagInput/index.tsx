@@ -4,7 +4,7 @@ import { FaPlus } from "react-icons/fa";
 
 import { SortableTagList } from "../SortableTagList";
 
-import { Button } from "@/components/shadcn/ui/button";
+import { Button, ButtonProps } from "@/components/shadcn/ui/button";
 import { Input } from "@/components/shadcn/ui/input";
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { Tag } from "@/types/Tag";
@@ -24,6 +24,7 @@ export type DragEndArgs = {
 
 type Props = {
   tags: Tag[];
+  addProps?: ButtonProps;
   onAddTag: (args: AddTagArgs) => void;
   onDeleteTag: (deleteIndex: number) => void;
   onDragEnd: (args: DragEndArgs) => void;
@@ -37,6 +38,7 @@ type Props = {
 };
 export const TagInput = memo(
   ({
+    addProps,
     disableSameNameError = false,
     onAddTag,
     onDeleteTag,
@@ -115,6 +117,7 @@ export const TagInput = memo(
             onClick={handleAddTag}
             size="icon"
             type="button"
+            {...addProps}
           >
             <FaPlus />
           </Button>

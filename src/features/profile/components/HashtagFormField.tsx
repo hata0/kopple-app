@@ -26,6 +26,9 @@ export const HashtagFormField = memo(({ control, hashtagFields }: Props) => {
         <FormItem className="w-full">
           <FormLabel>ハッシュタグ</FormLabel>
           <TagInput
+            addProps={{
+              "aria-label": "ハッシュタグを追加",
+            }}
             onAddTag={({ isSameTagName, text }) => {
               if (isSameTagName) {
                 return;
