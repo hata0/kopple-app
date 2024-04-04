@@ -3,6 +3,8 @@ import { fn, userEvent, within } from "@storybook/test";
 
 import { ProfileForm } from ".";
 
+import { Toaster } from "@/components/shadcn/ui/toaster";
+
 type T = typeof ProfileForm;
 type Story = StoryObj<T>;
 
@@ -65,5 +67,13 @@ export default {
     },
   },
   component: ProfileForm,
+  decorators: [
+    (Story) => (
+      <>
+        <Story />
+        <Toaster />
+      </>
+    ),
+  ],
   title: "Features/profile/ProfileForm",
 } satisfies Meta<T>;

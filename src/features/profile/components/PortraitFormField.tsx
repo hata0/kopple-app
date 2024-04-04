@@ -37,7 +37,10 @@ export const PortraitFormField = memo(({ control, imageUrl, setValue }: Props) =
               })
             }
             dropOptions={{
-              onDrop: (files) => {
+              accept: {
+                "image/png": [".png", ".jpg"],
+              },
+              onDropAccepted: (files) => {
                 if (files.length > 0) {
                   setValue("image", files[0]);
                 } else {
@@ -46,6 +49,12 @@ export const PortraitFormField = memo(({ control, imageUrl, setValue }: Props) =
                     variant: "destructive",
                   });
                 }
+              },
+              onDropRejected: () => {
+                toast({
+                  title: "ファイルは画像である必要があります",
+                  variant: "destructive",
+                });
               },
             }}
             render={({ isDragActive }) => (
