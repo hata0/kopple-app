@@ -4,7 +4,7 @@ import { userEvent } from "@testing-library/user-event";
 
 import * as stories from "./index.stories";
 
-const { Empty, EmptySubmit } = composeStories(stories);
+const { BigNumberAge, Empty, EmptySubmit, NegativeNumberAge } = composeStories(stories);
 
 window.URL.createObjectURL = jest.fn().mockReturnValue("blob:hello");
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
@@ -20,6 +20,28 @@ describe("ProfileForm", () => {
       "名前を入力してください。",
     );
     expect(EmptySubmit.args.onSubmit).not.toHaveBeenCalled();
+  });
+
+  describe("不正な入力値のとき、エラーが表示", () => {
+    it("年齢が負数", async () => {
+      const { container } = render(<NegativeNumberAge />);
+      await act(async () => {
+        await NegativeNumberAge.play?.({ canvasElement: container });
+      });
+      expect(screen.getByRole("textbox", { name: "年齢" })).toHaveAccessibleDescription(
+        "年齢を入力してください。",
+      );
+    });
+
+    it("年齢が130より大きい", async () => {
+      const { container } = render(<BigNumberAge />);
+      await act(async () => {
+        await BigNumberAge.play?.({ canvasElement: container });
+      });
+      expect(screen.getByRole("textbox", { name: "年齢" })).toHaveAccessibleDescription(
+        "年齢を入力してください。",
+      );
+    });
   });
 
   it("有効な入力の場合、onSubmitが実行される", async () => {

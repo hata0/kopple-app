@@ -50,6 +50,50 @@ export const EmptySubmit: Story = {
   },
 };
 
+export const NegativeNumberAge: Story = {
+  args: {
+    onSubmit: fn(),
+    profileContent: {
+      address: "",
+      age: -50,
+      birthday: null,
+      hashtags: [],
+      hobbies: [],
+      imageUrl: null,
+      message: "",
+      name: "bob",
+      sex: "man",
+    },
+  },
+  name: "年齢が負数の時",
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole("button", { name: "更新" }));
+  },
+};
+
+export const BigNumberAge: Story = {
+  args: {
+    onSubmit: fn(),
+    profileContent: {
+      address: "",
+      age: 131,
+      birthday: null,
+      hashtags: [],
+      hobbies: [],
+      imageUrl: null,
+      message: "",
+      name: "bob",
+      sex: "man",
+    },
+  },
+  name: "年齢が131の時",
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole("button", { name: "更新" }));
+  },
+};
+
 export default {
   args: {
     onSubmit: fn(),

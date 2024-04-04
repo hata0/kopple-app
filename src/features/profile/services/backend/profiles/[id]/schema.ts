@@ -4,7 +4,7 @@ export const profileFormInputSchema = z.object({
   address: z.string(),
   age: z.coerce
     .number()
-    .int("年齢を入力してください。")
+    .int()
     .nonnegative("年齢を入力してください。")
     .max(130, "年齢を入力してください。"),
   birthday: z.date().optional(),
