@@ -10,12 +10,12 @@ export const profileFormInputSchema = z.object({
   birthday: z.date().optional(),
   hashtags: z.array(
     z.object({
-      name: z.string().min(1, "ハッシュタグ名が必要です"),
+      name: z.string(),
     }),
   ),
   hobbies: z.array(
     z.object({
-      name: z.string().min(1, "趣味名が必要です"),
+      name: z.string(),
     }),
   ),
   image: z.instanceof(File).optional(),
