@@ -3,15 +3,16 @@ import { useId } from "react";
 
 import { useProfileForm } from "../../hooks/useProfileForm";
 import { ProfileFormInput } from "../../services/backend/profiles/[id]/type";
-import { BirthdayFormField } from "../BirthdayFormField";
-import { HashtagFormField } from "../HashtagFormField";
-import { HobbyFormField } from "../HobbyFormField";
-import { PortraitFormField } from "../PortraitFormField";
+import { BirthdayFormControl } from "../BirthdayFormControl";
+import { HashtagsFormControl } from "../HashtagsFormControl";
+import { HobbiesFormControl } from "../HobbiesFormControl";
+import { PortraitFormControl } from "../PortraitFormControl";
 
 import { Button } from "@/components/shadcn/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -106,12 +107,35 @@ export const ProfileForm = ({ onSubmit, profileContent }: Props) => {
               </FormItem>
             )}
           />
-          <BirthdayFormField control={form.control} />
+          <FormField
+            control={form.control}
+            name="birthday"
+            render={({ field }) => (
+              <FormItem className="w-48">
+                <FormLabel>誕生日</FormLabel>
+                <BirthdayFormControl onChange={field.onChange} value={field.value} />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
-        <PortraitFormField
+        <FormField
           control={form.control}
-          imageUrl={profileContent.imageUrl}
-          setValue={form.setValue}
+          name="image"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>ポートレイト</FormLabel>
+              <PortraitFormControl
+                imageUrl={profileContent.imageUrl}
+                setValue={form.setValue}
+                value={field.value}
+              />
+              <FormDescription className="flex w-[224px] items-center justify-center">
+                画像をドロップまたは選択
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
         />
         <FormField
           control={form.control}
@@ -126,8 +150,28 @@ export const ProfileForm = ({ onSubmit, profileContent }: Props) => {
             </FormItem>
           )}
         />
-        <HashtagFormField control={form.control} hashtagFields={hashtagFields} />
-        <HobbyFormField control={form.control} hobbyFields={hobbyFields} />
+        <FormField
+          control={form.control}
+          name="hashtags"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>ハッシュタグ</FormLabel>
+              <HashtagsFormControl hashtagFields={hashtagFields} value={field.value} />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="hobbies"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>趣味</FormLabel>
+              <HobbiesFormControl hobbyFields={hobbyFields} value={field.value} />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <div className="flex space-x-8 pt-5">
           <Button type="submit">更新</Button>
           <Button asChild>
