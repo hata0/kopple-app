@@ -6,7 +6,7 @@ import { ProfileFormInput } from "../../services/backend/profiles/[id]/type";
 import { BirthdayFormControl } from "../BirthdayFormControl";
 import { HashtagsFormControl } from "../HashtagsFormControl";
 import { HobbiesFormControl } from "../HobbiesFormControl";
-import { PortraitFormControl } from "../PortraitFormControl";
+import { PortraitInput } from "../PortraitInput";
 
 import { Button } from "@/components/shadcn/ui/button";
 import {
@@ -125,8 +125,9 @@ export const ProfileForm = ({ onSubmit, profileContent }: Props) => {
           render={({ field }) => (
             <FormItem className="w-full">
               <FormLabel>ポートレイト</FormLabel>
-              <PortraitFormControl
+              <PortraitInput
                 imageUrl={profileContent.imageUrl}
+                render={(children) => <FormControl>{children}</FormControl>}
                 setValue={form.setValue}
                 value={field.value}
               />

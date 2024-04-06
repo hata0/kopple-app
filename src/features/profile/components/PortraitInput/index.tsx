@@ -1,11 +1,10 @@
 import Image from "next/image";
-import { memo } from "react";
+import { memo, ReactNode } from "react";
 import { UseFormSetValue } from "react-hook-form";
 import { FaPortrait } from "react-icons/fa";
 
 import { ProfileFormInput } from "../../services/backend/profiles/[id]/type";
 
-import { FormControl } from "@/components/shadcn/ui/form";
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { DroppableFileInput } from "@/components/ui/case/DroppableFileInput";
 import { cn } from "@/lib/utils";
@@ -14,8 +13,9 @@ type Props = {
   setValue: UseFormSetValue<ProfileFormInput>;
   imageUrl: string | null;
   value: File | undefined;
+  render: (children: ReactNode) => ReactNode;
 };
-export const PortraitFormControl = memo(({ imageUrl, setValue, value }: Props) => {
+export const PortraitInput = memo(({ imageUrl, render, setValue, value }: Props) => {
   return (
     <DroppableFileInput
       className={({ isDragActive }) =>
@@ -44,9 +44,9 @@ export const PortraitFormControl = memo(({ imageUrl, setValue, value }: Props) =
           });
         },
       }}
-      render={({ isDragActive }) => (
-        <FormControl>
-          {!imageUrl && !value ? (
+      render={({ isDragActive }) =>
+        render(
+          !imageUrl && !value ? (
             <div
               className={cn(
                 "flex h-full w-full items-center justify-center rounded-md border-2 border-dashed bg-accent text-accent-foreground hover:bg-gray-100 hover:text-accent-foreground/80",
@@ -70,10 +70,10 @@ export const PortraitFormControl = memo(({ imageUrl, setValue, value }: Props) =
                 src={value ? URL.createObjectURL(value) : imageUrl!}
               />
             </div>
-          )}
-        </FormControl>
-      )}
+          ),
+        )
+      }
     />
   );
 });
-PortraitFormControl.displayName = "PortraitInput";
+PortraitInput.displayName = "PortraitInput";

@@ -59,11 +59,11 @@ describe("ProfileForm", () => {
       screen.getAllByRole("gridcell", { name: "1" }).find((elm) => {
         return !elm.classList.contains("day-outside");
       })!,
-    ),
-      await user.upload(
-        screen.getByTestId("drop-input"),
-        new File(["hello"], "hello.png", { type: "image/png" }),
-      );
+    );
+    await user.upload(
+      screen.getByTestId("drop-input"),
+      new File(["hello"], "hello.png", { type: "image/png" }),
+    );
     await user.type(screen.getByRole("textbox", { name: "自己紹介" }), "こんにちは");
     await user.type(screen.getByRole("textbox", { name: "ハッシュタグ" }), "釣り");
     await user.click(screen.getByRole("button", { name: "ハッシュタグを追加" }));
