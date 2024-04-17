@@ -3,7 +3,7 @@ import { useId } from "react";
 
 import { useProfileForm } from "../../hooks/useProfileForm";
 import { ProfileFormInput } from "../../services/backend/profiles/[id]/type";
-import { BirthdayFormControl } from "../BirthdayFormControl";
+import { BirthdayPicker } from "../BirthdayPicker";
 import { HashtagsInput } from "../HashtagsInput";
 import { HobbyTagsInput } from "../HobbyTagsInput";
 import { PortraitInput } from "../PortraitInput";
@@ -113,7 +113,11 @@ export const ProfileForm = ({ onSubmit, profileContent }: Props) => {
             render={({ field }) => (
               <FormItem className="w-48">
                 <FormLabel>誕生日</FormLabel>
-                <BirthdayFormControl onChange={field.onChange} value={field.value} />
+                <BirthdayPicker
+                  onChange={field.onChange}
+                  render={(children) => <FormControl>{children}</FormControl>}
+                  value={field.value}
+                />
                 <FormMessage />
               </FormItem>
             )}
