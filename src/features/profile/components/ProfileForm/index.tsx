@@ -4,7 +4,7 @@ import { useId } from "react";
 import { useProfileForm } from "../../hooks/useProfileForm";
 import { ProfileFormInput } from "../../services/backend/profiles/[id]/type";
 import { BirthdayFormControl } from "../BirthdayFormControl";
-import { HashtagsFormControl } from "../HashtagsFormControl";
+import { HashtagsInput } from "../HashtagsInput";
 import { HobbyTagsInput } from "../HobbyTagsInput";
 import { PortraitInput } from "../PortraitInput";
 
@@ -157,7 +157,11 @@ export const ProfileForm = ({ onSubmit, profileContent }: Props) => {
           render={({ field }) => (
             <FormItem className="w-full">
               <FormLabel>ハッシュタグ</FormLabel>
-              <HashtagsFormControl hashtagFields={hashtagFields} value={field.value} />
+              <HashtagsInput
+                hashtagFields={hashtagFields}
+                render={(children) => <FormControl>{children}</FormControl>}
+                value={field.value}
+              />
               <FormMessage />
             </FormItem>
           )}
