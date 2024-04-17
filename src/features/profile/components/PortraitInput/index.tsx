@@ -28,14 +28,7 @@ export const PortraitInput = memo(({ imageUrl, render, setValue, value }: Props)
           "image/png": [".png", ".jpg"],
         },
         onDropAccepted: (files) => {
-          if (files.length > 0) {
-            setValue("image", files[0]);
-          } else {
-            toast({
-              title: "画像のアップロードに失敗しました",
-              variant: "destructive",
-            });
-          }
+          setValue("image", files[0]);
         },
         onDropRejected: () => {
           toast({
