@@ -1,9 +1,8 @@
-import { memo } from "react";
+import { memo, ReactNode } from "react";
 import { UseFieldArrayReturn } from "react-hook-form";
 
 import { ProfileFormInput } from "../../services/backend/profiles/[id]/type";
 
-import { FormControl } from "@/components/shadcn/ui/form";
 import { Input } from "@/components/shadcn/ui/input";
 import { TagInput } from "@/components/ui/case/TagInput";
 
@@ -12,8 +11,9 @@ type Props = {
   value: {
     name: string;
   }[];
+  render: (children: ReactNode) => ReactNode;
 };
-export const HobbiesFormControl = memo(({ hobbyFields, value }: Props) => {
+export const HobbyTagsInput = memo(({ hobbyFields, render, value }: Props) => {
   return (
     <TagInput
       addProps={{
@@ -40,13 +40,9 @@ export const HobbiesFormControl = memo(({ hobbyFields, value }: Props) => {
           hobbyFields.swap(oldIndex, newIndex);
         }
       }}
-      render={(props) => (
-        <FormControl>
-          <Input {...props} />
-        </FormControl>
-      )}
+      render={(props) => render(<Input {...props} />)}
       tags={value}
     />
   );
 });
-HobbiesFormControl.displayName = "HobbiesFormControl";
+HobbyTagsInput.displayName = "HobbiesFormControl";

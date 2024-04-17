@@ -5,7 +5,7 @@ import { useProfileForm } from "../../hooks/useProfileForm";
 import { ProfileFormInput } from "../../services/backend/profiles/[id]/type";
 import { BirthdayFormControl } from "../BirthdayFormControl";
 import { HashtagsFormControl } from "../HashtagsFormControl";
-import { HobbiesFormControl } from "../HobbiesFormControl";
+import { HobbyTagsInput } from "../HobbyTagsInput";
 import { PortraitInput } from "../PortraitInput";
 
 import { Button } from "@/components/shadcn/ui/button";
@@ -168,7 +168,11 @@ export const ProfileForm = ({ onSubmit, profileContent }: Props) => {
           render={({ field }) => (
             <FormItem className="w-full">
               <FormLabel>趣味</FormLabel>
-              <HobbiesFormControl hobbyFields={hobbyFields} value={field.value} />
+              <HobbyTagsInput
+                hobbyFields={hobbyFields}
+                render={(children) => <FormControl>{children}</FormControl>}
+                value={field.value}
+              />
               <FormMessage />
             </FormItem>
           )}
