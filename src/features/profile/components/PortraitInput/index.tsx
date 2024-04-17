@@ -48,6 +48,7 @@ export const PortraitInput = memo(({ imageUrl, render, setValue, value }: Props)
         render(
           !imageUrl && !value ? (
             <div
+              aria-label="ポートレイトは設定されていません"
               className={cn(
                 "flex h-full w-full items-center justify-center rounded-md border-2 border-dashed bg-accent text-accent-foreground hover:bg-gray-100 hover:text-accent-foreground/80",
                 {
