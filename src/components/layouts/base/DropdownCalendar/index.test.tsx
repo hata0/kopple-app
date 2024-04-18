@@ -7,8 +7,8 @@ import * as stories from "./index.stories";
 
 import { createFromDate, createToDate } from ".";
 
-import { MockPointerEvent } from "@/tests/utils/MockPointerEvent";
-import { MockResizeObserver } from "@/tests/utils/MockResizeObserver";
+import { MockPointerEvent } from "@/tests/mocks/MockPointerEvent";
+import { MockResizeObserver } from "@/tests/mocks/MockResizeObserver";
 
 const { PickDate } = composeStories(stories);
 const user = userEvent.setup();
