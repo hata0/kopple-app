@@ -3,31 +3,10 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
 import * as stories from "./index.stories";
 
-const { Default, HasImageUrl } = composeStories(stories);
+import { createDtWithFiles } from "@/tests/dropzone/createDtWithFiles";
+import { createFile } from "@/tests/dropzone/createFile";
 
-const createDtWithFiles = (files: File[] = []) => {
-  return {
-    dataTransfer: {
-      files,
-      items: files.map((file) => ({
-        getAsFile: () => file,
-        kind: "file",
-        size: file.size,
-        type: file.type,
-      })),
-      types: ["Files"],
-    },
-  };
-};
-const createFile = (name: string, size: number, type: string) => {
-  const file = new File([], name, { type });
-  Object.defineProperty(file, "size", {
-    get() {
-      return size;
-    },
-  });
-  return file;
-};
+const { Default, HasImageUrl } = composeStories(stories);
 
 describe("PortraitInput", () => {
   it("空の場合、フォールバックが表示", () => {
