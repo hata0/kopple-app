@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 
 import { PreLoginHeader } from ".";
 
-import { UidDecorator } from "@/tests/decorators/UidDecorator";
+import { UidDecorator } from "@/tests/storybook/decorators/UidDecorator";
 
 type T = typeof PreLoginHeader;
 type Story = StoryObj<T>;
