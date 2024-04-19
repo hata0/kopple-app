@@ -1,10 +1,12 @@
 import { composeStories } from "@storybook/react";
 import { act, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+import mockRouter from "next-router-mock";
+import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
 import * as stories from "./index.stories";
 
-const { BigNumberAge, Empty, EmptySubmit, NegativeNumberAge } = composeStories(stories);
+const { BigNumberAge, Default, Empty, EmptySubmit, NegativeNumberAge } = composeStories(stories);
 
 window.URL.createObjectURL = jest.fn().mockReturnValue("blob:hello");
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
@@ -85,5 +87,13 @@ describe("ProfileForm", () => {
       },
       expect.any(Object),
     );
+  });
+
+  it("キャンセルをクリックした時、ダッシュボードページへ遷移", async () => {
+    render(<Default />, {
+      wrapper: MemoryRouterProvider,
+    });
+    await userEvent.click(screen.getByRole("link", { name: "キャンセル" }));
+    expect(mockRouter.asPath).toBe("/dashboard");
   });
 });

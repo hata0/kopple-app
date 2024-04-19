@@ -1,9 +1,12 @@
 import { composeStories } from "@storybook/react";
 import { act, render, screen } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
+import mockRouter from "next-router-mock";
+import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
 import * as stories from "./index.stories";
 
-const { EmptySubmit, InvalidInput, ValidInput } = composeStories(stories);
+const { Default, EmptySubmit, InvalidInput, ValidInput } = composeStories(stories);
 
 describe("SignInForm", () => {
   it("空のまま送信した場合、エラーが表示", async () => {
@@ -37,5 +40,13 @@ describe("SignInForm", () => {
     ).not.toHaveAccessibleDescription("メールアドレスの形式が不正です。");
     expect(screen.queryByText("パスワードを入力してください。")).not.toBeInTheDocument();
     expect(ValidInput.args.onSubmit).toHaveBeenCalled();
+  });
+
+  it("新規登録をクリックした時、新規登録ページへ遷移", async () => {
+    render(<Default />, {
+      wrapper: MemoryRouterProvider,
+    });
+    await userEvent.click(screen.getByRole("link", { name: "新規登録" }));
+    expect(mockRouter.asPath).toBe("/sign-up");
   });
 });
