@@ -46,7 +46,7 @@ export const ProfileForm = ({ onSubmit, profileContent }: Props) => {
         onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}
       >
         <FormHeading id={headingId}>プロフィールを編集</FormHeading>
-        <div className="flex h-full w-full flex-wrap items-center justify-start gap-10">
+        <div className="flex h-full w-full flex-wrap gap-10">
           <FormField
             control={form.control}
             name="name"
