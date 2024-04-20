@@ -62,19 +62,6 @@ export const ProfileForm = ({ onSubmit, profileContent }: Props) => {
           />
           <FormField
             control={form.control}
-            name="age"
-            render={({ field }) => (
-              <FormItem className="w-24">
-                <FormLabel>年齢</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="sex"
             render={({ field }) => (
               <FormItem className="w-24">

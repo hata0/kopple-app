@@ -9,7 +9,6 @@ import { ProfileContent } from "@/types/ProfileContent";
 type Props = Omit<ProfileContent, "imageUrl">;
 export const useProfileForm = ({
   address,
-  age,
   birthday,
   hashtags,
   hobbies,
@@ -20,8 +19,7 @@ export const useProfileForm = ({
   const form = useForm<ProfileFormInput>({
     defaultValues: {
       address,
-      age,
-      birthday: birthday === null ? undefined : birthday,
+      birthday,
       hashtags,
       hobbies,
       image: undefined,
