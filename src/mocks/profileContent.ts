@@ -8,8 +8,7 @@ export const profileContent = () => {
 const PROFILE_CONTENTS: ProfileContent[] = [
   {
     address: "北海道",
-    age: 25,
-    birthday: new Date(),
+    birthday: new Date(1999, 2, 3),
     hashtags: [{ name: "冒険好き" }, { name: "登山" }],
     hobbies: [{ name: "挨拶" }, { name: "自然" }],
     imageUrl: "/portrait/1.jpg",
@@ -20,8 +19,7 @@ const PROFILE_CONTENTS: ProfileContent[] = [
   },
   {
     address: "東京都",
-    age: 30,
-    birthday: new Date(),
+    birthday: new Date(1994, 3, 6),
     hashtags: [{ name: "山好き" }],
     hobbies: [{ name: "登山" }],
     imageUrl: "/portrait/2.jpg",
@@ -32,8 +30,7 @@ const PROFILE_CONTENTS: ProfileContent[] = [
   },
   {
     address: "大阪府",
-    age: 22,
-    birthday: null,
+    birthday: new Date(2002, 7, 22),
     hashtags: [{ name: "好奇心旺盛" }],
     hobbies: [{ name: "新しいこと" }],
     imageUrl: "/portrait/3.jpg",
@@ -44,8 +41,7 @@ const PROFILE_CONTENTS: ProfileContent[] = [
   },
   {
     address: "愛知県",
-    age: 28,
-    birthday: null,
+    birthday: new Date(1996, 10, 7),
     hashtags: [{ name: "グルメ" }],
     hobbies: [{ name: "美食" }],
     imageUrl: "/portrait/4.jpg",
@@ -56,8 +52,7 @@ const PROFILE_CONTENTS: ProfileContent[] = [
   },
   {
     address: "",
-    age: 35,
-    birthday: null,
+    birthday: new Date(1989, 9, 24),
     hashtags: [],
     hobbies: [],
     imageUrl: "/portrait/5.jpg",

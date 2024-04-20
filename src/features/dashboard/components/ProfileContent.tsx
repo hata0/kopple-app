@@ -4,9 +4,10 @@ import { memo } from "react";
 
 import { Badge } from "@/components/shadcn/ui/badge";
 import { ProfileContent as Props } from "@/types/ProfileContent";
+import { getAge } from "@/utils/getAge";
 
 export const ProfileContent = memo(
-  ({ address, age, birthday, hashtags, hobbies, imageUrl, message, name, sex }: Props) => {
+  ({ address, birthday, hashtags, hobbies, imageUrl, message, name, sex }: Props) => {
     return (
       <div>
         <div className="m-[10px] rounded-tl-[30px] rounded-tr-[30px] bg-[rgb(255,_242,_230)] pb-px">
@@ -33,7 +34,7 @@ export const ProfileContent = memo(
             </h3>
             <div className="px-[1.5em] pb-[.5em] pt-[1.2em]">
               <p className="m-0">
-                {age}・{sex}
+                {getAge(new Date(birthday))}・{sex}
               </p>
               <p className="m-0">誕生日:{birthday ? format(birthday, "M月d日") : "未設定"}</p>
               <p className="m-0">住所:{address !== "" ? address : "未設定"}</p>
