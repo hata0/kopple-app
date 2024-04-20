@@ -15,7 +15,6 @@ type Props = {
 
 export const ProfileDrawer = memo(({ id }: Props) => {
   const { fetchProfile, profileContent } = useProfile(id);
-  console.log(profileContent);
 
   return (
     <Drawer>
