@@ -15,8 +15,7 @@ export const Empty: Story = {
     onSubmit: fn(),
     profileContent: {
       address: "",
-      age: 20,
-      birthday: null,
+      birthday: new Date(1999, 4, 9),
       hashtags: [],
       hobbies: [],
       imageUrl: null,
@@ -33,8 +32,7 @@ export const EmptySubmit: Story = {
     onSubmit: fn(),
     profileContent: {
       address: "",
-      age: 0,
-      birthday: null,
+      birthday: new Date(1999, 4, 9),
       hashtags: [],
       hobbies: [],
       imageUrl: null,
@@ -50,56 +48,11 @@ export const EmptySubmit: Story = {
   },
 };
 
-export const NegativeNumberAge: Story = {
-  args: {
-    onSubmit: fn(),
-    profileContent: {
-      address: "",
-      age: -50,
-      birthday: null,
-      hashtags: [],
-      hobbies: [],
-      imageUrl: null,
-      message: "",
-      name: "bob",
-      sex: "man",
-    },
-  },
-  name: "年齢が負数の時",
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByRole("button", { name: "更新" }));
-  },
-};
-
-export const BigNumberAge: Story = {
-  args: {
-    onSubmit: fn(),
-    profileContent: {
-      address: "",
-      age: 131,
-      birthday: null,
-      hashtags: [],
-      hobbies: [],
-      imageUrl: null,
-      message: "",
-      name: "bob",
-      sex: "man",
-    },
-  },
-  name: "年齢が131の時",
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByRole("button", { name: "更新" }));
-  },
-};
-
 export default {
   args: {
     onSubmit: fn(),
     profileContent: {
       address: "大阪",
-      age: 20,
       birthday: new Date(1999, 4, 9),
       hashtags: [{ name: "魚" }, { name: "海" }],
       hobbies: [{ name: "釣り" }],
