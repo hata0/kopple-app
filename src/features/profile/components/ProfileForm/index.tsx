@@ -32,7 +32,7 @@ import { ProfileContent } from "@/types/ProfileContent";
 
 type Props = {
   profileContent: ProfileContent;
-  onSubmit: (values: ProfileFormInput) => void;
+  onSubmit: (values: ProfileFormInput) => Promise<void>;
 };
 export const ProfileForm = ({ onSubmit, profileContent }: Props) => {
   const headingId = useId();
