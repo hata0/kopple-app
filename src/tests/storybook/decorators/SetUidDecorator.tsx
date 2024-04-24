@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 import { uidCookieMock } from "../../mocks/mockCookies";
 
-export const UidDecorator = (Story: StoryFn) => {
+export const SetUidDecorator = (Story: StoryFn) => {
   const { name, value } = uidCookieMock;
 
   useEffect(() => {
