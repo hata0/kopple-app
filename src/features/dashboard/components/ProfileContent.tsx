@@ -34,7 +34,7 @@ export const ProfileContent = memo(
             </h3>
             <div className="px-[1.5em] pb-[.5em] pt-[1.2em]">
               <p className="m-0">
-                {getAge(new Date(birthday))}・{sex}
+                {getAge(birthday)}・{sex}
               </p>
               <p className="m-0">誕生日:{birthday ? format(birthday, "M月d日") : "未設定"}</p>
               <p className="m-0">住所:{address !== "" ? address : "未設定"}</p>

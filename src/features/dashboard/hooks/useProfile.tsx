@@ -30,7 +30,14 @@ export const useProfile = (id: string) => {
       });
     } else {
       const data = (await res?.json()) as ProfileContent;
-      await mutate(data, false);
+
+      await mutate(
+        {
+          ...data,
+          birthday: new Date(data.birthday),
+        },
+        false,
+      );
     }
   }, [id, mutate]);
 
