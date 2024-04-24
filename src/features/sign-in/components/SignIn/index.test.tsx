@@ -1,9 +1,8 @@
 import { composeStories } from "@storybook/react";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import * as firebaseAuth from "firebase/auth";
 import { type UserCredential } from "firebase/auth";
 import mockRouter from "next-router-mock";
-import { act } from "react-dom/test-utils";
 
 import * as stories from "./index.stories";
 

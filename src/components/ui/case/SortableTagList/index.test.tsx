@@ -1,6 +1,5 @@
 import { composeStories } from "@storybook/react";
-import { render, screen } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import { act, render, screen } from "@testing-library/react";
 
 import * as stories from "./index.stories";
 
