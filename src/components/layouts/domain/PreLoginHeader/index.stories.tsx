@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 
 import { PreLoginHeader } from ".";
 
-import { UidDecorator } from "@/tests/storybook/decorators/UidDecorator";
+import { SetUidDecorator } from "@/tests/storybook/decorators/SetUidDecorator";
 
 type T = typeof PreLoginHeader;
 type Story = StoryObj<T>;
@@ -32,7 +32,7 @@ export const SignUp: Story = {
 };
 
 export const HasSession: Story = {
-  decorators: [UidDecorator],
+  decorators: [SetUidDecorator],
   name: "セッションがある場合",
 };
 
