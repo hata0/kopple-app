@@ -97,7 +97,7 @@ export default {
     birthday: new Date(1999, 10, 9),
     hashtags: [{ name: "採掘" }],
     hobbies: [{ name: "マイニング" }],
-    imageUrl: null,
+    imageUrl: "/portrait/2.jpg",
     message: "こんにちは",
     name: "hoge",
     sex: "man",
