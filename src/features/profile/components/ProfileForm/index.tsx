@@ -28,6 +28,7 @@ import {
 } from "@/components/shadcn/ui/select";
 import { Textarea } from "@/components/shadcn/ui/textarea";
 import { FormHeading } from "@/components/ui/domain/FormHeading";
+import { useFormGuard } from "@/hooks/useFormGuard";
 import { ProfileContent } from "@/types/ProfileContent";
 
 type Props = {
@@ -37,6 +38,7 @@ type Props = {
 export const ProfileForm = ({ onSubmit, profileContent }: Props) => {
   const headingId = useId();
   const { form, hashtagFields, hobbyFields } = useProfileForm(profileContent);
+  useFormGuard(form.formState.isDirty);
 
   return (
     <Form {...form}>
