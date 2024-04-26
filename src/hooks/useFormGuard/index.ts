@@ -6,7 +6,7 @@ export const useFormGuard = (isDirty: boolean) => {
       if (
         isDirty &&
         event.target instanceof Element &&
-        event.target.closest('a:not([target="_blank"]')
+        event.target.closest('a:not([target="_blank"])')
       ) {
         if (!window.confirm("ページを離れても良いですか？")) {
           event.preventDefault();
