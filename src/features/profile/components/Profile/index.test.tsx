@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { composeStories } from "@storybook/react";
 import { act, render, screen } from "@testing-library/react";
-
-import { postProfileHandler } from "../../services/backend/profiles/[id]/mock";
 
 import * as stories from "./index.stories";
 
@@ -19,7 +19,7 @@ beforeEach(() => {
 
 describe("Profile", () => {
   it("更新に成功した場合、成功したことを知らせる", async () => {
-    server.use(postProfileHandler());
+    server.use(...SucceedSubmit.parameters.msw.handlers);
     const { container } = render(<SucceedSubmit />);
     await act(async () => {
       await SucceedSubmit.play?.({ canvasElement: container });
@@ -36,14 +36,7 @@ describe("Profile", () => {
   });
 
   it("エラー時、更新に失敗したことを知らせる", async () => {
-    server.use(
-      postProfileHandler({
-        error: {
-          message: "無効なリクエストです",
-          status: 400,
-        },
-      }),
-    );
+    server.use(...Error.parameters.msw.handlers);
     const { container } = render(<Error />);
     await act(async () => {
       await Error.play?.({ canvasElement: container });
@@ -52,11 +45,7 @@ describe("Profile", () => {
   });
 
   it("ネットワークエラー時、サーバー側でエラーが発生したことを知らせる", async () => {
-    server.use(
-      postProfileHandler({
-        isNetworkError: true,
-      }),
-    );
+    server.use(...NetworkError.parameters.msw.handlers);
     const { container } = render(<NetworkError />);
     await act(async () => {
       await NetworkError.play?.({ canvasElement: container });
