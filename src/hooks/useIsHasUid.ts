@@ -1,13 +1,13 @@
 import { parseCookies } from "nookies";
-
-import { useIsClient } from "@/hooks/useIsClient";
+import { useEffect, useState } from "react";
 
 export const useIsHasUid = () => {
-  const { isClient } = useIsClient();
+  const [isHasUid, setIsHasUid] = useState(false);
 
-  if (isClient) {
+  useEffect(() => {
     const cookies = parseCookies();
-    return { isHasUid: !!cookies.uid };
-  }
-  return { isHasUid: false };
+    setIsHasUid(!!cookies.uid);
+  }, []);
+
+  return { isHasUid };
 };
