@@ -1,6 +1,7 @@
 import { composeStories } from "@storybook/react";
 import { render, screen } from "@testing-library/react";
 import mockRouter from "next-router-mock";
+import { setCookie } from "nookies";
 
 import * as stories from "./index.stories";
 
@@ -21,6 +22,13 @@ describe("PreLoginHeader", () => {
   });
 
   it("セッションがある場合、ダッシュボードへのリンクが表示される", () => {
+    const { name, value } = uidCookieMock;
+    setCookie(null, name, value, {
+      maxAge: 60 * 60 * 24 * 5,
+      path: "/",
+      sameSite: "lax",
+      secure: true,
+    });
     render(<HasSession />);
     expect(document.cookie).toContain(serializeCookie(uidCookieMock));
     expect(screen.getByRole("link", { name: "ダッシュボード" })).toBeInTheDocument();
