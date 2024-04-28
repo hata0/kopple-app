@@ -14,16 +14,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu";
 import { toast } from "@/components/shadcn/ui/use-toast";
-import { API_ROUTE_URL } from "@/constants/apiRouteUrl";
-import { fetcher } from "@/utils/fetcher";
+import { deleteSession } from "@/services/api/session";
 
 export const DropdownHamburgerMenu = memo(() => {
   const router = useRouter();
 
   const handleLogoutSelect = async () => {
-    const { error, res } = await fetcher(`${API_ROUTE_URL}/session`, {
-      method: "DELETE",
-    });
+    const { error, res } = await deleteSession();
 
     if (error || !res?.ok) {
       toast({
