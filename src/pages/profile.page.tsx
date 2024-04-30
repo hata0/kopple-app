@@ -1,7 +1,6 @@
 import { NextPage } from "next";
 
-import Error from "./_error.page";
-
+import { Error } from "@/features/error/components/Error";
 import { Profile } from "@/features/profile/components/Profile";
 import { getServerSideProps, Props } from "@/features/profile/getServerSideProps";
 import { ProfileContent } from "@/types/ProfileContent";

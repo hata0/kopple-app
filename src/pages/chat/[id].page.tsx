@@ -1,12 +1,11 @@
 import { NextPage } from "next";
 import { SWRConfig } from "swr";
 
-import Error from "../_error.page";
-
 import { ChatContents } from "@/features/chat/components/ChatContents";
 import { ChatForm } from "@/features/chat/components/ChatForm";
 import { ChatHeader } from "@/features/chat/components/ChatHeader";
 import { getServerSideProps, Props } from "@/features/chat/getServerSideProps";
+import { Error } from "@/features/error/components/Error";
 
 export { getServerSideProps };
 
