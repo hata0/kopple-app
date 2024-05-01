@@ -3,14 +3,13 @@ import { GetServerSideProps } from "next";
 import { ChatContents } from "./types/ChatContents";
 
 import { MOCK_API_URL } from "@/constants/mockApiUrl";
-import { HttpError, HttpErrorObject } from "@/utils/HttpError";
 import { fetcher } from "@/utils/fetcher";
 
 export type Props = {
   fallback?: {
     [api: string]: ChatContents;
   };
-  error?: HttpErrorObject;
+  status?: number;
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
@@ -20,7 +19,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
   if (error) {
     throw new Error();
   } else if (!res?.ok) {
-    return { props: { error: new HttpError(res!).serialize() } };
+    return { props: { status: res?.status } };
   }
 
   const chatContents = (await res?.json()) as ChatContents;

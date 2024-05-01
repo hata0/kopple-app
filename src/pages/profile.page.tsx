@@ -7,12 +7,15 @@ import { ProfileContent } from "@/types/ProfileContent";
 
 export { getServerSideProps };
 
-export const ProfilePage: NextPage<Props> = ({ error, profileContent: data }) => {
+export const ProfilePage: NextPage<Props> = ({ profileContent: data, status }) => {
+  if (status) {
+    return <Error status={status} />;
+  }
+
   const profileContent = {
     ...data!,
     birthday: new Date(data!.birthday),
   } satisfies ProfileContent;
-
-  return error ? <Error {...error} /> : <Profile {...profileContent} />;
+  return <Profile {...profileContent} />;
 };
 export default ProfilePage;

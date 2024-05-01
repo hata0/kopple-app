@@ -8,9 +8,9 @@ import { Error } from "@/features/error/components/Error";
 
 export { getServerSideProps };
 
-const ChatsPage: NextPage<Props> = ({ error, fallback }) => {
-  if (error) {
-    return <Error {...error} />;
+const ChatsPage: NextPage<Props> = ({ fallback, status }) => {
+  if (status) {
+    return <Error status={status} />;
   }
 
   return (

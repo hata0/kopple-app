@@ -6,9 +6,9 @@ import { PortraitCarousel } from "@/features/dashboard/components/PortraitCarous
 import { getServerSideProps, Props } from "@/features/dashboard/getServerSideProps";
 import { Error } from "@/features/error/components/Error";
 
-const DashboardPage: NextPage<Props> = ({ error, fallback }) => {
-  if (error) {
-    return <Error {...error} />;
+const DashboardPage: NextPage<Props> = ({ fallback, status }) => {
+  if (status) {
+    return <Error status={status} />;
   }
 
   return (

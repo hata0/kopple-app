@@ -3,14 +3,13 @@ import { GetServerSideProps } from "next";
 import { PortraitCard } from "./types/PortraitCard";
 
 import { MOCK_API_URL } from "@/constants/mockApiUrl";
-import { HttpError, HttpErrorObject } from "@/utils/HttpError";
 import { fetcher } from "@/utils/fetcher";
 
 export type Props = {
   fallback?: {
     "/portraits": PortraitCard[];
   };
-  error?: HttpErrorObject;
+  status?: number;
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
@@ -19,7 +18,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
   if (error) {
     throw new Error();
   } else if (!res?.ok) {
-    return { props: { error: new HttpError(res!).serialize() } };
+    return { props: { status: res?.status } };
   }
 
   const portraits = (await res?.json()) as PortraitCard[];
