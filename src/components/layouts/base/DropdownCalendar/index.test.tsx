@@ -1,6 +1,7 @@
 import { composeStories } from "@storybook/react";
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+import MockDate from "mockdate";
 import { type DayPickerSingleProps } from "react-day-picker";
 
 import * as stories from "./index.stories";
@@ -34,11 +35,10 @@ describe("DropdownCalendar", () => {
       expect(createToDate({ date: 12, month: 2, year: 2025 })).toEqual(new Date(2025, 1, 12));
     });
     it("任意の Date クラス", () => {
-      jest.useFakeTimers();
-      jest.setSystemTime(new Date(2022, 0, 1, 1, 0, 0));
+      MockDate.set(new Date(2022, 0, 1, 1, 0, 0));
       expect(createFromDate(new Date())).toEqual(new Date());
       expect(createToDate(new Date())).toEqual(new Date());
-      jest.useRealTimers();
+      MockDate.reset();
     });
   });
 
