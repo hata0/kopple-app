@@ -1,6 +1,7 @@
 import { composeStories } from "@storybook/react";
 import { act, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+import MockDate from "mockdate";
 import mockRouter from "next-router-mock";
 import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
@@ -25,29 +26,29 @@ describe("ProfileForm", () => {
   });
 
   it("有効な入力の場合、onSubmitが実行される", async () => {
-    const user = userEvent.setup();
+    MockDate.set(new Date(2024, 3, 10, 1, 0, 0));
     render(<Empty />);
-    await user.clear(screen.getByRole("textbox", { name: "名前" }));
-    await user.type(screen.getByRole("textbox", { name: "名前" }), "fish");
-    await user.click(screen.getByRole("combobox", { name: "性別" }));
-    await user.click(screen.getByRole("option", { name: "女性" }));
-    await user.type(screen.getByRole("textbox", { name: "住所" }), "大阪");
-    await user.click(screen.getByRole("button", { name: "誕生日" }));
-    await user.click(
+    await userEvent.clear(screen.getByRole("textbox", { name: "名前" }));
+    await userEvent.type(screen.getByRole("textbox", { name: "名前" }), "fish");
+    await userEvent.click(screen.getByRole("combobox", { name: "性別" }));
+    await userEvent.click(screen.getByRole("option", { name: "女性" }));
+    await userEvent.type(screen.getByRole("textbox", { name: "住所" }), "大阪");
+    await userEvent.click(screen.getByRole("button", { name: "誕生日" }));
+    await userEvent.click(
       screen.getAllByRole("gridcell", { name: "1" }).find((elm) => {
         return !elm.classList.contains("day-outside");
       })!,
     );
-    await user.upload(
+    await userEvent.upload(
       screen.getByTestId("drop-input"),
       new File(["hello"], "hello.png", { type: "image/png" }),
     );
-    await user.type(screen.getByRole("textbox", { name: "自己紹介" }), "こんにちは");
-    await user.type(screen.getByRole("textbox", { name: "ハッシュタグ" }), "釣り");
-    await user.click(screen.getByRole("button", { name: "ハッシュタグを追加" }));
-    await user.type(screen.getByRole("textbox", { name: "趣味" }), "釣り");
-    await user.click(screen.getByRole("button", { name: "趣味を追加" }));
-    await user.click(screen.getByRole("button", { name: "更新" }));
+    await userEvent.type(screen.getByRole("textbox", { name: "自己紹介" }), "こんにちは");
+    await userEvent.type(screen.getByRole("textbox", { name: "ハッシュタグ" }), "釣り");
+    await userEvent.click(screen.getByRole("button", { name: "ハッシュタグを追加" }));
+    await userEvent.type(screen.getByRole("textbox", { name: "趣味" }), "釣り");
+    await userEvent.click(screen.getByRole("button", { name: "趣味を追加" }));
+    await userEvent.click(screen.getByRole("button", { name: "更新" }));
     expect(Empty.args.onSubmit).toHaveBeenLastCalledWith(
       {
         address: "大阪",
@@ -62,7 +63,8 @@ describe("ProfileForm", () => {
       },
       expect.any(Object),
     );
-  });
+    MockDate.reset();
+  }, 20000);
 
   it("キャンセルをクリックした時、ダッシュボードページへ遷移", async () => {
     render(<Default />, {
