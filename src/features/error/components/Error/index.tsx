@@ -1,11 +1,23 @@
-import { Custom401 } from "../401";
+import { useRouter } from "next/router";
+
 import { Custom500 } from "../500";
 
-import { HttpErrorObject } from "@/utils/HttpError";
+import { toast } from "@/components/shadcn/ui/use-toast";
 
-export const Error = ({ http }: HttpErrorObject) => {
-  if (http.status === 401) {
-    return <Custom401 />;
+type Props = {
+  status: number;
+};
+export const Error = ({ status }: Props) => {
+  const router = useRouter();
+
+  if (status === 401) {
+    toast({
+      title: "再度ログインしてください",
+      variant: "destructive",
+    });
+    if (typeof window !== "undefined") {
+      void router.replace("/sign-in");
+    }
   } else {
     return <Custom500 />;
   }
