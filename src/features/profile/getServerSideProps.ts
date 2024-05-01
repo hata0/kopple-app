@@ -1,9 +1,8 @@
 import { GetServerSideProps } from "next";
 import nookies from "nookies";
 
-import { MOCK_API_URL } from "@/constants/mockApiUrl";
+import { getProfile } from "@/services/backend/profiles/[id]";
 import { ProfileContent } from "@/types/ProfileContent";
-import { fetcher } from "@/utils/fetcher";
 
 export type Props = {
   profileContent?: ProfileContent;
@@ -15,7 +14,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
   if (!cookies.uid) {
     return { props: { status: 401 } };
   }
-  const { error, res } = await fetcher(`${MOCK_API_URL}/profiles/${cookies.uid}`);
+  const { error, res } = await getProfile(cookies.uid);
 
   if (error) {
     throw new Error();
