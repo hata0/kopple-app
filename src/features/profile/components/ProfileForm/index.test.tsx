@@ -64,7 +64,7 @@ describe("ProfileForm", () => {
       expect.any(Object),
     );
     MockDate.reset();
-  }, 20000);
+  });
 
   it("キャンセルをクリックした時、ダッシュボードページへ遷移", async () => {
     render(<Default />, {
