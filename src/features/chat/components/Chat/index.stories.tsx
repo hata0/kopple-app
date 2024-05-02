@@ -12,7 +12,7 @@ export const Default: Story = {};
 export default {
   args: {
     fallback: {
-      ["/chats/id"]: chatContents(),
+      "/chats/id": chatContents(),
     },
   },
   component: Chat,
