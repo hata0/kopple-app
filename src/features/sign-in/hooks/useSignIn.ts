@@ -3,10 +3,10 @@ import { useRouter } from "next/router";
 import { setCookie } from "nookies";
 
 import { Props } from "../components/SignInForm";
-import { getSession } from "../services/api/session";
 
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { firebaseClient } from "@/lib/firebase/client";
+import { getSession } from "@/services/api/session";
 
 type onSubmitType = Props["onSubmit"];
 

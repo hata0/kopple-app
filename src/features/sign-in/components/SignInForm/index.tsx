@@ -17,7 +17,7 @@ import { RevealPasswordInput } from "@/components/ui/case/RevealPasswordInput";
 import { ErrorMessage } from "@/components/ui/domain/ErrorMessage";
 import { FormHeading } from "@/components/ui/domain/FormHeading";
 import { FormLegend } from "@/components/ui/domain/FormLegend";
-import { SignInInput } from "@/features/sign-in/services/api/session";
+import { SignInInput } from "@/services/api/session/type";
 
 export type Props = {
   onSubmit: (

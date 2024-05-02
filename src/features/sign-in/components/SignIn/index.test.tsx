@@ -6,7 +6,7 @@ import mockRouter from "next-router-mock";
 
 import * as stories from "./index.stories";
 
-import { getSessionHandler } from "@/features/sign-in/services/api/session/mock";
+import { getSessionHandler } from "@/services/api/session/mock";
 import { uidCookieMock } from "@/tests/mocks/mockCookies";
 import { defineMockCookie } from "@/tests/utils/defineMockCookie";
 import { serializeCookie } from "@/tests/utils/serializeCookie";

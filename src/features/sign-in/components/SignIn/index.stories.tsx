@@ -12,7 +12,7 @@ import type {
 import { SignIn } from ".";
 
 import { Toaster } from "@/components/shadcn/ui/toaster";
-import { getSessionHandler } from "@/features/sign-in/services/api/session/mock";
+import { getSessionHandler } from "@/services/api/session/mock";
 
 type T = typeof SignIn;
 type Story = StoryObj<T>;
