@@ -2,7 +2,6 @@ import Link from "next/link";
 import { useId } from "react";
 
 import { useProfileForm } from "../../hooks/useProfileForm";
-import { ProfileFormInput } from "../../services/backend/profiles/[id]/type";
 import { BirthdayPicker } from "../BirthdayPicker";
 import { HashtagsInput } from "../HashtagsInput";
 import { HobbyTagsInput } from "../HobbyTagsInput";
@@ -29,6 +28,7 @@ import {
 import { Textarea } from "@/components/shadcn/ui/textarea";
 import { FormHeading } from "@/components/ui/domain/FormHeading";
 import { useFormGuard } from "@/hooks/useFormGuard";
+import { ProfileFormInput } from "@/services/backend/profiles/[id]/type";
 import { ProfileContent } from "@/types/ProfileContent";
 
 type Props = {

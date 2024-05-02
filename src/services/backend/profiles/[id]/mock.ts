@@ -8,3 +8,9 @@ import { profileContent } from "@/mocks/profileContent";
 export const getProfileHandler = httpHandlerFactory("get", path(":id"), () => {
   return HttpResponse.json(profileContent());
 });
+
+export const postProfileHandler = httpHandlerFactory("post", path(":id"), () => {
+  return HttpResponse.json({
+    message: "プロフィールを更新しました",
+  });
+});

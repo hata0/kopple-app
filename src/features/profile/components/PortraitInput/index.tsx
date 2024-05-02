@@ -3,11 +3,10 @@ import { memo, ReactNode } from "react";
 import { UseFormSetValue } from "react-hook-form";
 import { FaPortrait } from "react-icons/fa";
 
-import { ProfileFormInput } from "../../services/backend/profiles/[id]/type";
-
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { DroppableFileInput } from "@/components/ui/case/DroppableFileInput";
 import { cn } from "@/lib/utils";
+import { ProfileFormInput } from "@/services/backend/profiles/[id]/type";
 
 type Props = {
   setValue: UseFormSetValue<ProfileFormInput>;

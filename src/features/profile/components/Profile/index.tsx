@@ -1,11 +1,10 @@
 import { parseCookies } from "nookies";
 
-import { postProfile } from "../../services/backend/profiles/[id]";
-import { ProfileFormInput } from "../../services/backend/profiles/[id]/type";
 import { ProfileForm } from "../ProfileForm";
 
 import { PostLoginHeader } from "@/components/layouts/domain/PostLoginHeader";
 import { toast } from "@/components/shadcn/ui/use-toast";
+import { postProfile, ProfileFormInput } from "@/services/backend/profiles/[id]";
 import { ProfileContent } from "@/types/ProfileContent";
 
 export const Profile = (props: ProfileContent) => {

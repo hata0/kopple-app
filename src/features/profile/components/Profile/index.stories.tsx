@@ -4,11 +4,10 @@ import { userEvent, within } from "@storybook/test";
 // eslint-disable-next-line storybook/use-storybook-testing-library
 import type { ByRoleMatcher, ByRoleOptions, Matcher, MatcherOptions } from "@testing-library/react";
 
-import { postProfileHandler } from "../../services/backend/profiles/[id]/mock";
-
 import { Profile } from ".";
 
 import { Toaster } from "@/components/shadcn/ui/toaster";
+import { postProfileHandler } from "@/services/backend/profiles/[id]/mock";
 import { DeleteUidDecorator } from "@/tests/storybook/decorators/DeleteUidDecorator";
 import { SetUidDecorator } from "@/tests/storybook/decorators/SetUidDecorator";
 

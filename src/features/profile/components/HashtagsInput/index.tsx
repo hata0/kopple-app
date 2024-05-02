@@ -1,10 +1,9 @@
 import { memo, ReactNode } from "react";
 import { UseFieldArrayReturn } from "react-hook-form";
 
-import { ProfileFormInput } from "../../services/backend/profiles/[id]/type";
-
 import { Input } from "@/components/shadcn/ui/input";
 import { TagInput } from "@/components/ui/case/TagInput";
+import { ProfileFormInput } from "@/services/backend/profiles/[id]/type";
 
 type Props = {
   hashtagFields: UseFieldArrayReturn<ProfileFormInput, "hashtags", "id">;
