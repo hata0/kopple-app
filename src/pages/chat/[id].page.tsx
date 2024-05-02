@@ -1,9 +1,6 @@
 import { NextPage } from "next";
-import { SWRConfig } from "swr";
 
-import { ChatContents } from "@/features/chat/components/ChatContents";
-import { ChatForm } from "@/features/chat/components/ChatForm";
-import { ChatHeader } from "@/features/chat/components/ChatHeader";
+import { Chat } from "@/features/chat/components/Chat";
 import { getServerSideProps, Props } from "@/features/chat/getServerSideProps";
 import { Error } from "@/features/error/components/Error";
 
@@ -14,14 +11,6 @@ export const ChatPage: NextPage<Props> = ({ fallback, status }) => {
     return <Error status={status} />;
   }
 
-  return (
-    <SWRConfig value={{ fallback }}>
-      <div className="flex h-screen flex-col">
-        <ChatHeader />
-        <ChatContents />
-        <ChatForm />
-      </div>
-    </SWRConfig>
-  );
+  return <Chat fallback={fallback} />;
 };
 export default ChatPage;
