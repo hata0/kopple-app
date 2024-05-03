@@ -1,6 +1,6 @@
 import { VscSend } from "react-icons/vsc";
 
-import { useChatForm } from "../hooks/useChatForm";
+import { useChatForm } from "../../hooks/useChatForm";
 
 import { Button } from "@/components/shadcn/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/shadcn/ui/form";

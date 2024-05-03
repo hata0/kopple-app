@@ -6,12 +6,10 @@ import useSWR from "swr";
 import { z } from "zod";
 
 import { ChatContents } from "../types/ChatContents";
-import { CreateMessageRequest } from "../types/CreateMessage";
 import { Message } from "../types/Message";
 
 import { toast } from "@/components/shadcn/ui/use-toast";
-import { MOCK_API_URL } from "@/constants/mockApiUrl";
-import { fetcher } from "@/utils/fetcher";
+import { postMessage } from "@/services/backend/messages/create/[id]";
 
 const formSchema = z.object({
   message: z.string().min(1),
@@ -48,15 +46,7 @@ export const useChatForm = () => {
 
       await mutate(
         async () => {
-          const { error, res } = await fetcher<CreateMessageRequest>(
-            `${MOCK_API_URL}/messages/create/${id}`,
-            {
-              body: {
-                message,
-              },
-              method: "POST",
-            },
-          );
+          const { error, res } = await postMessage(id, message);
 
           if (error) {
             toast({
