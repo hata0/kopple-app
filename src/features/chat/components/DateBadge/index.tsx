@@ -1,4 +1,4 @@
-import { format, isEqual, isThisYear, isToday, isYesterday } from "date-fns";
+import { format, isThisYear, isToday, isYesterday } from "date-fns";
 import { ja } from "date-fns/locale";
 
 import { Badge } from "@/components/shadcn/ui/badge";
@@ -8,13 +8,7 @@ type Props = {
 };
 
 export const DateBadge = ({ date }: Props) => {
-  let prevDate: Date | null = null;
   let formattedDate: string;
-
-  if (prevDate && isEqual(date, prevDate)) {
-    prevDate = date;
-    return;
-  }
 
   if (isToday(date)) {
     formattedDate = "今日";
@@ -26,7 +20,6 @@ export const DateBadge = ({ date }: Props) => {
     formattedDate = format(date, "yyyy/M/d(E)", { locale: ja });
   }
 
-  prevDate = date;
   return (
     <div className="flex w-full items-center justify-center">
       <Badge className="hover:bg-primary">{formattedDate}</Badge>
