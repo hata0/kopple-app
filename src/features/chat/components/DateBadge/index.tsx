@@ -1,7 +1,7 @@
 import { format, isEqual, isThisYear, isToday, isYesterday } from "date-fns";
+import { ja } from "date-fns/locale";
 
 import { Badge } from "@/components/shadcn/ui/badge";
-import { formatAcronymJpDayOfWeek } from "@/utils/formatAcronymJpDayOfWeek";
 
 type Props = {
   date: Date;
@@ -21,9 +21,9 @@ export const DateBadge = ({ date }: Props) => {
   } else if (isYesterday(date)) {
     formattedDate = "昨日";
   } else if (isThisYear(date)) {
-    formattedDate = `${format(date, "M/d")}(${formatAcronymJpDayOfWeek(date)})`;
+    formattedDate = format(date, "M/d(E)", { locale: ja });
   } else {
-    formattedDate = `${format(date, "yyyy/M/d")}(${formatAcronymJpDayOfWeek(date)})`;
+    formattedDate = format(date, "yyyy/M/d(E)", { locale: ja });
   }
 
   prevDate = date;
