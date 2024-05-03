@@ -3,11 +3,10 @@ import { Fragment } from "react";
 import { InView } from "react-intersection-observer";
 import { TailSpin } from "react-loader-spinner";
 
-import { useChatContents } from "../hooks/useChatContents";
-
-import { DateBadge } from "./DateBadge";
-import { FriendChatContent } from "./FriendChatContent";
-import { MyChatContent } from "./MyChatContent";
+import { useChatContents } from "../../hooks/useChatContents";
+import { DateBadge } from "../DateBadge";
+import { FriendChatContent } from "../FriendChatContent";
+import { MyChatContent } from "../MyChatContent";
 
 import { ScrollBar } from "@/components/shadcn/ui/scroll-area";
 import { useIsClient } from "@/hooks/useIsClient";

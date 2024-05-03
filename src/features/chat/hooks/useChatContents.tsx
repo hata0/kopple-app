@@ -7,8 +7,7 @@ import { Message } from "../types/Message";
 
 import { ToastAction } from "@/components/shadcn/ui/toast";
 import { toast } from "@/components/shadcn/ui/use-toast";
-import { MOCK_API_URL } from "@/constants/mockApiUrl";
-import { fetcher } from "@/utils/fetcher";
+import { getChat } from "@/services/backend/chats/[id]";
 
 export const useChatContents = () => {
   const router = useRouter();
@@ -57,17 +56,17 @@ export const useChatContents = () => {
 
   const handleInfiniteScroll = async (isInView: boolean) => {
     if (isInView) {
-      await getChatContents();
+      await handleGetChat();
     }
   };
 
-  const getChatContents = useCallback(async () => {
-    const { error, res } = await fetcher(`${MOCK_API_URL}/chats/${id}`);
+  const handleGetChat = useCallback(async () => {
+    const { error, res } = await getChat(id);
 
     if (error) {
       toast({
         action: (
-          <ToastAction altText="再取得" onClick={() => void getChatContents()}>
+          <ToastAction altText="再取得" onClick={() => void handleGetChat()}>
             再取得
           </ToastAction>
         ),
