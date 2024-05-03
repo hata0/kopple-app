@@ -6,7 +6,7 @@ import { TailSpin } from "react-loader-spinner";
 import { useChatContents } from "../hooks/useChatContents";
 
 import { DateBadge } from "./DateBadge";
-import { InterlocutorChatContent } from "./InterlocutorChatContent";
+import { FriendChatContent } from "./InterlocutorChatContent";
 import { MyChatContent } from "./MyChatContent";
 
 import { ScrollBar } from "@/components/shadcn/ui/scroll-area";
@@ -26,7 +26,7 @@ export const ChatContents = () => {
               {message.isMyMessage ? (
                 <MyChatContent {...message} />
               ) : (
-                <InterlocutorChatContent
+                <FriendChatContent
                   {...message}
                   imageUrl={chatContents.imageUrl}
                   name={chatContents.name}

@@ -11,7 +11,7 @@ type Props = {
   name: string;
 } & Message;
 
-export const InterlocutorChatContent = memo(({ createdAt, imageUrl, message, name }: Props) => {
+export const FriendChatContent = memo(({ createdAt, imageUrl, message, name }: Props) => {
   return (
     <div className="flex">
       <Avatar>
@@ -35,4 +35,4 @@ export const InterlocutorChatContent = memo(({ createdAt, imageUrl, message, nam
   );
 });
 
-InterlocutorChatContent.displayName = "InterlocutorChatContent";
+FriendChatContent.displayName = "InterlocutorChatContent";
