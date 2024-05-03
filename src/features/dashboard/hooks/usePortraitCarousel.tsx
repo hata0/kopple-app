@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
@@ -13,6 +14,7 @@ export const usePortraitCarousel = () => {
   const { data: portraitCards, mutate } = useSWR<PortraitCard[]>("/portraits");
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     if (api) {
@@ -39,9 +41,10 @@ export const usePortraitCarousel = () => {
               });
             } else if (res?.status === 401) {
               toast({
-                title: "ログインできていません",
+                title: "ログインできていません。再度ログインしてください",
                 variant: "destructive",
               });
+              await router.replace("/sign-in");
             } else {
               const additionalPortraitCards = (await res?.json()) as PortraitCard[];
               await mutate([...portraitCards!, ...additionalPortraitCards], false);
@@ -52,7 +55,7 @@ export const usePortraitCarousel = () => {
       };
       api.on("settle", () => void func());
     }
-  }, [api, mutate, portraitCards]);
+  }, [api, mutate, portraitCards, router]);
 
   return {
     current,

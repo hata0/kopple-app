@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { memo } from "react";
 import useSWR from "swr";
 
@@ -25,6 +26,7 @@ type Props = {
 
 export const DeleteChatDialog = memo(({ id }: Props) => {
   const { data: chatCards, mutate } = useSWR<ChatCard[]>(`/chats`);
+  const router = useRouter();
 
   const handleDeleteClick = async () => {
     const updatedChatCards = chatCards?.filter((chatCard) => {
@@ -45,9 +47,10 @@ export const DeleteChatDialog = memo(({ id }: Props) => {
           throw new Error();
         } else if (res?.status === 401) {
           toast({
-            title: "ログインできていません",
+            title: "ログインできていません。再度ログインしてください",
             variant: "destructive",
           });
+          await router.replace("/sign-in");
         }
 
         return updatedChatCards;

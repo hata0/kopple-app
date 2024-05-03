@@ -75,9 +75,10 @@ export const useChatContents = () => {
       });
     } else if (res?.status === 401) {
       toast({
-        title: "ログインできていません",
+        title: "ログインできていません。再度ログインしてください",
         variant: "destructive",
       });
+      await router.replace("/sign-in");
     } else {
       const additionalChatContents = (await res?.json()) as ChatContents;
       await mutate({
@@ -85,7 +86,7 @@ export const useChatContents = () => {
         messages: [...chatContents!.messages, ...additionalChatContents.messages],
       });
     }
-  }, [chatContents, id, mutate]);
+  }, [chatContents, id, mutate, router]);
 
   return {
     chatContents,

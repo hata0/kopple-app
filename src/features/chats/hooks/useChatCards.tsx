@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useCallback } from "react";
 import useSWR from "swr";
 
@@ -10,6 +11,7 @@ import { fetcher } from "@/utils/fetcher";
 
 export const useChatCards = () => {
   const { data: chatCards, mutate } = useSWR<ChatCard[]>("/chats");
+  const router = useRouter();
 
   const getChatCards = useCallback(async () => {
     const { error, res } = await fetcher(`${MOCK_API_URL}/chats`);
@@ -26,14 +28,15 @@ export const useChatCards = () => {
       });
     } else if (res?.status === 401) {
       toast({
-        title: "ログインできていません",
+        title: "ログインできていません。再度ログインしてください",
         variant: "destructive",
       });
+      await router.replace("/sign-in");
     } else {
       const additionalChatCards = (await res!.json()) as ChatCard[];
       await mutate([...chatCards!, ...additionalChatCards], false);
     }
-  }, [chatCards, mutate]);
+  }, [chatCards, mutate, router]);
 
   return {
     chatCards,

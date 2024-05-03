@@ -66,9 +66,10 @@ export const useChatForm = () => {
             throw new Error();
           } else if (res?.status === 401) {
             toast({
-              title: "ログインできていません",
+              title: "ログインできていません。再度ログインしてください",
               variant: "destructive",
             });
+            await router.replace("/sign-in");
           } else {
             additionalMessage = (await res?.json()) as Message;
             return {
@@ -112,7 +113,7 @@ export const useChatForm = () => {
 
       setTimeout(() => void func(), 5000);
     },
-    [chatContents, form, id, mutate],
+    [chatContents, form, id, mutate, router],
   );
 
   const handleKeyDown = useCallback(

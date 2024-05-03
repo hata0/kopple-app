@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { memo } from "react";
 import { AiFillLike } from "react-icons/ai";
 import { ImProfile } from "react-icons/im";
@@ -22,6 +23,7 @@ export const PortraitMenubar = memo(({ current }: Props) => {
   const { data: portraitCards, mutate } = useSWR<PortraitCard[]>("/portraits");
   const isLike = portraitCards![current] ? portraitCards![current].isLike : false;
   const id = portraitCards![current] ? portraitCards![current].id : undefined;
+  const router = useRouter();
 
   const handleLikeClick = async () => {
     if (!id) {
@@ -51,9 +53,10 @@ export const PortraitMenubar = memo(({ current }: Props) => {
           throw new Error();
         } else if (res?.status === 401) {
           toast({
-            title: "ログインできていません",
+            title: "ログインできていません。再度ログインしてください",
             variant: "destructive",
           });
+          await router.replace("/sign-in");
         }
 
         return updatedUsers;
