@@ -6,7 +6,7 @@ import { TailSpin } from "react-loader-spinner";
 import { useChatContents } from "../hooks/useChatContents";
 
 import { DateBadge } from "./DateBadge";
-import { FriendChatContent } from "./InterlocutorChatContent";
+import { FriendChatContent } from "./FriendChatContent";
 import { MyChatContent } from "./MyChatContent";
 
 import { ScrollBar } from "@/components/shadcn/ui/scroll-area";
