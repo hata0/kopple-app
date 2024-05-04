@@ -65,7 +65,7 @@ export const UnauthorizedError: Story = {
   },
 };
 
-export const KeyboardSucceedSubmit: Story = {
+export const CtrlSucceedSubmit: Story = {
   name: "有効な値でctrl + enter を入力したとき",
   parameters: {
     msw: {
@@ -79,12 +79,35 @@ export const KeyboardSucceedSubmit: Story = {
   },
 };
 
-export const KeyboardEmptySubmit: Story = {
+export const CtrlEmptySubmit: Story = {
   name: "空のままctrl + enter を入力したとき",
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByRole("textbox", { name: textareaLabel }));
     await userEvent.keyboard("{Control>}{Enter}{/Control}");
+  },
+};
+
+export const MetaSucceedSubmit: Story = {
+  name: "有効な値でmeta + enter を入力したとき",
+  parameters: {
+    msw: {
+      handlers: [postMessageHandler()],
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole("textbox", { name: textareaLabel }));
+    await userEvent.keyboard("こんにちは{Meta>}{Enter}{/Meta}");
+  },
+};
+
+export const MetaEmptySubmit: Story = {
+  name: "空のままmeta + enter を入力したとき",
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole("textbox", { name: textareaLabel }));
+    await userEvent.keyboard("{Meta>}{Enter}{/Meta}");
   },
 };
 
