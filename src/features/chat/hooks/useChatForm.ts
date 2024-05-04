@@ -38,8 +38,6 @@ export const useChatForm = () => {
     async (values: ChatInput) => {
       form.reset();
 
-      let additionalMessage: Message;
-
       await mutate(
         async () => {
           const { error, res } = await postMessage(id, values);
@@ -57,7 +55,7 @@ export const useChatForm = () => {
             });
             await router.replace("/sign-in");
           } else {
-            additionalMessage = (await res?.json()) as Message;
+            const additionalMessage = (await res?.json()) as Message;
             return {
               ...chatContents!,
               messages: [additionalMessage, ...chatContents!.messages],
@@ -80,24 +78,6 @@ export const useChatForm = () => {
           rollbackOnError: true,
         },
       );
-
-      const func = async () => {
-        await mutate({
-          ...chatContents!,
-          messages: [
-            {
-              createdAt: new Date(),
-              id: crypto.randomUUID(),
-              isMyMessage: false,
-              message: "オッケー!",
-            },
-            additionalMessage,
-            ...chatContents!.messages,
-          ],
-        });
-      };
-
-      setTimeout(() => void func(), 5000);
     },
     [chatContents, form, id, mutate, router],
   );
