@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import useSWR from "swr";
 
@@ -16,8 +16,6 @@ export const useChatForm = () => {
   const router = useRouter();
   const id = router.query.id as string;
   const { data: chatContents, mutate } = useSWR<ChatContents>(`/chats/${id}`);
-  const [rows, setRows] = useState(0);
-  const messageHeightRef = useRef<HTMLTextAreaElement>(null);
   const form = useForm<ChatInput>({
     defaultValues: {
       message: "",
@@ -25,14 +23,6 @@ export const useChatForm = () => {
     mode: "onChange",
     resolver: zodResolver(chatInputSchema),
   });
-  const watchMessage = form.watch("message", "");
-
-  useEffect(() => {
-    if (messageHeightRef.current) {
-      const rows = Math.floor(messageHeightRef.current.scrollHeight / 20);
-      setRows(rows);
-    }
-  }, [watchMessage]);
 
   const onSubmit = useCallback(
     async (values: ChatInput) => {
@@ -94,8 +84,6 @@ export const useChatForm = () => {
   return {
     form,
     handleKeyDown,
-    messageHeightRef,
     onSubmit,
-    rows,
   };
 };

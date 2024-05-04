@@ -1,14 +1,15 @@
+import { useState } from "react";
 import { VscSend } from "react-icons/vsc";
+import TextareaAutosize from "react-textarea-autosize";
 
 import { useChatForm } from "../../hooks/useChatForm";
 
 import { Button } from "@/components/shadcn/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/shadcn/ui/form";
-import { Textarea } from "@/components/shadcn/ui/textarea";
-import { cn } from "@/lib/utils";
 
 export const ChatForm = () => {
-  const { form, handleKeyDown, messageHeightRef, onSubmit, rows } = useChatForm();
+  const { form, handleKeyDown, onSubmit } = useChatForm();
+  const [isFocus, setIsFocus] = useState(false);
 
   return (
     <Form {...form}>
@@ -22,30 +23,20 @@ export const ChatForm = () => {
             name="message"
             render={({ field }) => (
               <FormItem className="h-fit w-full space-y-0">
-                <textarea
-                  ref={messageHeightRef}
-                  aria-hidden
-                  readOnly
-                  className="absolute h-0 w-full overflow-scroll pl-3 pr-14 text-sm"
-                  rows={1}
-                  value={field.value}
-                />
                 <FormControl>
-                  <Textarea
+                  <TextareaAutosize
                     {...field}
                     aria-label="メッセージを入力"
-                    className={cn("min-h-[auto] resize-none overflow-y-scroll pr-14", {
-                      "h-[38px]": rows === 1,
-                      "h-[52px]": rows === 2,
-                      "transition-[height] delay-150 duration-300 ease-in-out focus:h-[78px]":
-                        rows <= 3,
-                    })}
+                    className="w-full resize-none rounded-md border border-input bg-background px-3 py-2 pr-14 text-sm ring-offset-background transition-[height] delay-150 duration-300 ease-in-out placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    maxRows={6}
+                    minRows={isFocus ? 3 : 1}
+                    onBlur={() => setIsFocus(false)}
                     onChange={(e) => {
                       field.onChange(e);
                     }}
+                    onFocus={() => setIsFocus(true)}
                     onKeyDown={(e) => void handleKeyDown(e)}
                     placeholder="メッセージを入力"
-                    rows={rows >= 7 ? 6 : rows === 0 ? 1 : rows}
                   />
                 </FormControl>
               </FormItem>
@@ -53,7 +44,7 @@ export const ChatForm = () => {
           />
           <Button
             aria-label="送信"
-            className="absolute bottom-1 right-5 h-7 w-7 p-1"
+            className="absolute bottom-[10px] right-5 h-7 w-7 p-1"
             disabled={!form.formState.isValid}
             type="submit"
           >
