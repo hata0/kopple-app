@@ -33,6 +33,7 @@ export const ChatForm = () => {
                 <FormControl>
                   <Textarea
                     {...field}
+                    aria-label="メッセージを入力"
                     className={cn("min-h-[auto] resize-none overflow-y-scroll pr-14", {
                       "h-[38px]": rows === 1,
                       "h-[52px]": rows === 2,
@@ -51,6 +52,7 @@ export const ChatForm = () => {
             )}
           />
           <Button
+            aria-label="送信"
             className="absolute bottom-1 right-5 h-7 w-7 p-1"
             disabled={!form.formState.isValid}
             type="submit"
