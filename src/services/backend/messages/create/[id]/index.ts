@@ -1,13 +1,13 @@
+import { ChatInput } from "./type";
+
 import { MOCK_API_URL } from "@/constants/mockApiUrl";
 import { CreateMessageRequest } from "@/features/chat/types/CreateMessage";
 import { fetcher } from "@/utils/fetcher";
 
 export const path = (id: string) => `${MOCK_API_URL}/messages/create/${id}`;
 
-export const postMessage = (id: string, message: string) =>
+export const postMessage = (id: string, values: ChatInput) =>
   fetcher<CreateMessageRequest>(path(id), {
-    body: {
-      message,
-    },
+    body: values,
     method: "POST",
   });

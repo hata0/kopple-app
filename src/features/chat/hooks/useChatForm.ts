@@ -36,14 +36,13 @@ export const useChatForm = () => {
 
   const onSubmit = useCallback(
     async (values: ChatInput) => {
-      const { message } = values;
       form.reset();
 
       let additionalMessage: Message;
 
       await mutate(
         async () => {
-          const { error, res } = await postMessage(id, message);
+          const { error, res } = await postMessage(id, values);
 
           if (error) {
             toast({
@@ -73,7 +72,7 @@ export const useChatForm = () => {
                 createdAt: new Date(),
                 id: crypto.randomUUID(),
                 isMyMessage: true,
-                message,
+                message: values.message,
               },
               ...chatContents!.messages,
             ],
