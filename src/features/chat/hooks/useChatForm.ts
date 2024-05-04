@@ -53,7 +53,7 @@ export const useChatForm = () => {
               title: "メッセージの送信に失敗しました。",
               variant: "destructive",
             });
-            throw new Error();
+            throw new Error("ネットワークエラーが発生しました。");
           } else if (res?.status === 401) {
             toast({
               title: "ログインできていません。再度ログインしてください",
