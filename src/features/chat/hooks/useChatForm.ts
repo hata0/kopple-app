@@ -3,17 +3,14 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import useSWR from "swr";
-import { z } from "zod";
 
 import { ChatContents } from "../types/ChatContents";
 import { Message } from "../types/Message";
 
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { postMessage } from "@/services/backend/messages/create/[id]";
-
-const formSchema = z.object({
-  message: z.string().min(1),
-});
+import { chatInputSchema } from "@/services/backend/messages/create/[id]/schema";
+import { ChatInput } from "@/services/backend/messages/create/[id]/type";
 
 export const useChatForm = () => {
   const router = useRouter();
@@ -21,12 +18,12 @@ export const useChatForm = () => {
   const { data: chatContents, mutate } = useSWR<ChatContents>(`/chats/${id}`);
   const [rows, setRows] = useState(0);
   const messageHeightRef = useRef<HTMLTextAreaElement>(null);
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<ChatInput>({
     defaultValues: {
       message: "",
     },
     mode: "onChange",
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(chatInputSchema),
   });
   const watchMessage = form.watch("message", "");
 
@@ -38,7 +35,7 @@ export const useChatForm = () => {
   }, [watchMessage]);
 
   const onSubmit = useCallback(
-    async (values: z.infer<typeof formSchema>) => {
+    async (values: ChatInput) => {
       const { message } = values;
       form.reset();
 
