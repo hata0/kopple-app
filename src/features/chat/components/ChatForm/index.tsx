@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { VscSend } from "react-icons/vsc";
-import TextareaAutosize from "react-textarea-autosize";
 
 import { useChatForm } from "../../hooks/useChatForm";
 
 import { Button } from "@/components/shadcn/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/shadcn/ui/form";
+import { TextareaAutosize } from "@/components/ui/case/TextareaAutosize";
 
 export const ChatForm = () => {
   const { form, handleKeyDown, onSubmit } = useChatForm();
@@ -27,7 +27,7 @@ export const ChatForm = () => {
                   <TextareaAutosize
                     {...field}
                     aria-label="メッセージを入力"
-                    className="w-full resize-none rounded-md border border-input bg-background px-3 py-2 pr-14 text-sm ring-offset-background transition-[height] delay-150 duration-300 ease-in-out placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="resize-none pr-14 transition-[height] delay-150 duration-300 ease-in-out"
                     maxRows={6}
                     minRows={isFocus ? 3 : 1}
                     onBlur={() => setIsFocus(false)}
