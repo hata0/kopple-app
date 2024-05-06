@@ -1,13 +1,5 @@
-/* eslint-disable testing-library/prefer-screen-queries */
 import { Meta, StoryObj } from "@storybook/react";
 import { userEvent, within } from "@storybook/test";
-// eslint-disable-next-line storybook/use-storybook-testing-library
-import type {
-  ByRoleMatcher,
-  ByRoleOptions,
-  Matcher,
-  SelectorMatcherOptions,
-} from "@testing-library/react";
 
 import { SignIn } from ".";
 
@@ -17,14 +9,14 @@ import { getSessionHandler } from "@/services/api/session/mock";
 type T = typeof SignIn;
 type Story = StoryObj<T>;
 
-type ValidSubmitArgs = {
-  getByRole: (role: ByRoleMatcher, options?: ByRoleOptions) => HTMLElement;
-  getByLabelText: (id: Matcher, options?: SelectorMatcherOptions) => HTMLElement;
-};
-const validSubmit = async ({ getByLabelText, getByRole }: ValidSubmitArgs) => {
-  await userEvent.type(getByRole("textbox", { name: "メールアドレス" }), "email@example.com");
-  await userEvent.type(getByLabelText("パスワード"), "password1");
-  await userEvent.click(getByRole("button", { name: "ログイン" }));
+const validSubmit = async (canvasElement: HTMLElement) => {
+  const canvas = within(canvasElement);
+  await userEvent.type(
+    canvas.getByRole("textbox", { name: "メールアドレス" }),
+    "email@example.com",
+  );
+  await userEvent.type(canvas.getByLabelText("パスワード"), "password1");
+  await userEvent.click(canvas.getByRole("button", { name: "ログイン" }));
 };
 
 export const Default: Story = {};
@@ -45,8 +37,7 @@ export const SucceedSubmit: Story = {
     },
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    await validSubmit(canvas);
+    await validSubmit(canvasElement);
   },
 };
 
@@ -58,8 +49,7 @@ export const ServerError: Story = {
     },
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    await validSubmit(canvas);
+    await validSubmit(canvasElement);
   },
 };
 
