@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import { SWRConfig } from "swr";
 
 import { Chat } from "@/features/chat/components/Chat";
 import { getServerSideProps, Props } from "@/features/chat/getServerSideProps";
@@ -11,6 +12,10 @@ export const ChatPage: NextPage<Props> = ({ fallback, status }) => {
     return <Error status={status} />;
   }
 
-  return <Chat fallback={fallback} />;
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Chat />
+    </SWRConfig>
+  );
 };
 export default ChatPage;
