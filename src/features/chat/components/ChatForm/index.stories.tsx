@@ -1,77 +1,38 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { userEvent, within } from "@storybook/test";
-import { SWRConfig } from "swr";
-
-import { Props } from "../../getServerSideProps";
+import { fn, userEvent, within } from "@storybook/test";
 
 import { ChatForm } from ".";
-
-import { Toaster } from "@/components/shadcn/ui/toaster";
-import { chatContents } from "@/mocks/chatContents";
-import { postMessageHandler } from "@/services/backend/messages/create/[id]/mock";
 
 type T = typeof ChatForm;
 type Story = StoryObj<T>;
 
 const textareaLabel = "メッセージを入力";
+const buttonLabel = "送信";
 const validSubmit = async (canvasElement: HTMLElement) => {
   const canvas = within(canvasElement);
   await userEvent.type(canvas.getByRole("textbox", { name: textareaLabel }), "こんにちは");
-  await userEvent.click(canvas.getByRole("button", { name: "送信" }));
+  await userEvent.click(canvas.getByRole("button", { name: buttonLabel }));
 };
 
 export const Default: Story = {};
 
-export const Success: Story = {
-  name: "成功したとき",
-  parameters: {
-    msw: {
-      handlers: [postMessageHandler()],
-    },
-  },
+export const ValidSubmit: Story = {
+  name: "有効な値の場合",
   play: async ({ canvasElement }) => {
     await validSubmit(canvasElement);
   },
 };
 
-export const NetworkError: Story = {
-  name: "ネットワークエラーのとき",
-  parameters: {
-    msw: {
-      handlers: [postMessageHandler({ isNetworkError: true })],
-    },
-  },
+export const EmptySubmit: Story = {
+  name: "空のまま送信したとき",
   play: async ({ canvasElement }) => {
-    await validSubmit(canvasElement);
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole("button", { name: buttonLabel }));
   },
 };
 
-export const UnauthorizedError: Story = {
-  name: "認証に失敗したとき",
-  parameters: {
-    msw: {
-      handlers: [
-        postMessageHandler({
-          error: {
-            message: "認証に失敗しました",
-            status: 401,
-          },
-        }),
-      ],
-    },
-  },
-  play: async ({ canvasElement }) => {
-    await validSubmit(canvasElement);
-  },
-};
-
-export const CtrlSucceedSubmit: Story = {
+export const CtrlValidSubmit: Story = {
   name: "有効な値でctrl + enter を入力したとき",
-  parameters: {
-    msw: {
-      handlers: [postMessageHandler()],
-    },
-  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByRole("textbox", { name: textareaLabel }));
@@ -90,11 +51,6 @@ export const CtrlEmptySubmit: Story = {
 
 export const MetaSucceedSubmit: Story = {
   name: "有効な値でmeta + enter を入力したとき",
-  parameters: {
-    msw: {
-      handlers: [postMessageHandler()],
-    },
-  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByRole("textbox", { name: textareaLabel }));
@@ -112,23 +68,9 @@ export const MetaEmptySubmit: Story = {
 };
 
 export default {
-  component: ChatForm,
-  decorators: [
-    (Story) => (
-      <SWRConfig
-        value={{ fallback: { "/chats/id": chatContents() } } satisfies Pick<Props, "fallback">}
-      >
-        <Story />
-        <Toaster />
-      </SWRConfig>
-    ),
-  ],
-  parameters: {
-    nextjs: {
-      router: {
-        query: { id: "id" },
-      },
-    },
+  args: {
+    onSubmit: fn(),
   },
+  component: ChatForm,
   title: "Features/chat/ChatForm",
 } satisfies Meta<T>;
